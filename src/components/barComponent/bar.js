@@ -1,6 +1,6 @@
 import "./bar.css";
 
-function bar() {
+function Bar() {
   return (
     <div className="bar__content">
       <div className="bar__player-progress"></div>
@@ -88,4 +88,4 @@ function bar() {
   );
 }
 
-export default bar;
+export default Bar;

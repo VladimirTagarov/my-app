@@ -1,6 +1,6 @@
 import "./content.css";
 
-function content() {
+function Content() {
   return (
     <div className="centerblock__content">
       <div className="content__title playlist-title">
@@ -582,4 +582,4 @@ function content() {
   );
 }
 
-export default content;
+export default Content;

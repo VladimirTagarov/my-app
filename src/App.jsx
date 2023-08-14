@@ -1,29 +1,29 @@
 // import logo from "./logo.svg";
 import "./App.css";
-import mainNav from "./components/mainNavComponent/MainNav.js";
-import search from "./components/searchComponent/search.js";
-import filter from "./components/filterComponent/filter.js";
-import content from "./components/contentComponent/content.js";
-import sidebar from "./components/sidebarComponent/sidebar.js";
-import bar from "./components/barComponent/bar.js";
+import MainNav from "./components/mainNavComponent/MainNav.js";
+import Search from "./components/searchComponent/Search.js";
+import Filter from "./components/filterComponent/Filter.js";
+import Content from "./components/contentComponent/Content.js";
+import Sidebar from "./components/sidebarComponent/Sidebar.js";
+import Bar from "./components/barComponent/Bar.js";
 
 function App() {
   return (
-    <div classNameName="App">
+    <div className="App">
       <div className="wrapper">
         <div className="container">
           <main className="main">
-            <mainNav />
+            <MainNav />
             <div className="main__centerblock centerblock">
-              <search />
+              <Search />
               <h2 className="centerblock__h2">Треки</h2>
-              <filter />
-              <content />
+              <Filter />
+              <Content />
             </div>
-            <sidebar />
+            <Sidebar />
           </main>
           <div className="bar">
-            <bar />
+            <Bar />
           </div>
           <footer className="footer"></footer>
         </div>

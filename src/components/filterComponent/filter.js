@@ -1,6 +1,6 @@
 import "./filter.css";
 
-function filter() {
+function Filter() {
   return (
     <div className="centerblock__filter filter">
       <div className="filter__title">Искать по:</div>
@@ -11,4 +11,4 @@ function filter() {
   );
 }
 
-export default filter;
+export default Filter;

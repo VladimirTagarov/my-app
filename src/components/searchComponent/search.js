@@ -1,6 +1,6 @@
 import "./search.css";
 
-function search() {
+function Search() {
   return (
     <div className="centerblock__search search">
       <svg className="search__svg">
@@ -16,4 +16,4 @@ function search() {
   );
 }
 
-export default search;
+export default Search;
