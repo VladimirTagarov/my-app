@@ -18,7 +18,6 @@ function App() {
   useEffect(() => {
     const loadingTimer = setInterval(() => {
       setLoading(false);
-      console.log("check");
     }, 5000);
     return () => {
       clearInterval(loadingTimer);
