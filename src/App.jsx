@@ -4,10 +4,27 @@ import MainNav from "./components/mainNavComponent/MainNav.js";
 import Search from "./components/searchComponent/Search.js";
 import Filter from "./components/filterComponent/Filter.js";
 import Content from "./components/contentComponent/Content.js";
+import ContentSkeleton from "./components/contentSkeletonComponent/ContentSkeleton.js";
 import Sidebar from "./components/sidebarComponent/Sidebar.js";
+import SidebarSkeleton from "./components/sidebarSkeletonComponent/sidebarSkeleton.js";
 import Bar from "./components/barComponent/Bar.js";
+import BarSkeleton from "./components/barSkeletonComponent/BarSkeleton.js";
+import { useState } from "react";
+import { useEffect } from "react";
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadingTimer = setInterval(() => {
+      setLoading(false);
+      console.log("check");
+    }, 5000);
+    return () => {
+      clearInterval(loadingTimer);
+    };
+  }, []);
+
   return (
     <div className="App">
       <div className="wrapper">
@@ -18,13 +35,11 @@ function App() {
               <Search />
               <h2 className="centerblock__h2">Треки</h2>
               <Filter />
-              <Content />
+              {loading ? <ContentSkeleton /> : <Content />}
             </div>
-            <Sidebar />
+            {loading ? <SidebarSkeleton /> : <Sidebar />}
           </main>
-          <div className="bar">
-            <Bar />
-          </div>
+          <div className="bar">{loading ? <BarSkeleton /> : <Bar />}</div>
           <footer className="footer"></footer>
         </div>
       </div>
