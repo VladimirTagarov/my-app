@@ -1,10 +1,11 @@
-.main__sidebar {
-  /* max-width: 418px;
-  padding: 20px 90px 20px 78px; */
-}
+import { styled } from "styled-components";
 
-.sidebar__personal {
-  /* display: -webkit-box;
+export const MainSidebar = styled.div`
+  max-width: 418px;
+  padding: 20px 90px 20px 78px;
+`;
+export const SidebarPersonal = styled.div`
+  display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: horizontal;
@@ -17,28 +18,28 @@
   -webkit-box-pack: end;
   -ms-flex-pack: end;
   justify-content: flex-end;
-  padding: 12px 0 15px 0; */
-}
+  padding: 12px 0 15px 0;
+`;
 
-.sidebar__personal-name {
-  /* font-style: normal;
+export const SidebarPersonalName = styled.p`
+  font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
   color: #ffffff;
-  margin-right: 16px; */
-}
+  margin-right: 16px;
+`;
 
-.sidebar__icon {
-  /* width: 43px;
+export const SidebarIcon = styled.div`
+  width: 43px;
   height: 43px;
   background-color: #313131;
   border-radius: 50%;
-  cursor: pointer; */
-}
+  cursor: pointer;
+`;
 
-.sidebar__block {
-  /* height: 100%;
+export const SidebarBlock = styled.div`
+  height: 100%;
   padding: 240px 0 0 0;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -49,11 +50,11 @@
   flex-direction: column;
   -webkit-box-pack: start;
   -ms-flex-pack: start;
-  justify-content: flex-start; */
-}
+  justify-content: flex-start;
+`;
 
-.sidebar__list {
-  /* display: -webkit-box;
+export const SidebarList = styled.div`
+  display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: vertical;
@@ -62,30 +63,23 @@
   flex-direction: column;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: center; */
-}
+  align-items: center;
+`;
 
-.sidebar__item {
-  /* width: 250px;
-  height: 150px; */
-}
-
-.sidebar__item:not(:last-child) {
-  /* margin-bottom: 30px; */
-}
-
-.sidebar__link {
-  /* width: 100%;
-  height: 100%; */
-}
-
-.sidebar__img {
-  /* width: 100%;
-  height: auto; */
-}
-
-.sidebar__skeleton {
+export const SidebarItem = styled.div`
   width: 250px;
   height: 150px;
-  background-color: #313131;
-}
+  &:not(:last-child) {
+    margin-bottom: 30px;
+  }
+`;
+
+export const SidebarLink = styled.a`
+  width: 100%;
+  height: 100%;
+`;
+
+export const SidebarImg = styled.img`
+  width: 100%;
+  height: auto;
+`;

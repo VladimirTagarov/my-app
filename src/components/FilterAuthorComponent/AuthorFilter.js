@@ -1,5 +1,4 @@
-import "./authorFilter.css";
-import { useState } from "react";
+import * as S from "./AuthorFilter.style";
 
 function AuthorFilter() {
   const author = [
@@ -15,13 +14,11 @@ function AuthorFilter() {
     "Tom Baker",
   ];
   return (
-    <ul className="popup__author">
+    <S.PopupAuthor>
       {author.map((element, i) => (
-        <li className="popup__author-text" key={i}>
-          {element}
-        </li>
+        <S.PopupAuthorText key={i}>{element}</S.PopupAuthorText>
       ))}
-    </ul>
+    </S.PopupAuthor>
   );
 }
 

@@ -1,16 +1,15 @@
 import "./yearFilter.css";
 import { useState } from "react";
+import * as S from "./yearFilter.style";
 
 function YearFilter() {
   const year = [1992, 1993, 1994];
   return (
-    <ul className="popup__year">
+    <S.PopupYear>
       {year.map((element, i) => (
-        <li className="popup__year-text" key={i}>
-          {element}
-        </li>
+        <S.PopupYearText key={i}>{element}</S.PopupYearText>
       ))}
-    </ul>
+    </S.PopupYear>
   );
 }
 

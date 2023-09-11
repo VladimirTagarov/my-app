@@ -1,5 +1,5 @@
 .popup__year {
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   border-radius: 12px;
   background: #313131;
@@ -8,9 +8,9 @@
   margin-top: 50px;
   width: 221px;
   height: 196px;
-  gap: 28px;
+  gap: 28px; */
 }
 .popup__year-text {
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
 }

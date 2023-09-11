@@ -11,6 +11,41 @@ import Bar from "./components/barComponent/Bar.js";
 import BarSkeleton from "./components/barSkeletonComponent/BarSkeleton.js";
 import { useState } from "react";
 import { useEffect } from "react";
+import * as S from "./App.style";
+import { createGlobalStyle } from "styled-components";
+
+const GlobalStyle = createGlobalStyle`
+button,
+._btn {
+  cursor: pointer;
+}
+html,
+body {
+  width: 100%;
+  height: 100%;
+  font-family: "StratosSkyeng", sans-serif;
+  color: #ffffff;
+}
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+a,
+a:visited {
+  text-decoration: none;
+  font-family: "StratosSkyeng", sans-serif;
+  cursor: pointer;
+}
+`;
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -25,23 +60,24 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <div className="wrapper">
-        <div className="container">
-          <main className="main">
+    <div>
+      <GlobalStyle />
+      <S.Wrapper>
+        <S.Container>
+          <S.Main>
             <MainNav />
-            <div className="main__centerblock centerblock">
+            <S.MainCenterblock>
               <Search />
-              <h2 className="centerblock__h2">Треки</h2>
+              <S.Centerblock>Треки</S.Centerblock>
               <Filter />
               {loading ? <ContentSkeleton /> : <Content />}
-            </div>
+            </S.MainCenterblock>
             {loading ? <SidebarSkeleton /> : <Sidebar />}
-          </main>
-          <div className="bar">{loading ? <BarSkeleton /> : <Bar />}</div>
-          <footer className="footer"></footer>
-        </div>
-      </div>
+          </S.Main>
+          <S.Bar>{loading ? <BarSkeleton /> : <Bar />}</S.Bar>
+          <S.Footer></S.Footer>
+        </S.Container>
+      </S.Wrapper>
     </div>
   );
 }

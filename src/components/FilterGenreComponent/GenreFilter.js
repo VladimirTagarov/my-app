@@ -1,5 +1,4 @@
-import "./genreFilter.css";
-import { useState } from "react";
+import * as S from "./GenreFilter.style";
 
 function GenreFilter() {
   const genre = [
@@ -12,13 +11,13 @@ function GenreFilter() {
     "Классическая музыка",
   ];
   return (
-    <ul className="popup__genre">
+    <S.PopupGenre>
       {genre.map((element, i) => (
-        <li className="popup__genre-text" key={i}>
+        <S.PopupGenreText className="popup__genre-text" key={i}>
           {element}
-        </li>
+        </S.PopupGenreText>
       ))}
-    </ul>
+    </S.PopupGenre>
   );
 }
 
