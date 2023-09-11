@@ -1,5 +1,4 @@
 // import logo from "./logo.svg";
-import "./App.css";
 import MainNav from "./components/mainNavComponent/MainNav.js";
 import Search from "./components/searchComponent/Search.js";
 import Filter from "./components/filterComponent/Filter.js";
@@ -44,6 +43,15 @@ a:visited {
   text-decoration: none;
   font-family: "StratosSkyeng", sans-serif;
   cursor: pointer;
+}
+
+@font-face {
+  font-family: "StratosSkyeng";
+  src: local("StratosSkyeng"), local("StratosSkyeng"),
+    url("./fonts/StratosSkyeng.woff2") format("woff2"),
+    url("./fonts/StratosSkyeng.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
 }
 `;
 
