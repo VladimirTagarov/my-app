@@ -8,7 +8,7 @@ import Filter from "../../components/filterComponent/Filter";
 import Content from "../../components/contentComponent/Content";
 import ContentSkeleton from "../../components/contentSkeletonComponent/ContentSkeleton";
 import Sidebar from "../../components/sidebarComponent/Sidebar";
-import SidebarSkeleton from "../../components/sidebarSkeletonComponent/sidebarSkeleton";
+import SidebarSkeleton from "../../components/sidebarSkeletonComponent/SidebarSkeleton";
 import Bar from "../../components/barComponent/Bar";
 import BarSkeleton from "../../components/barSkeletonComponent/BarSkeleton";
 import { createGlobalStyle } from "styled-components";
