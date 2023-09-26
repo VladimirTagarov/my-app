@@ -1,5 +1,4 @@
-import "./yearFilter.css";
-import { useState } from "react";
+import React from "react";
 import * as S from "./yearFilter.style";
 
 function YearFilter() {

@@ -1,13 +1,11 @@
-// import "./sidebar.css";
+import React from "react";
 import * as S from "./Sidebar.style";
 
 function SidebarSkeleton() {
   return (
     <S.MainSidebar>
       <S.SidebarPersonal>
-        <S.SidebarPersonalName className="sidebar__personal-name">
-          Sergey.Ivanov
-        </S.SidebarPersonalName>
+        <S.SidebarPersonalName>Sergey.Ivanov</S.SidebarPersonalName>
         <S.SidebarIcon>
           <svg alt="logout">
             <use xlinkHref="img/icon/sprite.svg#logout"></use>
@@ -18,17 +16,17 @@ function SidebarSkeleton() {
         <S.SidebarList>
           <S.SidebarItem>
             <S.SidebarLink href="#">
-              <div className="sidebar__skeleton"></div>
+              <S.SidebarSkeleton></S.SidebarSkeleton>
             </S.SidebarLink>
           </S.SidebarItem>
           <S.SidebarItem>
             <S.SidebarLink href="#">
-              <div className="sidebar__skeleton"></div>
+              <S.SidebarSkeleton></S.SidebarSkeleton>
             </S.SidebarLink>
           </S.SidebarItem>
           <S.SidebarItem>
             <S.SidebarLink href="#">
-              <div className="sidebar__skeleton"></div>
+              <S.SidebarSkeleton></S.SidebarSkeleton>
             </S.SidebarLink>
           </S.SidebarItem>
         </S.SidebarList>

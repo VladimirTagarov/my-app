@@ -1,4 +1,4 @@
-import "./content.css";
+import React from "react";
 import * as S from "./Content.style";
 
 function Content() {

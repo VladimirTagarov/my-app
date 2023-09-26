@@ -4,6 +4,7 @@ export const CenterblockFilter = styled.div`
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  gap: 10px;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
   -ms-flex-direction: row;
@@ -36,7 +37,4 @@ export const FilterButton = styled.div`
   border: 1px solid #ffffff;
   border-radius: 60px;
   padding: 6px 20px;
-  &:not(:last-child) {
-    margin-right: 10px;
-  }
 `;

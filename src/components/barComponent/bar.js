@@ -1,5 +1,5 @@
-import "./bar.css";
-import * as S from "./Bar.style.js";
+import React from "react";
+import * as S from "./Bar.style";
 
 function Bar() {
   return (

@@ -1,13 +1,14 @@
-import "./sidebar.css";
+import React from "react";
 import * as S from "./Sidebar.style";
+import { Link } from "react-router-dom";
+
+export const category = [1, 2, 3];
 
 function Sidebar() {
   return (
     <S.MainSidebar>
       <S.SidebarPersonal>
-        <S.SidebarPersonalName className="sidebar__personal-name">
-          Sergey.Ivanov
-        </S.SidebarPersonalName>
+        <S.SidebarPersonalName>Sergey.Ivanov</S.SidebarPersonalName>
         <S.SidebarIcon>
           <svg alt="logout">
             <use xlinkHref="img/icon/sprite.svg#logout"></use>
@@ -16,21 +17,18 @@ function Sidebar() {
       </S.SidebarPersonal>
       <S.SidebarBlock>
         <S.SidebarList>
-          <S.SidebarItem>
-            <S.SidebarLink href="#">
-              <S.SidebarImg src="img/playlist01.png" alt="day's playlist" />
-            </S.SidebarLink>
-          </S.SidebarItem>
-          <S.SidebarItem>
-            <S.SidebarLink href="#">
-              <S.SidebarImg src="img/playlist02.png" alt="day's playlist" />
-            </S.SidebarLink>
-          </S.SidebarItem>
-          <S.SidebarItem>
-            <S.SidebarLink href="#">
-              <S.SidebarImg src="img/playlist03.png" alt="day's playlist" />
-            </S.SidebarLink>
-          </S.SidebarItem>
+          {category.map((id) => (
+            <S.SidebarItem key={id}>
+              <Link to={`/category/${id}`}>
+                <S.SidebarLink>
+                  <S.SidebarImg
+                    src={`img/playlist0${id}.png`}
+                    alt="day's playlist"
+                  />
+                </S.SidebarLink>
+              </Link>
+            </S.SidebarItem>
+          ))}
         </S.SidebarList>
       </S.SidebarBlock>
     </S.MainSidebar>
