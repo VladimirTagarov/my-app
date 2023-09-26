@@ -1,13 +1,53 @@
-import "./filter.css";
+import React from "react";
+import AuthorFilter from "../FilterAuthorComponent/AuthorFilter";
+import GenreFilter from "../FilterGenreComponent/GenreFilter";
+import YearFilter from "../FilterYearComponent/YearFilter";
+import { useState } from "react";
+import * as S from "./filter.styles";
 
 function Filter() {
+  const [open, setOpen] = useState(false);
+
+  const popup = () => {
+    setOpen(!open);
+    setOpenPopup(false);
+    setOpenYear(false);
+  };
+  const [openPopup, setOpenPopup] = useState(false);
+  const popupGenre = () => {
+    setOpenPopup(!openPopup);
+    setOpenYear(false);
+    setOpen(false);
+  };
+  const [openYear, setOpenYear] = useState(false);
+  const popupYear = () => {
+    setOpenYear(!openYear);
+    setOpen(false);
+    setOpenPopup(false);
+  };
+
   return (
-    <div className="centerblock__filter filter">
-      <div className="filter__title">Искать по:</div>
-      <div className="filter__button button-author _btn-text">исполнителю</div>
-      <div className="filter__button button-year _btn-text">году выпуска</div>
-      <div className="filter__button button-genre _btn-text">жанру</div>
-    </div>
+    <S.CenterblockFilter>
+      <S.FilterTitle>Искать по:</S.FilterTitle>
+      <S.Popup>
+        <S.FilterButton onClick={popup} className="_btn-text">
+          исполнителю
+        </S.FilterButton>
+        {open ? <AuthorFilter /> : null}
+      </S.Popup>
+      <S.Popup>
+        <S.FilterButton onClick={popupYear} className="_btn-text">
+          году выпуска
+        </S.FilterButton>
+        {openYear ? <YearFilter /> : null}
+      </S.Popup>
+      <S.Popup>
+        <S.FilterButton onClick={popupGenre} className="_btn-text">
+          жанру
+        </S.FilterButton>
+        {openPopup ? <GenreFilter /> : null}
+      </S.Popup>
+    </S.CenterblockFilter>
   );
 }
 

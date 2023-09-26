@@ -1,7 +1,7 @@
 import React from "react";
 import * as S from "./Bar.style";
 
-function Bar() {
+function BarSkeleton() {
   return (
     <S.BarContent>
       <S.BarPlayerProgress></S.BarPlayerProgress>
@@ -46,14 +46,10 @@ function Bar() {
                 </S.TrackPlaySvg>
               </S.TrackPlayImage>
               <S.TrackPlayAuthor>
-                <S.TrackPlayAuthorLink href="http://">
-                  Ты та...
-                </S.TrackPlayAuthorLink>
+                <S.BarSkeleton></S.BarSkeleton>
               </S.TrackPlayAuthor>
               <S.TrackPlayAlbum>
-                <S.trackPlayAlbumLink href="http://">
-                  Баста
-                </S.trackPlayAlbumLink>
+                <S.BarSkeleton></S.BarSkeleton>
               </S.TrackPlayAlbum>
             </S.TrackPlayContain>
 
@@ -92,4 +88,4 @@ function Bar() {
   );
 }
 
-export default Bar;
+export default BarSkeleton;
