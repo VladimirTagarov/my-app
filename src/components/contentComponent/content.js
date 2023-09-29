@@ -1,7 +1,12 @@
 import React from "react";
 import * as S from "./Content.style";
 
-function Content() {
+export const Content = ({ tracks, playingTrack, setPlayingTrack }) => {
+  // const handlePlayTrack = (track) => {
+  //   setPlayingTrack(track);
+  // };
+  console.log(playingTrack);
+
   return (
     <S.CenterBlockContent>
       <S.ContentTitle>
@@ -15,6 +20,44 @@ function Content() {
         </S.PlaylistTitleCol04>
       </S.ContentTitle>
       <S.ContentPlaylist>
+        {tracks.map((track) => {
+          return (
+            <S.PlaylistItem onClick={() => setPlayingTrack(track)}>
+              <S.PlaylistTrack>
+                <S.TrackTitle>
+                  <S.TrackTitleImage>
+                    <S.TrackTitleSvg alt="music">
+                      <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
+                    </S.TrackTitleSvg>
+                  </S.TrackTitleImage>
+                  <S.TrackTitleText>
+                    <S.TrackTitleLink>
+                      {track.name} <S.TrackTitleSpan></S.TrackTitleSpan>
+                    </S.TrackTitleLink>
+                  </S.TrackTitleText>
+                </S.TrackTitle>
+                <S.TrackAuthor>
+                  <S.TrackAuthorLink>{track.author}</S.TrackAuthorLink>
+                </S.TrackAuthor>
+                <S.TrackAlbum>
+                  <S.TrackAlbumLink>{track.album}</S.TrackAlbumLink>
+                </S.TrackAlbum>
+                <S.TrackTime>
+                  <S.TrackTimeSvg alt="time">
+                    <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
+                  </S.TrackTimeSvg>
+                  <S.TrackTimeText>
+                    {Math.floor(track.duration_in_seconds / 60) +
+                      ":" +
+                      (track.duration_in_seconds % 60)}
+                  </S.TrackTimeText>
+                </S.TrackTime>
+              </S.PlaylistTrack>
+            </S.PlaylistItem>
+          );
+        })}
+      </S.ContentPlaylist>
+      {/* <S.ContentPlaylist>
         <S.PlaylistItem>
           <S.PlaylistTrack>
             <S.TrackTitle>
@@ -532,9 +575,9 @@ function Content() {
             </S.TrackTime>
           </S.PlaylistTrack>
         </S.PlaylistItem>
-      </S.ContentPlaylist>
+      </S.ContentPlaylist> */}
     </S.CenterBlockContent>
   );
-}
+};
 
 export default Content;

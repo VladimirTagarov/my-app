@@ -12,6 +12,7 @@ import SidebarSkeleton from "../../components/sidebarSkeletonComponent/SidebarSk
 import Bar from "../../components/barComponent/Bar";
 import BarSkeleton from "../../components/barSkeletonComponent/BarSkeleton";
 import { createGlobalStyle } from "styled-components";
+import { getTracks } from "../../api";
 
 const GlobalStyle = createGlobalStyle`
 button,
@@ -58,14 +59,23 @@ a:visited {
 
 export const Main = () => {
   const [loading, setLoading] = useState(true);
+  const [tracks, setTracks] = useState();
+  const [playingTrack, setPlayingTrack] = useState(null);
+  const [addPlayerError, setAddPlayerError] = useState(null);
 
   useEffect(() => {
-    const loadingTimer = setInterval(() => {
-      setLoading(false);
-    }, 5000);
-    return () => {
-      clearInterval(loadingTimer);
-    };
+    getTracks()
+      .then((track) => {
+        setTracks(track);
+      })
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        setAddPlayerError(error.message);
+        setLoading(false);
+      });
+    console.log(tracks);
   }, []);
 
   return (
@@ -79,11 +89,32 @@ export const Main = () => {
               <Search />
               <S.Centerblock>Треки</S.Centerblock>
               <Filter />
-              {loading ? <ContentSkeleton /> : <Content />}
+              {loading ? (
+                <ContentSkeleton />
+              ) : (
+                <Content
+                  tracks={tracks}
+                  playingTrack={playingTrack}
+                  setPlayingTrack={setPlayingTrack}
+                />
+              )}
+              <p>{addPlayerError}</p>
             </S.MainCenterblock>
             {loading ? <SidebarSkeleton /> : <Sidebar />}
           </S.Main>
-          <S.Bar>{loading ? <BarSkeleton /> : <Bar />}</S.Bar>
+          <S.Bar
+            tracks={tracks}
+            playingTrack={playingTrack}
+            setPlayingTrack={setPlayingTrack}
+          >
+            {playingTrack ? (
+              <Bar
+                tracks={tracks}
+                playingTrack={playingTrack}
+                setPlayingTrack={setPlayingTrack}
+              />
+            ) : null}
+          </S.Bar>
           <S.Footer></S.Footer>
         </S.Container>
       </S.Wrapper>

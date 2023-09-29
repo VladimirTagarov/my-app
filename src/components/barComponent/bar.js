@@ -1,7 +1,8 @@
 import React from "react";
 import * as S from "./Bar.style";
 
-function Bar() {
+export const Bar = ({ tracks, playingTrack }) => {
+  console.log(playingTrack);
   return (
     <S.BarContent>
       <S.BarPlayerProgress></S.BarPlayerProgress>
@@ -46,13 +47,19 @@ function Bar() {
                 </S.TrackPlaySvg>
               </S.TrackPlayImage>
               <S.TrackPlayAuthor>
-                <S.TrackPlayAuthorLink href="http://">
-                  Ты та...
+                <S.TrackPlayAuthorLink
+                  tracks={tracks}
+                  playingTrack={playingTrack}
+                >
+                  {playingTrack.name}
                 </S.TrackPlayAuthorLink>
               </S.TrackPlayAuthor>
               <S.TrackPlayAlbum>
-                <S.trackPlayAlbumLink href="http://">
-                  Баста
+                <S.trackPlayAlbumLink
+                  tracks={tracks}
+                  playingTrack={playingTrack}
+                >
+                  {playingTrack.author}
                 </S.trackPlayAlbumLink>
               </S.TrackPlayAlbum>
             </S.TrackPlayContain>
@@ -90,6 +97,6 @@ function Bar() {
       </S.BarPlayerBlock>
     </S.BarContent>
   );
-}
+};
 
 export default Bar;
