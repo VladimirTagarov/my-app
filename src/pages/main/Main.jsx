@@ -3,14 +3,13 @@ import * as S from "./Main.style";
 import { useState } from "react";
 import { useEffect } from "react";
 import MainNav from "../../components/mainNavComponent/MainNav";
-import Search from "../../components/searchComponent/Search";
-import Filter from "../../components/filterComponent/Filter";
-import Content from "../../components/contentComponent/Content";
-import ContentSkeleton from "../../components/contentSkeletonComponent/ContentSkeleton";
-import Sidebar from "../../components/sidebarComponent/Sidebar";
-import SidebarSkeleton from "../../components/sidebarSkeletonComponent/SidebarSkeleton";
-import Bar from "../../components/barComponent/Bar";
-import BarSkeleton from "../../components/barSkeletonComponent/BarSkeleton";
+import Search from "../../components/searchComponent/search";
+import Filter from "../../components/filterComponent/filter";
+import Content from "../../components/contentComponent/content";
+import ContentSkeleton from "../../components/contentSkeletonComponent/contentSkeleton";
+import Sidebar from "../../components/sidebarComponent/sidebar";
+import SidebarSkeleton from "../../components/sidebarSkeletonComponent/sidebarSkeleton";
+import Bar from "../../components/barComponent/bar";
 import { createGlobalStyle } from "styled-components";
 import { getTracks } from "../../api";
 
@@ -62,17 +61,17 @@ export const Main = () => {
   const [tracks, setTracks] = useState();
   const [playingTrack, setPlayingTrack] = useState(null);
   const [addPlayerError, setAddPlayerError] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     getTracks()
       .then((track) => {
         setTracks(track);
       })
-      .then(() => {
-        setLoading(false);
-      })
       .catch((error) => {
         setAddPlayerError(error.message);
+      })
+      .finally(() => {
         setLoading(false);
       });
     console.log(tracks);
@@ -93,6 +92,8 @@ export const Main = () => {
                 <ContentSkeleton />
               ) : (
                 <Content
+                  isPlaying={isPlaying}
+                  setIsPlaying={setIsPlaying}
                   tracks={tracks}
                   playingTrack={playingTrack}
                   setPlayingTrack={setPlayingTrack}
@@ -103,6 +104,8 @@ export const Main = () => {
             {loading ? <SidebarSkeleton /> : <Sidebar />}
           </S.Main>
           <S.Bar
+            isPlaying={isPlaying}
+            setIsPlaying={setIsPlaying}
             tracks={tracks}
             playingTrack={playingTrack}
             setPlayingTrack={setPlayingTrack}

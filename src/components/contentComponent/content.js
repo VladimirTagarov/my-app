@@ -1,7 +1,13 @@
 import React from "react";
 import * as S from "./Content.style";
 
-export const Content = ({ tracks, playingTrack, setPlayingTrack }) => {
+export const Content = ({
+  tracks,
+  playingTrack,
+  setPlayingTrack,
+  isPlaying,
+  setIsPlaying,
+}) => {
   // const handlePlayTrack = (track) => {
   //   setPlayingTrack(track);
   // };
@@ -22,7 +28,14 @@ export const Content = ({ tracks, playingTrack, setPlayingTrack }) => {
       <S.ContentPlaylist>
         {tracks.map((track) => {
           return (
-            <S.PlaylistItem onClick={() => setPlayingTrack(track)}>
+            <S.PlaylistItem
+              key={track.id}
+              onClick={() => {
+                setPlayingTrack(track);
+                isPlaying = true;
+                setIsPlaying(!isPlaying);
+              }}
+            >
               <S.PlaylistTrack>
                 <S.TrackTitle>
                   <S.TrackTitleImage>
