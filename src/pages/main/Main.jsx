@@ -6,7 +6,7 @@ import MainNav from "../../components/mainNavComponent/MainNav";
 import Search from "../../components/searchComponent/search";
 import Filter from "../../components/filterComponent/filter";
 import Content from "../../components/contentComponent/content";
-import ContentSkeleton from "../../components/contentSkeletonComponent/contentSkeleton";
+import ContentSkeleton from "../../components/contentSkeletonComponent/ContentSkeleton";
 import Sidebar from "../../components/sidebarComponent/sidebar";
 import SidebarSkeleton from "../../components/sidebarSkeletonComponent/sidebarSkeleton";
 import Bar from "../../components/barComponent/bar";
