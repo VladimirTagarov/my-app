@@ -365,3 +365,14 @@ export const VolumeProgress = styled.div`
 export const VolumeProgressLine = styled.input`
   width: 109px;
 `;
+
+export const BarTime = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
+  color: #696969;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+`;

@@ -33,22 +33,44 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack }) => {
 
   const togglePlay = isPlaying ? handleStop : handleStart;
 
-  const [progressTime, setProgressTime] = useState(10);
+  const [progressTime, setProgressTime] = useState(0);
 
   const [duration, setDuration] = useState(110);
+  // if (isPlaying) {
+  //   const timing = audioRef.current.duration;
+  //   audioRef.current.duration = duration;
+  //   setDuration(timing);
+  //   console.log(timing);
+  //   console.log(audioRef.current.duration);
+  // }
+
+  const handleTimeUpdate = () => {
+    setProgressTime(audioRef.current.currentTime);
+    setDuration(audioRef.current.duration);
+  };
+
+  function formatTiming(timeOfTracks) {
+    const minutes = Math.floor(timeOfTracks / 60);
+    const seconds = Math.floor(timeOfTracks % 60);
+    const formattedSeconds = seconds.toString().padStart(2, "0");
+    return `${minutes}:${formattedSeconds}`;
+  }
+
   useEffect(() => {
-    if (isPlaying) {
-      setDuration(audioRef.current.duration);
-      console.log(duration);
-    }
+    audioRef.current.addEventListener("timeupdate", handleTimeUpdate);
+    return () => {
+      audioRef.current.removeEventListener("timeupdate", handleTimeUpdate);
+    };
   }, []);
 
-  const handleProgress = () => {
-    console.log(audioRef.current.currentTime);
+  const handleProgress = (value) => {
+    // console.log(audioRef.current.currentTime);
+    setProgressTime(value);
+    audioRef.current.currentTime = value;
     // audioRef.current.currentTime = progressTime;
-    setProgressTime(audioRef.current.currentTime);
     console.log(progressTime);
     console.log(audioRef.current.currentTime);
+    console.log(duration);
   };
 
   const [isRepeating, setIsRepeating] = useState(false);
@@ -67,20 +89,16 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack }) => {
   return (
     <>
       <audio
-        controls
         ref={audioRef}
         tracks={tracks}
         playingTrack={playingTrack}
         setPlayingTrack={setPlayingTrack}
-      >
-        <source
-          tracks={tracks}
-          playingTrack={playingTrack}
-          setPlayingTrack={setPlayingTrack}
-          src={playingTrack.track_file}
-        ></source>
-      </audio>
+        src={playingTrack.track_file}
+      ></audio>
       <S.BarContent>
+        <S.BarTime>
+          {formatTiming(progressTime)}/{formatTiming(duration)}
+        </S.BarTime>
         <S.ProgressBar
           type="range"
           min={0}
@@ -88,11 +106,12 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack }) => {
           step={1}
           defaultValue="0"
           value={progressTime}
-          onChange={(event) => setProgressTime(event.target.value)}
+          onChange={(event) => handleProgress(event.target.value)}
           // onChange={handleProgress}
           $color="#B672FF"
           audioRef={audioRef}
         ></S.ProgressBar>
+
         <S.BarPlayerProgress></S.BarPlayerProgress>
 
         <S.BarPlayerBlock>
