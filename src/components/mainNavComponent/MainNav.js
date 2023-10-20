@@ -2,12 +2,22 @@ import React from "react";
 import { useState } from "react";
 import * as S from "./mainNav.styles";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useUserContext } from "../../context";
 
 function MainNav() {
   const [open, setOpen] = useState(true);
   function burgerButton() {
     setOpen(!open);
   }
+  const { regUser, setRegUser, isLogin, setIsLogin } = useUserContext();
+  const navigate = useNavigate();
+  const handleLogOut = () => {
+    localStorage.clear();
+    setIsLogin(false);
+    setRegUser(null);
+    navigate("/login", { replace: true });
+  };
 
   return (
     <S.MainNav>
@@ -34,7 +44,7 @@ function MainNav() {
             </S.MenuItem>
             <S.MenuItem>
               <Link to="/login">
-                <S.MenuLink>Войти</S.MenuLink>
+                <S.MenuLink onClick={handleLogOut}>Выйти</S.MenuLink>
               </Link>
             </S.MenuItem>
           </S.MenuList>

@@ -14,9 +14,11 @@
 // };
 
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as S from "./AuthPage.styles";
 import { useEffect, useState } from "react";
+import { getLogin, getRegistration, getToken } from "../../api";
+import { useUserContext } from "../../context";
 
 export const Registration = ({ isLoginMode = false }) => {
   const [error, setError] = useState(null);
@@ -24,15 +26,58 @@ export const Registration = ({ isLoginMode = false }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const { regUser, setRegUser, isLogin, setIsLogin } = useUserContext();
 
-  const handleLogin = async ({ email, password }) => {
-    alert(`Выполняется вход: ${email} ${password}`);
-    setError("Неизвестная ошибка входа");
+  function setUser(user, token) {
+    localStorage.setItem(user, token);
+    navigate("/", { replace: true });
+  }
+
+  const handleRegister = () => {
+    if (email === "" && password === "" && repeatPassword === "") {
+      setError("Введите все значения");
+    } else if (password === repeatPassword) {
+      setLoading(true);
+      console.log("прохожу регистрацию");
+      getRegistration(email, password).then(() => {
+        getToken(email, password)
+          .then((response) => {
+            setUser("user", response.access);
+            setIsLogin(true);
+            setRegUser(email);
+          })
+          .then(() => {
+            setLoading(false);
+          });
+      });
+    } else {
+      setError("Пароли не совпадают");
+    }
+    // alert(`Выполняется вход: ${email} ${password}`);
+    // setError("Неизвестная ошибка входа");
   };
 
-  const handleRegister = async () => {
-    alert(`Выполняется регистрация: ${email} ${password}`);
-    setError("Неизвестная ошибка регистрации");
+  const handleLogin = () => {
+    if (email === "" && password === "" && repeatPassword === "") {
+      setError("Введите все значения");
+    } else {
+      setLoading(true);
+      getLogin(email, password);
+      getToken(email, password)
+        .then((response) => {
+          setUser("user", response.access);
+          setIsLogin(true);
+          setRegUser(email);
+        })
+        .then(() => {
+          setLoading(false);
+        });
+
+      // alert(`Выполняется регистрация: ${email} ${password}`);
+      // setError("Неизвестная ошибка регистрации");
+    }
   };
 
   // Сбрасываем ошибку если пользователь меняет данные на форме или меняется режим формы
@@ -72,7 +117,10 @@ export const Registration = ({ isLoginMode = false }) => {
             </S.Inputs>
             {error && <S.Error>{error}</S.Error>}
             <S.Buttons>
-              <S.PrimaryButton onClick={() => handleLogin({ email, password })}>
+              <S.PrimaryButton
+                disabled={loading}
+                onClick={() => handleLogin({ email, password })}
+              >
                 Войти
               </S.PrimaryButton>
               <Link to="/registration">
@@ -113,7 +161,7 @@ export const Registration = ({ isLoginMode = false }) => {
             </S.Inputs>
             {error && <S.Error>{error}</S.Error>}
             <S.Buttons>
-              <S.PrimaryButton onClick={handleRegister}>
+              <S.PrimaryButton disabled={loading} onClick={handleRegister}>
                 Зарегистрироваться
               </S.PrimaryButton>
             </S.Buttons>
