@@ -2,6 +2,7 @@ import React from "react";
 import { AppRoutes } from "./routes.jsx";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthorizedProvider } from "./context.js";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -13,12 +14,14 @@ function App() {
   const handleLogout = () => setUser(null);
 
   return (
-    <div>
-      <AppRoutes
-        user={user}
-        onAuthButtonClick={user ? handleLogout : handleLogin}
-      />
-    </div>
+    <AuthorizedProvider>
+      <div>
+        <AppRoutes
+          user={user}
+          onAuthButtonClick={user ? handleLogout : handleLogin}
+        />
+      </div>
+    </AuthorizedProvider>
   );
 }
 
