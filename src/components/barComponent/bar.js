@@ -5,9 +5,12 @@ import { useSelector, useDispatch } from "react-redux";
 
 export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrackIndex, isPlaying, setIsPlaying }) => {
   console.log();
+  const dispatch = useDispatch()
   // const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef();
   const [isShuffled, setIsShuffled] = useState(false);
+
+  const addPlayingTrack = () => dispatch(setPlayingTrack(playingTrack));
 
   const shuffleTracks = (array) => {
     const newArray = array.slice();
@@ -91,6 +94,8 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrac
     setIsRepeating(!isRepeating);
   };
 
+  
+
   const [volume, setVolume] = useState(0.5);
   useEffect(() => {
     if (isPlaying) {
@@ -136,6 +141,12 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrac
 
   }
 
+  const functionForNextTrack = () => {
+    if (!isRepeating) {
+      handleNextTrack()
+    }
+  }
+
   const handleShuffle = () => {
     tracks = shuffleTracks (tracks);
     setIsShuffled(!isShuffled);
@@ -151,6 +162,7 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrac
         playingTrack={playingTrack}
         setPlayingTrack={setPlayingTrack}
         src={playingTrack.track_file}
+        onEnded={functionForNextTrack}
       ></audio>
       <S.BarContent>
         <S.BarTime>
@@ -224,9 +236,15 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrac
                 className="_btn-icon"
                 onClick={handleShuffle}
               >
+                {!isShuffled ? (
                 <S.BarPlayerBtnShuffleSvg alt="shuffle">
                   <use xlinkHref="img/icon/sprite.svg#icon-shuffle"></use>
                 </S.BarPlayerBtnShuffleSvg>
+                ) : (
+                  <S.BarPlayerBtnShuffleSvg alt="shuffle">
+                  <use xlinkHref="img/icon/sprite.svg#icon-shuffling"></use>
+                </S.BarPlayerBtnShuffleSvg>
+                )}
               </S.BarPlayerBtnShuffle>
             </S.PlayerControls>
             <S.PlayerTrackPlay>
