@@ -72,7 +72,7 @@ export const Main = () => {
   const addCurrentPlaylist = () => dispatch(setCurrentPlaylist(tracks));
   useEffect(() => {
     addCurrentPlaylist()
-  }, [playingTrack]);
+  }, [addCurrentPlaylist, playingTrack]);
 
 
 

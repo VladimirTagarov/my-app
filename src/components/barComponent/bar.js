@@ -99,7 +99,11 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrac
   });
 
   const handlePreviousTrack = () => {
-    if (isShuffled) {
+    if (tracks.indexOf(playingTrack)===0) {
+      return
+    }
+    else if (isShuffled) {
+      tracks = shuffleTracks(tracks)
       const indexPrevTrack = tracks.indexOf(playingTrack)-1;
       setPlayingTrack(tracks[indexPrevTrack])
 
@@ -114,8 +118,12 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrac
 
   const handleNextTrack = () => {
     const indexNextTrack = tracks.indexOf(playingTrack)+1;
-    if (isShuffled) {
-      shuffleTracks(tracks)
+    if (tracks.indexOf(playingTrack)===(tracks.length-1)) {
+      return
+    }
+    
+    else if (isShuffled) {
+      tracks = shuffleTracks(tracks)
       const indexNextTrack = tracks.indexOf(playingTrack)+1;
       setPlayingTrack(tracks[indexNextTrack])
 
