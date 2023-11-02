@@ -1,26 +1,10 @@
 import React from "react";
-import "../../App.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useUserContext } from "../../context";
 import * as S from "./AuthPage.styles";
 import { getLogin, getRegistration, getToken } from "../../api";
-
-// export const Login = () => {
-//   const navigate = useNavigate();
-//   const setUser = () => {
-//     localStorage.setItem("user", "token");
-//     navigate("/", { replace: true });
-//   };
-//   return (
-//     <div>
-//       <h1>Страница логина</h1>
-//       <button onClick={setUser}>Войти</button>
-//       <Link to="/registration">Перейти к регистрации</Link>
-//     </div>
-//   );
-// };
 
 export const Login = ({ isLoginMode = true }) => {
   const [error, setError] = useState(null);
@@ -30,7 +14,8 @@ export const Login = ({ isLoginMode = true }) => {
   const [repeatPassword, setRepeatPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { regUser, setRegUser, isLogin, setIsLogin } = useUserContext();
+  const { regUser, setRegUser, isLogin, setIsLogin, nameUser, setNameUser } =
+    useUserContext();
 
   function setUser(user, token) {
     localStorage.setItem(user, token);
@@ -39,13 +24,15 @@ export const Login = ({ isLoginMode = true }) => {
 
   const handleLogin = () => {
     if (email === "" && password === "" && repeatPassword === "") {
-      setError("Введите все значения");
+      setError("Укажите почту/пароль");
     } else {
       setLoading(true);
       getLogin(email, password);
       getToken(email, password)
         .then((response) => {
           setUser("user", response.access);
+          setNameUser(response.username);
+          console.log(nameUser);
           setIsLogin(true);
           setRegUser(email);
           console.log(regUser);
@@ -61,7 +48,7 @@ export const Login = ({ isLoginMode = true }) => {
 
   const handleRegister = () => {
     if (email === "" && password === "" && repeatPassword === "") {
-      setError("Введите все значения");
+      setError("Укажите почту/пароль");
     } else if (password === repeatPassword) {
       setLoading(true);
       console.log("прохожу регистрацию");
@@ -69,6 +56,8 @@ export const Login = ({ isLoginMode = true }) => {
         getToken(email, password)
           .then((response) => {
             setUser("user", response.access);
+            setNameUser(response.username);
+            console.log(nameUser);
             setIsLogin(true);
             setRegUser(email);
           })

@@ -7,11 +7,14 @@ export const Content = ({
   setPlayingTrack,
   isPlaying,
   setIsPlaying,
+  trackIndex,
+  setTrackIndex
 }) => {
   // const handlePlayTrack = (track) => {
   //   setPlayingTrack(track);
   // };
   console.log(playingTrack);
+  console.log(isPlaying);
 
   return (
     <S.CenterBlockContent>
@@ -26,7 +29,7 @@ export const Content = ({
         </S.PlaylistTitleCol04>
       </S.ContentTitle>
       <S.ContentPlaylist>
-        {tracks.map((track) => {
+        {tracks.map((track, index) => {
           return (
             <S.PlaylistItem
               key={track.id}
@@ -34,14 +37,26 @@ export const Content = ({
                 setPlayingTrack(track);
                 isPlaying = true;
                 setIsPlaying(!isPlaying);
+                setTrackIndex(index);
               }}
             >
               <S.PlaylistTrack>
                 <S.TrackTitle>
                   <S.TrackTitleImage>
+                    {((track === playingTrack) && isPlaying ) ? <S.PlayingDotActive>
                     <S.TrackTitleSvg alt="music">
-                      <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
+                      <use xlinkHref="img/icon/sprite.svg#icon-note"></use> 
                     </S.TrackTitleSvg>
+                    </S.PlayingDotActive> : ((track === playingTrack) && !isPlaying ) ? <S.PlayingDotActivePause>
+                    <S.TrackTitleSvg alt="music">
+                      <use xlinkHref="img/icon/sprite.svg#icon-note"></use> 
+                    </S.TrackTitleSvg>
+                    </S.PlayingDotActivePause> :
+                    <S.PlayingDot>
+                    <S.TrackTitleSvg alt="music">
+                      <use xlinkHref="img/icon/sprite.svg#icon-note"></use> 
+                    </S.TrackTitleSvg>
+                    </S.PlayingDot>}
                   </S.TrackTitleImage>
                   <S.TrackTitleText>
                     <S.TrackTitleLink>

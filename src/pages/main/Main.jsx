@@ -12,6 +12,8 @@ import SidebarSkeleton from "../../components/sidebarSkeletonComponent/sidebarSk
 import Bar from "../../components/barComponent/bar";
 import { createGlobalStyle } from "styled-components";
 import { getTracks } from "../../api";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentPlaylist } from "../../store/reducers/tracksReducer";
 
 const GlobalStyle = createGlobalStyle`
 button,
@@ -49,19 +51,31 @@ a:visited {
 @font-face {
   font-family: "StratosSkyeng";
   src: local("StratosSkyeng"), local("StratosSkyeng"),
-    url("./fonts/StratosSkyeng.woff2") format("woff2"),
-    url("./fonts/StratosSkyeng.woff") format("woff");
+    url("../../../public/fonts/StratosSkyeng.woff2") format("woff2"),
+    url("../../../public/fonts/StratosSkyeng.woff") format("woff");
   font-weight: 400;
   font-style: normal;
 }
 `;
 
 export const Main = () => {
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const [tracks, setTracks] = useState();
-  const [playingTrack, setPlayingTrack] = useState(null);
+  const playingTrackFromStore = useSelector((state) => state.track)
+  const [playingTrack, setPlayingTrack] = useState(playingTrackFromStore);
   const [addPlayerError, setAddPlayerError] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [trackIndex, setTrackIndex] = useState(null);
+  const addPlayingTrack = () => dispatch(setPlayingTrack(playingTrack));
+  // addPlayingTrack();
+  const addCurrentPlaylist = () => dispatch(setCurrentPlaylist(tracks));
+  useEffect(() => {
+    addCurrentPlaylist()
+  }, [playingTrack]);
+
+
+
 
   useEffect(() => {
     getTracks()
@@ -97,6 +111,8 @@ export const Main = () => {
                   tracks={tracks}
                   playingTrack={playingTrack}
                   setPlayingTrack={setPlayingTrack}
+                  trackIndex={trackIndex}
+                  setTrackIndex={setTrackIndex}
                 />
               )}
               <p>{addPlayerError}</p>
@@ -109,12 +125,18 @@ export const Main = () => {
             tracks={tracks}
             playingTrack={playingTrack}
             setPlayingTrack={setPlayingTrack}
+            trackIndex={trackIndex}
+            setTrackIndex={setTrackIndex}
           >
             {playingTrack ? (
               <Bar
+              isPlaying={isPlaying}
+                  setIsPlaying={setIsPlaying}
                 tracks={tracks}
                 playingTrack={playingTrack}
                 setPlayingTrack={setPlayingTrack}
+                trackIndex={trackIndex}
+                setTrackIndex={setTrackIndex}
               />
             ) : null}
           </S.Bar>
@@ -124,3 +146,7 @@ export const Main = () => {
     </div>
   );
 };
+
+
+
+

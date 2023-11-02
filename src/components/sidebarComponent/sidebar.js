@@ -7,7 +7,8 @@ import { useUserContext } from "../../context";
 export const category = [1, 2, 3];
 
 function Sidebar() {
-  const { regUser, setRegUser, isLogin, setIsLogin } = useUserContext();
+  const { regUser, setRegUser, isLogin, setIsLogin, nameUser, setNameUser } =
+    useUserContext();
   const navigate = useNavigate();
   const handleLogOut = () => {
     localStorage.clear();

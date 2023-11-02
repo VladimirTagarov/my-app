@@ -1,5 +1,5 @@
 import React from "react";
-import "../../App.css";
+
 import { category } from "../../components/sidebarComponent/sidebar";
 import { useParams } from "react-router-dom";
 

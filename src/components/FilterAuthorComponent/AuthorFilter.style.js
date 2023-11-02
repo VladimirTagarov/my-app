@@ -12,6 +12,8 @@ export const PopupAuthor = styled.ul`
   height: 305px;
   gap: 28px;
   overflow-y: scroll;
+  padding-left: 12px;
+  padding-top: 12px;
 `;
 
 export const PopupAuthorText = styled.li`

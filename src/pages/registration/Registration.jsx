@@ -1,18 +1,3 @@
-// import React from "react";
-// import "../../App.css";
-
-// export const Registration = () => {
-//   return (
-//     <div>
-//       <h1>Страница регистрации</h1>
-//       <input type="text" placeholder="Почта" name="search" />
-//       <input type="text" placeholder="Пароль" name="search" />
-//       <input type="text" placeholder="Повторите пароль" name="search" />
-//       <button>Зарегистрироваться</button>
-//     </div>
-//   );
-// };
-
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as S from "./AuthPage.styles";
@@ -28,7 +13,8 @@ export const Registration = ({ isLoginMode = false }) => {
   const [repeatPassword, setRepeatPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { regUser, setRegUser, isLogin, setIsLogin } = useUserContext();
+  const { regUser, setRegUser, isLogin, setIsLogin, nameUser, setNameUser } =
+    useUserContext();
 
   function setUser(user, token) {
     localStorage.setItem(user, token);
@@ -45,6 +31,7 @@ export const Registration = ({ isLoginMode = false }) => {
         getToken(email, password)
           .then((response) => {
             setUser("user", response.access);
+            setNameUser(response.username);
             setIsLogin(true);
             setRegUser(email);
           })
@@ -68,6 +55,8 @@ export const Registration = ({ isLoginMode = false }) => {
       getToken(email, password)
         .then((response) => {
           setUser("user", response.access);
+          setNameUser(response.username);
+          console.log(regUser);
           setIsLogin(true);
           setRegUser(email);
         })

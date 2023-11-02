@@ -12,6 +12,8 @@ export const PopupGenre = styled.ul`
   height: 305px;
   gap: 28px;
   overflow-y: scroll;
+  padding-left: 12px;
+  padding-top: 12px;
 `;
 
 export const PopupGenreText = styled.ul`

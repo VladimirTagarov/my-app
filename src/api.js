@@ -11,7 +11,7 @@ export async function getTracks() {
   return data;
 }
 
-export async function getRegistration(email, password) {
+export async function getRegistration(email, password, username) {
   const response = await fetch(
     "https://skypro-music-api.skyeng.tech/user/signup/",
     {

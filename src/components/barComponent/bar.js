@@ -1,33 +1,45 @@
 import React, { useEffect } from "react";
 import * as S from "./Bar.style";
 import { useRef, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
-export const Bar = ({ tracks, playingTrack, setPlayingTrack }) => {
-  console.log(playingTrack);
+export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrackIndex, isPlaying, setIsPlaying }) => {
   console.log();
-  const [isPlaying, setIsPlaying] = useState(false);
+  // const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef();
+  const [isShuffled, setIsShuffled] = useState(false);
+
+  const shuffleTracks = (array) => {
+    const newArray = array.slice();
+    for (let i = newArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = newArray[i];
+      newArray[i] = newArray[j];
+      newArray[j] = temp;
+    }
+    return newArray;
+  };
 
   const handleStart = () => {
     audioRef.current.play();
     setIsPlaying(true);
     setPlayingTrack(playingTrack);
+    console.log(trackIndex);
   };
 
   const handleStop = () => {
     audioRef.current.pause();
     setIsPlaying(false);
+    console.log(trackIndex);
   };
 
   useEffect(() => {
     if (isPlaying) {
       audioRef.current.play();
       setIsPlaying(true);
-      setPlayingTrack(playingTrack);
     } else {
       audioRef.current.pause();
       setIsPlaying(false);
-      setPlayingTrack(playingTrack);
     }
   }, [isPlaying, audioRef, playingTrack, setPlayingTrack]);
 
@@ -86,8 +98,45 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack }) => {
     }
   });
 
+  const handlePreviousTrack = () => {
+    if (isShuffled) {
+      const indexPrevTrack = tracks.indexOf(playingTrack)-1;
+      setPlayingTrack(tracks[indexPrevTrack])
+
+    }
+    else {
+      const indexPrevTrack = tracks.indexOf(playingTrack)-1;
+      setPlayingTrack(tracks[indexPrevTrack])
+    }
+
+
+  }
+
+  const handleNextTrack = () => {
+    const indexNextTrack = tracks.indexOf(playingTrack)+1;
+    if (isShuffled) {
+      shuffleTracks(tracks)
+      const indexNextTrack = tracks.indexOf(playingTrack)+1;
+      setPlayingTrack(tracks[indexNextTrack])
+
+    }
+    else {
+      const indexNextTrack = tracks.indexOf(playingTrack)+1;
+      setPlayingTrack(tracks[indexNextTrack])
+    }
+
+
+  }
+
+  const handleShuffle = () => {
+    tracks = shuffleTracks (tracks);
+    setIsShuffled(!isShuffled);
+    console.log(tracks);
+    console.log(trackIndex)
+  }
+
   return (
-    <>
+    <S.Bars>
       <audio
         ref={audioRef}
         tracks={tracks}
@@ -118,9 +167,7 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack }) => {
           <S.BarPlayer>
             <S.PlayerControls>
               <S.BarPlayerBtnPrev
-                onClick={() => {
-                  alert("Еще не реализовано");
-                }}
+                onClick={handlePreviousTrack}
               >
                 <S.BarPlayerBtnPrevSvg alt="prev">
                   <use xlinkHref="img/icon/sprite.svg#icon-prev"></use>
@@ -138,9 +185,7 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack }) => {
                 )}
               </S.BarPlayerBtnPlay>
               <S.BarPlayerBtnNext
-                onClick={() => {
-                  alert("Еще не реализовано");
-                }}
+                onClick={handleNextTrack}
               >
                 <S.BarPlayerBtnNextSvg alt="next">
                   <use xlinkHref="img/icon/sprite.svg#icon-next"></use>
@@ -169,9 +214,7 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack }) => {
               </S.BarPlayerBtnRepeat>
               <S.BarPlayerBtnShuffle
                 className="_btn-icon"
-                onClick={() => {
-                  alert("Еще не реализовано");
-                }}
+                onClick={handleShuffle}
               >
                 <S.BarPlayerBtnShuffleSvg alt="shuffle">
                   <use xlinkHref="img/icon/sprite.svg#icon-shuffle"></use>
@@ -239,7 +282,7 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack }) => {
           </S.BarVolumeBlock>
         </S.BarPlayerBlock>
       </S.BarContent>
-    </>
+      </S.Bars>
   );
 };
 

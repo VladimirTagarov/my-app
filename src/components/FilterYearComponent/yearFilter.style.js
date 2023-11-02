@@ -11,6 +11,8 @@ export const PopupYear = styled.ul`
   width: 221px;
   height: 196px;
   gap: 28px;
+  padding-left: 12px;
+  padding-top: 12px;
 `;
 
 export const PopupYearText = styled.li`

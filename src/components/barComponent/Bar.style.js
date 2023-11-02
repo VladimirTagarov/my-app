@@ -1,5 +1,19 @@
 import { styled } from "styled-components";
 
+export const Bars = styled.div`
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+`;
+
 export const BarContent = styled.div`
   display: -webkit-box;
   display: -ms-flexbox;
@@ -8,6 +22,7 @@ export const BarContent = styled.div`
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
+  // position: fixed;
 `;
 
 export const ProgressBar = styled.input`
@@ -122,6 +137,7 @@ export const BarPlayerBtnPrev = styled.div`
   -ms-flex-align: center;
   align-items: center;
   margin-right: 23px;
+  cursor: pointer;
 `;
 
 export const BarPlayerBtnPrevSvg = styled.svg`
@@ -157,6 +173,7 @@ export const BarPlayerBtnNext = styled.div`
   margin-right: 23px;
   margin-right: 28px;
   fill: #a53939;
+  cursor: pointer;
 `;
 
 export const BarPlayerBtnNextSvg = styled.svg`

@@ -3,6 +3,8 @@ import { AppRoutes } from "./routes.jsx";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthorizedProvider } from "./context.js";
+import { Provider } from "react-redux";
+import store from "./store/index.js";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -14,14 +16,16 @@ function App() {
   const handleLogout = () => setUser(null);
 
   return (
-    <AuthorizedProvider>
-      <div>
-        <AppRoutes
-          user={user}
-          onAuthButtonClick={user ? handleLogout : handleLogin}
-        />
-      </div>
-    </AuthorizedProvider>
+    <Provider store={store}>
+      <AuthorizedProvider>
+        <div>
+          <AppRoutes
+            user={user}
+            onAuthButtonClick={user ? handleLogout : handleLogin}
+          />
+        </div>
+      </AuthorizedProvider>
+    </Provider>
   );
 }
 
