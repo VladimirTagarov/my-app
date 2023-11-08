@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useUserContext } from "../../context";
 import * as S from "./AuthPage.styles";
-import { getLogin, getRegistration, getToken } from "../../api";
+import { getLogin, getRegistration, getToken, refreshToken } from "../../api";
 
 export const Login = ({ isLoginMode = true }) => {
   const [error, setError] = useState(null);
@@ -31,7 +31,9 @@ export const Login = ({ isLoginMode = true }) => {
       getToken(email, password)
         .then((response) => {
           setUser("user", response.access);
+          localStorage.setItem('refreshed', response.refresh)
           setNameUser(response.username);
+          console.log(nameUser.token);
           console.log(nameUser);
           setIsLogin(true);
           setRegUser(email);
@@ -40,6 +42,7 @@ export const Login = ({ isLoginMode = true }) => {
         .then(() => {
           setLoading(false);
         });
+        refreshToken()
 
       // alert(`Выполняется регистрация: ${email} ${password}`);
       // setError("Неизвестная ошибка регистрации");
@@ -56,7 +59,9 @@ export const Login = ({ isLoginMode = true }) => {
         getToken(email, password)
           .then((response) => {
             setUser("user", response.access);
+            localStorage.setItem('refreshed', response.refresh)
             setNameUser(response.username);
+            console.log(nameUser.token);
             console.log(nameUser);
             setIsLogin(true);
             setRegUser(email);

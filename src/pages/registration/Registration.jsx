@@ -31,7 +31,9 @@ export const Registration = ({ isLoginMode = false }) => {
         getToken(email, password)
           .then((response) => {
             setUser("user", response.access);
+            localStorage.setItem('refreshed', response.refresh)
             setNameUser(response.username);
+            console.log(nameUser.token);
             setIsLogin(true);
             setRegUser(email);
           })
@@ -55,8 +57,10 @@ export const Registration = ({ isLoginMode = false }) => {
       getToken(email, password)
         .then((response) => {
           setUser("user", response.access);
+          localStorage.setItem('refreshed', response.refresh)
           setNameUser(response.username);
           console.log(regUser);
+          console.log(nameUser.token);
           setIsLogin(true);
           setRegUser(email);
         })

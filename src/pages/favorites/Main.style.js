@@ -33,16 +33,16 @@ export const Main = styled.main`
   justify-content: space-between;
 `;
 
-export const ContentFavorites = styled.div`
-  display: none;
-`;
-
 export const MainCenterblock = styled.div`
   width: auto;
   -webkit-box-flex: 3;
   -ms-flex-positive: 3;
   flex-grow: 3;
   padding: 20px 40px 20px 111px;
+`;
+
+export const ContentFavorites = styled.div`
+  display: none;
 `;
 
 export const Centerblock = styled.h2`

@@ -11,7 +11,7 @@ import Sidebar from "../../components/sidebarComponent/sidebar";
 import SidebarSkeleton from "../../components/sidebarSkeletonComponent/sidebarSkeleton";
 import Bar from "../../components/barComponent/bar";
 import { createGlobalStyle } from "styled-components";
-import { getTracks } from "../../api";
+import { getTracks, getFavoritesTracks } from "../../api";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentPlaylist } from "../../store/reducers/tracksReducer";
 
@@ -63,6 +63,7 @@ export const Main = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const [tracks, setTracks] = useState();
+  const [favoritesTracks, setFavoritesTracks] = useState([]);
   const playingTrackFromStore = useSelector((state) => state.track)
   const [playingTrack, setPlayingTrack] = useState(playingTrackFromStore);
   const [addPlayerError, setAddPlayerError] = useState(null);
@@ -90,7 +91,35 @@ export const Main = () => {
         setLoading(false);
       });
     console.log(tracks);
+
+    getFavoritesTracks()
+      .then((favoritesTrack) => {
+        setFavoritesTracks(favoritesTrack);
+        console.log(favoritesTrack);
+      })
+    //   .catch((error) => {
+    //     setAddPlayerError(error.message);
+    //   })
+    //   .finally(() => {
+    //     setLoading(false);
+    //   });
+    
   }, []);
+
+
+    // useEffect(() => {
+    //   getFavoritesTracks()
+    //   .then((favoritesTrack) => {
+    //     setFavoritesTracks(favoritesTrack);
+    //   })
+    //   .catch((error) => {
+    //     setAddPlayerError(error.message);
+    //   })
+    //   .finally(() => {
+    //     setLoading(false);
+    //   });
+
+    // }, [])
 
   return (
     <div>
@@ -117,6 +146,17 @@ export const Main = () => {
                 />
               )}
               <p>{addPlayerError}</p>
+              <S.ContentFavorites
+                  isPlaying={isPlaying}
+                  setIsPlaying={setIsPlaying}
+                  tracks={tracks}
+                  favoritesTracks={favoritesTracks}
+                  setFavoritesTracks={setFavoritesTracks}
+                  playingTrack={playingTrack}
+                  setPlayingTrack={setPlayingTrack}
+                  trackIndex={trackIndex}
+                  setTrackIndex={setTrackIndex}
+                />
             </S.MainCenterblock>
             {loading ? <SidebarSkeleton /> : <Sidebar />}
           </S.Main>
@@ -128,6 +168,8 @@ export const Main = () => {
             setPlayingTrack={setPlayingTrack}
             trackIndex={trackIndex}
             setTrackIndex={setTrackIndex}
+            favoritesTracks={favoritesTracks}
+                  setFavoritesTracks={setFavoritesTracks}
           >
             {playingTrack ? (
               <Bar
@@ -138,6 +180,8 @@ export const Main = () => {
                 setPlayingTrack={setPlayingTrack}
                 trackIndex={trackIndex}
                 setTrackIndex={setTrackIndex}
+                favoritesTracks={favoritesTracks}
+                  setFavoritesTracks={setFavoritesTracks}
               />
             ) : null}
           </S.Bar>

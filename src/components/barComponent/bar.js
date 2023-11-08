@@ -3,12 +3,13 @@ import * as S from "./Bar.style";
 import { useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrackIndex, isPlaying, setIsPlaying }) => {
+export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrackIndex, isPlaying, setIsPlaying, favoritesTracks, setFavoritesTracks}) => {
   console.log();
   const dispatch = useDispatch()
   // const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef();
   const [isShuffled, setIsShuffled] = useState(false);
+  const [isLiked, setIsLiked] = useState(false)
 
   const addPlayingTrack = () => dispatch(setPlayingTrack(playingTrack));
 
@@ -73,9 +74,9 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrac
 
   useEffect(() => {
     audioRef.current.addEventListener("timeupdate", handleTimeUpdate);
-    return () => {
-      audioRef.current.removeEventListener("timeupdate", handleTimeUpdate);
-    };
+    // return () => {
+    //   audioRef.current.removeEventListener("timeupdate", handleTimeUpdate);
+    // };
   }, []);
 
   const handleProgress = (value) => {
@@ -152,6 +153,19 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrac
     setIsShuffled(!isShuffled);
     console.log(tracks);
     console.log(trackIndex)
+  }
+
+  const handleLike = (trackIndex) => {
+    console.log(trackIndex);
+    setIsLiked(true);
+    // if (favoritesTracks.indexOf(track) === -1) {
+      setFavoritesTracks((favoritesTracks) => ([...favoritesTracks, trackIndex]));
+      console.log(favoritesTracks);
+    // }
+    // else {
+    //   console.log('Трек уже добавлен в избранное');
+    // }
+
   }
 
   return (
@@ -272,7 +286,7 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrac
                 </S.TrackPlayAlbum>
               </S.TrackPlayContain>
               <S.trackPlayLikeDis>
-                <S.TrackPlayLike className="_btn-icon">
+                <S.TrackPlayLike className="_btn-icon" onClick={handleLike}>
                   <S.TrackPlayLikeSvg alt="like">
                     <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
                   </S.TrackPlayLikeSvg>
