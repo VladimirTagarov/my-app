@@ -30,8 +30,12 @@ export const Login = ({ isLoginMode = true }) => {
       getLogin(email, password);
       getToken(email, password)
         .then((response) => {
+          console.log(response);
           setUser("user", response.access);
-          localStorage.setItem('refreshed', response.refresh)
+          localStorage.setItem('access', response.access);
+          console.log('access');
+          console.log('user');
+          localStorage.setItem('refreshed', response.refresh);
           setNameUser(response.username);
           console.log(nameUser.token);
           console.log(nameUser);
@@ -58,8 +62,12 @@ export const Login = ({ isLoginMode = true }) => {
       getRegistration(email, password).then(() => {
         getToken(email, password)
           .then((response) => {
+            console.log(response);
             setUser("user", response.access);
-            localStorage.setItem('refreshed', response.refresh)
+            localStorage.setItem('access', response.access);
+            console.log('access');
+            console.log('user');
+            localStorage.setItem('refreshed', response.refresh);
             setNameUser(response.username);
             console.log(nameUser.token);
             console.log(nameUser);
