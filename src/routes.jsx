@@ -7,15 +7,102 @@ import { Registration } from "./pages/registration/Registration.jsx";
 import { Favorites } from "./pages/favorites/Favorites";
 import { Category } from "./pages/category/Category";
 import { ProtectedRoute } from "./components/protected-route/ProtectedRoute.jsx";
+import Bar from "./components/barComponent/bar.js";
+import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { getTracks, getFavoritesTracks } from "./api.js";
+import { setCurrentPlaylist } from "./store/reducers/tracksReducer";
 
 export const AppRoutes = ({ user }) => {
-  return (
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
+  const [tracks, setTracks] = useState();
+  const [favoritesTracks, setFavoritesTracks] = useState([]);
+  const playingTrackFromStore = useSelector((state) => state.track)
+  const [playingTrack, setPlayingTrack] = useState(playingTrackFromStore);
+  const [addPlayerError, setAddPlayerError] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [trackIndex, setTrackIndex] = useState(null);
+  const [isLiked, setIsLiked] = useState(false)
+
+  const addPlayingTrack = () => dispatch(setPlayingTrack(playingTrack));
+  // addPlayingTrack();
+  const addCurrentPlaylist = () => dispatch(setCurrentPlaylist(tracks));
+  useEffect(() => {
+    addCurrentPlaylist()
+  }, [addCurrentPlaylist, playingTrack]);
+
+
+  useEffect(() => {
+    getTracks()
+      .then((track) => {
+        setTracks(track);
+      })
+      .catch((error) => {
+        setAddPlayerError(error.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+    console.log(tracks);
+  }, []);
+
+
+  // useEffect(() => {
+  //   getTracks()
+  //     .then((track) => {
+  //       setTracks(track);
+  //     })
+  //     .catch((error) => {
+  //       setAddPlayerError(error.message);
+  //     })
+  //     .finally(() => {
+  //       setLoading(false);
+  //     });
+  //   console.log(tracks);
+    
+  //   getFavoritesTracks()
+  //     .then((favoritesTrack) => {
+  //       setFavoritesTracks(favoritesTrack);
+  //       console.log(favoritesTrack);
+  //     })
+  //     .catch((error) => {
+  //       // console.log("ошибка доступа");
+  //       if (error.status === 401){
+  //         console.log("Авторизуйтесь");
+  //         navigate("/login", { replace: false });
+  //       }
+  //       setAddPlayerError(error.message);
+  //     })
+
+  // }, []);
+
+
+  return (<>
     <Routes>
       <Route
         path="/"
         element={
           <ProtectedRoute isAllowed={Boolean(user)}>
-            <Main />
+            <Main 
+            isPlaying={isPlaying}
+            setIsPlaying={setIsPlaying}
+          tracks={tracks}
+          setTracks={setTracks}
+          playingTrack={playingTrack}
+          setPlayingTrack={setPlayingTrack}
+          trackIndex={trackIndex}
+          setTrackIndex={setTrackIndex}
+          favoritesTracks={favoritesTracks}
+            setFavoritesTracks={setFavoritesTracks}
+            isLiked={isLiked}
+            setIsLiked={setIsLiked}
+            loading={loading}
+            addPlayerError={addPlayerError}
+            />
           </ProtectedRoute>
         }
       ></Route>
@@ -25,7 +112,19 @@ export const AppRoutes = ({ user }) => {
         path="/favorites"
         element={
           <ProtectedRoute isAllowed={Boolean(user)}>
-            <Favorites />
+            <Favorites 
+            isPlaying={isPlaying}
+            setIsPlaying={setIsPlaying}
+          tracks={tracks}
+          setTracks={setTracks}
+          playingTrack={playingTrack}
+          setPlayingTrack={setPlayingTrack}
+          trackIndex={trackIndex}
+          setTrackIndex={setTrackIndex}
+          favoritesTracks={favoritesTracks}
+            setFavoritesTracks={setFavoritesTracks}
+            isLiked={isLiked}
+            setIsLiked={setIsLiked}/>
           </ProtectedRoute>
         }
       ></Route>
@@ -39,5 +138,21 @@ export const AppRoutes = ({ user }) => {
       ></Route>
       <Route path="*" element={<NotFound />}></Route>
     </Routes>
+    {playingTrack ? (
+              <Bar
+              isPlaying={isPlaying}
+                  setIsPlaying={setIsPlaying}
+                tracks={tracks}
+                playingTrack={playingTrack}
+                setPlayingTrack={setPlayingTrack}
+                trackIndex={trackIndex}
+                setTrackIndex={setTrackIndex}
+                favoritesTracks={favoritesTracks}
+                  setFavoritesTracks={setFavoritesTracks}
+                  isLiked={isLiked}
+                  setIsLiked={setIsLiked}
+              />
+            ) : null}
+    </>
   );
 };

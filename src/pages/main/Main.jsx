@@ -14,6 +14,9 @@ import { createGlobalStyle } from "styled-components";
 import { getTracks, getFavoritesTracks } from "../../api";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentPlaylist } from "../../store/reducers/tracksReducer";
+import { useNavigate } from "react-router-dom";
+
+
 
 const GlobalStyle = createGlobalStyle`
 button,
@@ -59,44 +62,57 @@ a:visited {
 `;
 
 
-export const Main = () => {
-  const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true);
-  const [tracks, setTracks] = useState();
-  const [favoritesTracks, setFavoritesTracks] = useState([]);
-  const playingTrackFromStore = useSelector((state) => state.track)
-  const [playingTrack, setPlayingTrack] = useState(playingTrackFromStore);
-  const [addPlayerError, setAddPlayerError] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [trackIndex, setTrackIndex] = useState(null);
-  const addPlayingTrack = () => dispatch(setPlayingTrack(playingTrack));
-  // addPlayingTrack();
-  const addCurrentPlaylist = () => dispatch(setCurrentPlaylist(tracks));
-  useEffect(() => {
-    addCurrentPlaylist()
-  }, [addCurrentPlaylist, playingTrack]);
+export const Main = ({ tracks, setTracks, playingTrack, setPlayingTrack, trackIndex, setTrackIndex, isPlaying, setIsPlaying, favoritesTracks, setFavoritesTracks, setIsLiked, isLiked, loading, addPlayerError}) => {
+  // const navigate = useNavigate();
+  // const dispatch = useDispatch();
+  // const [loading, setLoading] = useState(true);
+  // const [tracks, setTracks] = useState();
+  // const [favoritesTracks, setFavoritesTracks] = useState([]);
+  // const playingTrackFromStore = useSelector((state) => state.track)
+  // const [playingTrack, setPlayingTrack] = useState(playingTrackFromStore);
+  // const [addPlayerError, setAddPlayerError] = useState(null);
+  // const [isPlaying, setIsPlaying] = useState(false);
+  // const [trackIndex, setTrackIndex] = useState(null);
+  // const [isLiked, setIsLiked] = useState(false); 
 
 
+  
+
+  // const addPlayingTrack = () => dispatch(setPlayingTrack(playingTrack));
+  // // addPlayingTrack();
+  // const addCurrentPlaylist = () => dispatch(setCurrentPlaylist(tracks));
+  // useEffect(() => {
+  //   addCurrentPlaylist()
+  // }, [addCurrentPlaylist, playingTrack]);
 
 
-  useEffect(() => {
-    getTracks()
-      .then((track) => {
-        setTracks(track);
-      })
-      .catch((error) => {
-        setAddPlayerError(error.message);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-    console.log(tracks);
+  // useEffect(() => {
+  //   getTracks()
+  //     .then((track) => {
+  //       setTracks(track);
+  //     })
+  //     .catch((error) => {
+  //       setAddPlayerError(error.message);
+  //     })
+  //     .finally(() => {
+  //       setLoading(false);
+  //     });
+  //   console.log(tracks);
+  // }, []);
 
-    getFavoritesTracks()
-      .then((favoritesTrack) => {
-        setFavoritesTracks(favoritesTrack);
-        console.log(favoritesTrack);
-      })
+    // getFavoritesTracks()
+    //   .then((favoritesTrack) => {
+    //     setFavoritesTracks(favoritesTrack);
+    //     console.log(favoritesTrack);
+    //   })
+    //   .catch((error) => {
+    //     if (error.status === 401){
+    //       console.log("Авторизуйтесь");
+    //       navigate("/login", { replace: false });
+    //     }
+    //     setAddPlayerError(error.message);
+    //   })
+
     //   .catch((error) => {
     //     setAddPlayerError(error.message);
     //   })
@@ -104,7 +120,7 @@ export const Main = () => {
     //     setLoading(false);
     //   });
     
-  }, []);
+
 
 
     // useEffect(() => {
@@ -143,6 +159,8 @@ export const Main = () => {
                   setPlayingTrack={setPlayingTrack}
                   trackIndex={trackIndex}
                   setTrackIndex={setTrackIndex}
+                  isLiked={isLiked}
+                  setIsLiked={setIsLiked}
                 />
               )}
               <p>{addPlayerError}</p>
@@ -156,6 +174,8 @@ export const Main = () => {
                   setPlayingTrack={setPlayingTrack}
                   trackIndex={trackIndex}
                   setTrackIndex={setTrackIndex}
+                  isLiked={isLiked}
+                  setIsLiked={setIsLiked}
                 />
             </S.MainCenterblock>
             {loading ? <SidebarSkeleton /> : <Sidebar />}
@@ -170,6 +190,8 @@ export const Main = () => {
             setTrackIndex={setTrackIndex}
             favoritesTracks={favoritesTracks}
                   setFavoritesTracks={setFavoritesTracks}
+                  isLiked={isLiked}
+                  setIsLiked={setIsLiked}
           >
             {playingTrack ? (
               <Bar
@@ -182,6 +204,8 @@ export const Main = () => {
                 setTrackIndex={setTrackIndex}
                 favoritesTracks={favoritesTracks}
                   setFavoritesTracks={setFavoritesTracks}
+                  isLiked={isLiked}
+                  setIsLiked={setIsLiked}
               />
             ) : null}
           </S.Bar>

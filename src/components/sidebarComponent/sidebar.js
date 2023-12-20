@@ -16,11 +16,12 @@ function Sidebar() {
     setRegUser(null);
     navigate("/login", { replace: true });
   };
+  const nameOfUser = localStorage.getItem('user');
 
   return (
     <S.MainSidebar>
       <S.SidebarPersonal>
-        <S.SidebarPersonalName>{regUser}</S.SidebarPersonalName>
+        <S.SidebarPersonalName>{nameOfUser}</S.SidebarPersonalName>
         <S.SidebarIcon>
           <svg
             onClick={handleLogOut}

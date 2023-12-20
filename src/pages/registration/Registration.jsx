@@ -37,7 +37,6 @@ export const Registration = ({ isLoginMode = false }) => {
             console.log('user');
             localStorage.setItem('refreshed', response.refresh);
             setNameUser(response.username);
-            console.log(nameUser.token);
             setIsLogin(true);
             setRegUser(email);
           })
@@ -68,7 +67,6 @@ export const Registration = ({ isLoginMode = false }) => {
           localStorage.setItem('refreshed', response.refresh);
           setNameUser(response.username);
           console.log(regUser);
-          console.log(nameUser.token);
           setIsLogin(true);
           setRegUser(email);
         })

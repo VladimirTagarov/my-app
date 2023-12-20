@@ -18,7 +18,7 @@ export const Login = ({ isLoginMode = true }) => {
     useUserContext();
 
   function setUser(user, token) {
-    localStorage.setItem(user, token);
+    localStorage.setItem(user, email);
     navigate("/", { replace: true });
   }
 
@@ -37,7 +37,6 @@ export const Login = ({ isLoginMode = true }) => {
           console.log('user');
           localStorage.setItem('refreshed', response.refresh);
           setNameUser(response.username);
-          console.log(nameUser.token);
           console.log(nameUser);
           setIsLogin(true);
           setRegUser(email);
@@ -46,7 +45,7 @@ export const Login = ({ isLoginMode = true }) => {
         .then(() => {
           setLoading(false);
         });
-        refreshToken()
+        // refreshToken()
 
       // alert(`Выполняется регистрация: ${email} ${password}`);
       // setError("Неизвестная ошибка регистрации");
@@ -69,7 +68,6 @@ export const Login = ({ isLoginMode = true }) => {
             console.log('user');
             localStorage.setItem('refreshed', response.refresh);
             setNameUser(response.username);
-            console.log(nameUser.token);
             console.log(nameUser);
             setIsLogin(true);
             setRegUser(email);

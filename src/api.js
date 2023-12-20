@@ -1,3 +1,8 @@
+// import { useNavigate } from "react-router-dom";
+
+
+// const navigate = useNavigate();
+
 export async function getTracks() {
   const response = await fetch(
     "https://skypro-music-api.skyeng.tech/catalog/track/all/"
@@ -12,7 +17,7 @@ export async function getTracks() {
 }
 
 export async function getFavoritesTracks() {
-
+  // const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5NDQ1MjkyLCJpYXQiOjE2OTk0NDQ5OTIsImp0aSI6ImZjZWQyNzNlN2UzYzQ2OTM5MjdiNWY1NTdmNWQ5MWQzIiwidXNlcl9pZCI6MjU0M30.bdGvqxXeXdPWMlZ388B-S4ALKPOtkWVL_3YjY8DfcW4";
   const accessToken = localStorage.getItem('access');
   const response = await fetch("https://skypro-music-api.skyeng.tech/catalog/track/favorite/all/", {
     method: "GET",
@@ -24,7 +29,10 @@ export async function getFavoritesTracks() {
 })
 
   if (!response.ok) {
-    throw new Error("Ошибка сервера");
+    localStorage.removeItem('user');
+    window.location.reload(true);
+    // throw new Error("Ошибка сервера");
+    
   }
 
   const data = await response.json();
@@ -149,7 +157,7 @@ export async function getToken(email, password) {
   // .then((response) => response.json())
   // .then((json) => console.log(json));
 
-  const data = await response.json;
+  const data = await response.json();
 
   if (!response.ok) {
     throw new Error("Ошибка получения токена");
@@ -172,7 +180,7 @@ export async function refreshToken(refreshKey) {
       },
     })
 
-    const data = await response.json;
+    const data = await response.json();
 
     if (!response.ok) {
       throw new Error("Ошибка обновления токена");

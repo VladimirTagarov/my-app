@@ -59,16 +59,16 @@ a:visited {
 }
 `;
 
-export const Favorites = () => {
+export const Favorites = ({ tracks, setTracks, playingTrack, setPlayingTrack, trackIndex, setTrackIndex, isPlaying, setIsPlaying, favoritesTracks, setFavoritesTracks, setIsLiked, isLiked}) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
-  const [tracks, setTracks] = useState();
-  const [favoritesTracks, setFavoritesTracks] = useState();
-  const playingTrackFromStore = useSelector((state) => state.track)
-  const [playingTrack, setPlayingTrack] = useState(playingTrackFromStore);
+  // const [tracks, setTracks] = useState();
+  // const [favoritesTracks, setFavoritesTracks] = useState();
+  // const playingTrackFromStore = useSelector((state) => state.track)
+  // const [playingTrack, setPlayingTrack] = useState(playingTrackFromStore);
   const [addPlayerError, setAddPlayerError] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [trackIndex, setTrackIndex] = useState(null);
+  // const [isPlaying, setIsPlaying] = useState(false);
+  // const [trackIndex, setTrackIndex] = useState(null);
   const addPlayingTrack = () => dispatch(setPlayingTrack(playingTrack));
   // addPlayingTrack();
   const addCurrentPlaylist = () => dispatch(setCurrentPlaylist(tracks));
@@ -91,19 +91,22 @@ export const Favorites = () => {
         setLoading(false);
       });
     console.log(tracks);
-
     getFavoritesTracks()
-      .then((favoritesTrack) => {
-        setFavoritesTracks(favoritesTrack);
-        console.log(favoritesTrack);
-      })
+    .then((favoritesTrack) => {
+      setFavoritesTracks(favoritesTrack);
+      console.log(favoritesTrack);
+    })
+
+  }, []);
+
+   
       // .catch((error) => {
       //   setAddPlayerError(error.message);
       // })
       // .finally(() => {
       //   setLoading(false);
       // });
-  }, []);
+
 
   return (
     <div>
@@ -117,7 +120,7 @@ export const Favorites = () => {
               <S.Centerblock>Мои треки</S.Centerblock>
               <Filter />
              
-              <Content
+              {/* <Content
                   isPlaying={isPlaying}
                   setIsPlaying={setIsPlaying}
                   tracks={tracks}
@@ -125,8 +128,8 @@ export const Favorites = () => {
                   setPlayingTrack={setPlayingTrack}
                   trackIndex={trackIndex}
                   setTrackIndex={setTrackIndex}
-                />
-                {/* <ContentFavorites
+                /> */}
+                <ContentFavorites
                   isPlaying={isPlaying}
                   setIsPlaying={setIsPlaying}
                   tracks={tracks}
@@ -136,8 +139,8 @@ export const Favorites = () => {
                   setPlayingTrack={setPlayingTrack}
                   trackIndex={trackIndex}
                   setTrackIndex={setTrackIndex}
-                /> */}
-              <p>{addPlayerError}</p>
+                />
+              {/* <p>{addPlayerError}</p> */}
             </S.MainCenterblock>
             {loading ? <SidebarSkeleton /> : <Sidebar />}
           </S.Main>

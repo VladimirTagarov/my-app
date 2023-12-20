@@ -3,13 +3,13 @@ import * as S from "./Bar.style";
 import { useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrackIndex, isPlaying, setIsPlaying, favoritesTracks, setFavoritesTracks}) => {
+export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrackIndex, isPlaying, setIsPlaying, favoritesTracks, setFavoritesTracks, setIsLiked, isLiked}) => {
   console.log();
   const dispatch = useDispatch()
   // const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef();
   const [isShuffled, setIsShuffled] = useState(false);
-  const [isLiked, setIsLiked] = useState(false)
+  // const [isLiked, setIsLiked] = useState(false)
 
   const addPlayingTrack = () => dispatch(setPlayingTrack(playingTrack));
 
