@@ -102,6 +102,7 @@ export const AppRoutes = ({ user }) => {
             setIsLiked={setIsLiked}
             loading={loading}
             addPlayerError={addPlayerError}
+            playingTrackFromStore={playingTrackFromStore}
             />
           </ProtectedRoute>
         }
@@ -124,7 +125,9 @@ export const AppRoutes = ({ user }) => {
           favoritesTracks={favoritesTracks}
             setFavoritesTracks={setFavoritesTracks}
             isLiked={isLiked}
-            setIsLiked={setIsLiked}/>
+            setIsLiked={setIsLiked}
+            playingTrackFromStore={playingTrackFromStore}
+            />
           </ProtectedRoute>
         }
       ></Route>

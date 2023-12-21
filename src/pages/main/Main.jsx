@@ -62,7 +62,7 @@ a:visited {
 `;
 
 
-export const Main = ({ tracks, setTracks, playingTrack, setPlayingTrack, trackIndex, setTrackIndex, isPlaying, setIsPlaying, favoritesTracks, setFavoritesTracks, setIsLiked, isLiked, loading, addPlayerError}) => {
+export const Main = ({ tracks, setTracks, playingTrack, setPlayingTrack, trackIndex, setTrackIndex, isPlaying, setIsPlaying, favoritesTracks, setFavoritesTracks, setIsLiked, isLiked, loading, addPlayerError, playingTrackFromStore}) => {
   // const navigate = useNavigate();
   // const dispatch = useDispatch();
   // const [loading, setLoading] = useState(true);
@@ -161,6 +161,7 @@ export const Main = ({ tracks, setTracks, playingTrack, setPlayingTrack, trackIn
                   setTrackIndex={setTrackIndex}
                   isLiked={isLiked}
                   setIsLiked={setIsLiked}
+                  playingTrackFromStore={playingTrackFromStore}
                 />
               )}
               <p>{addPlayerError}</p>
@@ -176,6 +177,7 @@ export const Main = ({ tracks, setTracks, playingTrack, setPlayingTrack, trackIn
                   setTrackIndex={setTrackIndex}
                   isLiked={isLiked}
                   setIsLiked={setIsLiked}
+                  playingTrackFromStore={playingTrackFromStore}
                 />
             </S.MainCenterblock>
             {loading ? <SidebarSkeleton /> : <Sidebar />}
