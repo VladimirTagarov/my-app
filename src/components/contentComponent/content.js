@@ -1,9 +1,11 @@
 import React from "react";
 import * as S from "./Content.style";
 import { useUserContext } from "../../context";
+import { getLikes, getTracks } from "../../api";
 
 export const Content = ({
   tracks,
+  setTracks,
   playingTrack,
   setPlayingTrack,
   isPlaying,
@@ -28,8 +30,16 @@ export const Content = ({
   console.log(playingTrack?.stared_user.username);
   console.log(tracks);
   console.log(isPlaying);
-  const toggleLike = () => {
+  const toggleLike = async(id) => {
     setIsLiked(!isLiked);
+    getLikes(localStorage.access, id)
+    .then(() => {
+      getTracks()
+      .then((track) => {
+        setTracks(track)
+      })
+    })
+
     console.log('лайк/дизлайк');
   }
 
@@ -99,7 +109,7 @@ export const Content = ({
                 </S.TrackAlbum>
                 <S.TrackTime>
                   <S.TrackTimeSvg alt="time" onClick={() => {
-                    setIsLiked(!isLiked)
+                    toggleLike(track.id)
                   }}>
                     {((arrOfFavoritesTracks.includes(track))) ? (<svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M8.02203 12.7031C13.9025 9.20312 16.9678 3.91234 13.6132 1.47046C11.413 -0.13111 8.95392 1.14488 8.02203 1.95884H8.00052H8.00046H7.97895C7.04706 1.14488 4.58794 -0.13111 2.38775 1.47046C-0.966814 3.91234 2.09846 9.20312 7.97895 12.7031H8.00046H8.00052H8.02203Z" fill="#B672FF"/>
