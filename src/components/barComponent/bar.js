@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import * as S from "./Bar.style";
 import { useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { setCurrentPlaylist } from "../../store/reducers/tracksReducer";
 
-export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrackIndex, isPlaying, setIsPlaying, favoritesTracks, setFavoritesTracks, setIsLiked, isLiked}) => {
-  console.log();
+export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrackIndex, isPlaying, setIsPlaying, favoritesTracks, setFavoritesTracks, setIsLiked, isLiked, playlist}) => {
   const dispatch = useDispatch()
   // const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef();
@@ -12,6 +12,20 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrac
   // const [isLiked, setIsLiked] = useState(false)
 
   const addPlayingTrack = () => dispatch(setPlayingTrack(playingTrack));
+  const addCurrentPlaylist = () => dispatch(setCurrentPlaylist(tracks));
+  // const addCurrentPlaylist = () => {
+  //   (window.location.pathname === '/') ?
+  //   dispatch(setCurrentPlaylist(tracks))
+  //   :dispatch(setCurrentPlaylist(favoritesTracks));
+  // }
+    useEffect(() => {
+    addCurrentPlaylist()
+  }, [playingTrack]);
+
+// console.log("текущий плэйлист:" + playlist);
+  // let playlist = tracks;
+  // playlist = useSelector((state) => state.tracks.currentPlaylist);
+
 
   const shuffleTracks = (array) => {
     const newArray = array.slice();
@@ -28,13 +42,13 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrac
     audioRef.current.play();
     setIsPlaying(true);
     setPlayingTrack(playingTrack);
-    console.log(trackIndex);
+    addPlayingTrack(playingTrack);
+    addCurrentPlaylist(playlist);
   };
 
   const handleStop = () => {
     audioRef.current.pause();
     setIsPlaying(false);
-    console.log(trackIndex);
   };
 
   useEffect(() => {
@@ -84,9 +98,9 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrac
     setProgressTime(value);
     audioRef.current.currentTime = value;
     // audioRef.current.currentTime = progressTime;
-    console.log(progressTime);
-    console.log(audioRef.current.currentTime);
-    console.log(duration);
+    // console.log(progressTime);
+    // console.log(audioRef.current.currentTime);
+    // console.log(duration);
   };
 
   const [isRepeating, setIsRepeating] = useState(false);
@@ -105,38 +119,38 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrac
   });
 
   const handlePreviousTrack = () => {
-    if (tracks.indexOf(playingTrack)===0) {
+    if (playlist.indexOf(playingTrack)===0) {
       return
     }
     else if (isShuffled) {
-      tracks = shuffleTracks(tracks)
-      const indexPrevTrack = tracks.indexOf(playingTrack)-1;
-      setPlayingTrack(tracks[indexPrevTrack])
+      playlist = shuffleTracks(playlist)
+      const indexPrevTrack = playlist.indexOf(playingTrack)-1;
+      setPlayingTrack(playlist[indexPrevTrack])
 
     }
     else {
-      const indexPrevTrack = tracks.indexOf(playingTrack)-1;
-      setPlayingTrack(tracks[indexPrevTrack])
+      const indexPrevTrack = playlist.indexOf(playingTrack)-1;
+      setPlayingTrack(playlist[indexPrevTrack])
     }
 
 
   }
 
   const handleNextTrack = () => {
-    const indexNextTrack = tracks.indexOf(playingTrack)+1;
-    if (tracks.indexOf(playingTrack)===(tracks.length-1)) {
+    const indexNextTrack = playlist.indexOf(playingTrack)+1;
+    if (playlist.indexOf(playingTrack)===(playlist.length-1)) {
       return
     }
     
     else if (isShuffled) {
-      tracks = shuffleTracks(tracks)
-      const indexNextTrack = tracks.indexOf(playingTrack)+1;
-      setPlayingTrack(tracks[indexNextTrack])
+      playlist = shuffleTracks(playlist)
+      const indexNextTrack = playlist.indexOf(playingTrack)+1;
+      setPlayingTrack(playlist[indexNextTrack])
 
     }
     else {
-      const indexNextTrack = tracks.indexOf(playingTrack)+1;
-      setPlayingTrack(tracks[indexNextTrack])
+      const indexNextTrack = playlist.indexOf(playingTrack)+1;
+      setPlayingTrack(playlist[indexNextTrack])
     }
 
 
@@ -149,14 +163,11 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrac
   }
 
   const handleShuffle = () => {
-    tracks = shuffleTracks (tracks);
+    playlist = shuffleTracks (playlist);
     setIsShuffled(!isShuffled);
-    console.log(tracks);
-    console.log(trackIndex)
   }
 
   const handleLike = (trackIndex) => {
-    console.log(trackIndex);
     setIsLiked(true);
     // if (favoritesTracks.indexOf(track) === -1) {
       setFavoritesTracks((favoritesTracks) => ([...favoritesTracks, trackIndex]));
@@ -172,7 +183,7 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrac
     <S.Bars>
       <audio
         ref={audioRef}
-        tracks={tracks}
+        tracks={playlist}
         playingTrack={playingTrack}
         setPlayingTrack={setPlayingTrack}
         src={playingTrack.track_file}

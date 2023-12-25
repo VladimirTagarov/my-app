@@ -1,7 +1,9 @@
 import React from "react";
 import * as S from "./Content.style";
 import { useUserContext } from "../../context";
-import { getLikes, getTracks } from "../../api";
+import { getDisLikes, getLikes, getTracks } from "../../api";
+import { useNavigate } from "react-router-dom";
+import { setCurrentPlaylist } from "../../store/reducers/tracksReducer";
 
 export const Content = ({
   tracks,
@@ -19,29 +21,55 @@ export const Content = ({
   // const handlePlayTrack = (track) => {
   //   setPlayingTrack(track);
   // };
+  const navigate = useNavigate();
   const { regUser, setRegUser} = useUserContext();
   const nameOfUser = localStorage.getItem('user');
-  console.log(nameOfUser);
-  const arrOfFavoritesTracks = tracks.filter(track => {
+  // console.log(nameOfUser);
+  const arrOfFavoritesTracks = tracks?.filter(track => {
     return track.stared_user.some(user => user.username === nameOfUser)
   });
-  console.log(arrOfFavoritesTracks);
   
-  console.log(playingTrack?.stared_user.username);
-  console.log(tracks);
-  console.log(isPlaying);
-  const toggleLike = async(id) => {
-    setIsLiked(!isLiked);
-    getLikes(localStorage.access, id)
-    .then(() => {
-      getTracks()
-      .then((track) => {
-        setTracks(track)
-      })
-    })
 
-    console.log('лайк/дизлайк');
-  }
+  const toggleLike = async(toggleTrackId) => {
+      // console.log(arrOfFavoritesTracks.includes(toggleTrackId));
+      setIsLiked(!isLiked);
+      getLikes(localStorage.access, toggleTrackId)
+      .then(() => {
+        getTracks()
+        .then((track) => {
+          setTracks(track)
+          // navigate("/login", { replace: true });
+        })
+        .catch((error) => {
+          if (error.status === 401){
+                localStorage.clear();
+                navigate("/login", { replace: true });
+              }
+            });
+
+        })
+      }
+     
+      const toggleDisLike = async(toggleTrackId) => {
+        setIsLiked(!isLiked);
+        getDisLikes(localStorage.access, toggleTrackId)
+        .then(() => {
+          getTracks()
+          .then((track) => {
+            setTracks(track)
+            // console.log(arrOfFavoritesTracks);
+            // navigate("/login", { replace: true });
+          })
+          .catch((error) => {
+            if (error.status === 401){
+                  localStorage.clear();
+                  navigate("/login", { replace: true });
+                }
+              });
+  
+          })
+        }
+
 
   return (
     <S.CenterBlockContent>
@@ -56,7 +84,7 @@ export const Content = ({
         </S.PlaylistTitleCol04>
       </S.ContentTitle>
       <S.ContentPlaylist>
-        {tracks.map((track, index) => {
+        {tracks?.map((track, index) => {
           return (
             <S.PlaylistItem
               key={track.id}
@@ -74,6 +102,7 @@ export const Content = ({
                 isPlaying = true;
                 setIsPlaying(!isPlaying);
                 setTrackIndex(index);
+                setCurrentPlaylist(tracks);
               }}>
                     {((track === playingTrack) && isPlaying ) ? <S.PlayingDotActive>
                     <S.TrackTitleSvg alt="music">
@@ -96,6 +125,7 @@ export const Content = ({
                 isPlaying = true;
                 setIsPlaying(!isPlaying);
                 setTrackIndex(index);
+                setCurrentPlaylist(tracks);
               }}>
                       {track.name} <S.TrackTitleSpan></S.TrackTitleSpan>
                     </S.TrackTitleLink>
@@ -109,7 +139,8 @@ export const Content = ({
                 </S.TrackAlbum>
                 <S.TrackTime>
                   <S.TrackTimeSvg alt="time" onClick={() => {
-                    toggleLike(track.id)
+                    ((arrOfFavoritesTracks.includes(track))) ? toggleDisLike(track.id)
+                     : toggleLike(track.id)
                   }}>
                     {((arrOfFavoritesTracks.includes(track))) ? (<svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M8.02203 12.7031C13.9025 9.20312 16.9678 3.91234 13.6132 1.47046C11.413 -0.13111 8.95392 1.14488 8.02203 1.95884H8.00052H8.00046H7.97895C7.04706 1.14488 4.58794 -0.13111 2.38775 1.47046C-0.966814 3.91234 2.09846 9.20312 7.97895 12.7031H8.00046H8.00052H8.02203Z" fill="#B672FF"/>

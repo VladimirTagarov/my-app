@@ -59,9 +59,9 @@ a:visited {
 }
 `;
 
-export const Favorites = ({ tracks, setTracks, playingTrack, setPlayingTrack, trackIndex, setTrackIndex, isPlaying, setIsPlaying, favoritesTracks, setFavoritesTracks, setIsLiked, isLiked}) => {
+export const Favorites = ({ tracks, setTracks, playingTrack, loading, setPlayingTrack, trackIndex, setTrackIndex, isPlaying, setIsPlaying, favoritesTracks, setFavoritesTracks, setIsLiked, isLiked, playlist}) => {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   // const [tracks, setTracks] = useState();
   // const [favoritesTracks, setFavoritesTracks] = useState();
   // const playingTrackFromStore = useSelector((state) => state.track)
@@ -71,33 +71,33 @@ export const Favorites = ({ tracks, setTracks, playingTrack, setPlayingTrack, tr
   // const [trackIndex, setTrackIndex] = useState(null);
   const addPlayingTrack = () => dispatch(setPlayingTrack(playingTrack));
   // addPlayingTrack();
-  const addCurrentPlaylist = () => dispatch(setCurrentPlaylist(tracks));
-  useEffect(() => {
-    addCurrentPlaylist()
-  }, [addCurrentPlaylist, playingTrack]);
+  // const addCurrentPlaylist = () => dispatch(setCurrentPlaylist(tracks));
+  // useEffect(() => {
+  //   addCurrentPlaylist()
+  // }, [addCurrentPlaylist, playingTrack]);
 
 
 
 
-  useEffect(() => {
-    getTracks()
-      .then((track) => {
-        setTracks(track);
-      })
-      .catch((error) => {
-        setAddPlayerError(error.message);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-    console.log(tracks);
-    getFavoritesTracks()
-    .then((favoritesTrack) => {
-      setFavoritesTracks(favoritesTrack);
-      console.log(favoritesTrack);
-    })
+  // useEffect(() => {
+  //   getTracks()
+  //     .then((track) => {
+  //       setTracks(track);
+  //     })
+  //     .catch((error) => {
+  //       setAddPlayerError(error.message);
+  //     })
+  //     .finally(() => {
+  //       setLoading(false);
+  //     });
+  //   // console.log(tracks);
+  //   getFavoritesTracks()
+  //   .then((favoritesTracks) => {
+  //     setFavoritesTracks(favoritesTracks);
+  //     console.log(favoritesTracks);
+  //   })
 
-  }, []);
+  // }, []);
 
    
       // .catch((error) => {
@@ -139,6 +139,7 @@ export const Favorites = ({ tracks, setTracks, playingTrack, setPlayingTrack, tr
                   setPlayingTrack={setPlayingTrack}
                   trackIndex={trackIndex}
                   setTrackIndex={setTrackIndex}
+                  playlist={playlist}
                 />
               {/* <p>{addPlayerError}</p> */}
             </S.MainCenterblock>
@@ -152,6 +153,7 @@ export const Favorites = ({ tracks, setTracks, playingTrack, setPlayingTrack, tr
             setPlayingTrack={setPlayingTrack}
             trackIndex={trackIndex}
             setTrackIndex={setTrackIndex}
+            playlist={playlist}
           >
             {playingTrack ? (
               <Bar
@@ -162,6 +164,7 @@ export const Favorites = ({ tracks, setTracks, playingTrack, setPlayingTrack, tr
                 setPlayingTrack={setPlayingTrack}
                 trackIndex={trackIndex}
                 setTrackIndex={setTrackIndex}
+                playlist={playlist}
               />
             ) : null}
           </S.Bar>

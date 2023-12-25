@@ -16,22 +16,22 @@ export async function getTracks() {
   return data;
 }
 
-export async function getFavoritesTracks() {
+export async function getFavoritesTracks(accessToken) {
   // const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5NDQ1MjkyLCJpYXQiOjE2OTk0NDQ5OTIsImp0aSI6ImZjZWQyNzNlN2UzYzQ2OTM5MjdiNWY1NTdmNWQ5MWQzIiwidXNlcl9pZCI6MjU0M30.bdGvqxXeXdPWMlZ388B-S4ALKPOtkWVL_3YjY8DfcW4";
-  const accessToken = localStorage.getItem('access');
+  // const accessToken = localStorage.getItem('access');
   const response = await fetch("https://skypro-music-api.skyeng.tech/catalog/track/favorite/all/", {
     method: "GET",
     headers: {
-      "content-type": "application/json",
     Authorization: `Bearer ${accessToken}`,
+    "content-type": "application/json",
 
   },
 })
 
   if (!response.ok) {
-    localStorage.removeItem('user');
-    window.location.reload(true);
-    // throw new Error("Ошибка сервера");
+    // localStorage.removeItem('user');
+    // window.location.reload(true);
+    throw new Error("Ошибка сервера");
     
   }
 
@@ -55,7 +55,9 @@ export async function getLikes(accessToken, id) {
 })
 
   if (!response.ok) {
-    throw new Error("Ошибка сервера");
+    // throw new Error("Ошибка сервера");
+    localStorage.removeItem('user');
+    window.location.reload(true);
   }
 
   const data = await response.json();
@@ -78,7 +80,9 @@ export async function getDisLikes(accessToken, id) {
 })
 
 if (!response.ok) {
-  throw new Error("Ошибка сервера");
+  // throw new Error("Ошибка сервера");
+  localStorage.removeItem('user');
+  window.location.reload(true);
 }
 
 const data = await response.json();

@@ -13,6 +13,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getTracks, getFavoritesTracks } from "./api.js";
 import { setCurrentPlaylist } from "./store/reducers/tracksReducer";
+import ContentFavorites from "./components/contentComponent/contentFavorite.js";
 
 export const AppRoutes = ({ user }) => {
 
@@ -30,16 +31,28 @@ export const AppRoutes = ({ user }) => {
 
   const addPlayingTrack = () => dispatch(setPlayingTrack(playingTrack));
   // addPlayingTrack();
-  const addCurrentPlaylist = () => dispatch(setCurrentPlaylist(tracks));
-  useEffect(() => {
+  // const addCurrentPlaylist = () => dispatch(setCurrentPlaylist(tracks));
+  // useEffect(() => {
+  //   addCurrentPlaylist()
+  // }, [addCurrentPlaylist, playingTrack]);
+  const addCurrentPlaylist = () => {
+    (window.location.pathname === '/') ?
+    dispatch(setCurrentPlaylist(tracks))
+    :dispatch(setCurrentPlaylist(favoritesTracks));
+  }
+    useEffect(() => {
     addCurrentPlaylist()
-  }, [addCurrentPlaylist, playingTrack]);
+  }, [playingTrack]);
+
+  
+  let playlist = tracks;
+  playlist = useSelector((state) => state.tracks.currentPlaylist);
 
 
   useEffect(() => {
     getTracks()
-      .then((track) => {
-        setTracks(track);
+      .then((tracks) => {
+        setTracks(tracks);
       })
       .catch((error) => {
         setAddPlayerError(error.message);
@@ -47,27 +60,34 @@ export const AppRoutes = ({ user }) => {
       .finally(() => {
         setLoading(false);
       });
-    console.log(tracks);
+    // console.log(tracks);
+    getFavoritesTracks(localStorage.access)
+      .then((favoritesTracks) => {
+        setFavoritesTracks(favoritesTracks);
+        console.log(favoritesTracks);
+      })
+      .catch((error) => {
+        // console.log("ошибка доступа");
+        if (error.message === 'Данный токен недействителен для любого типа токена'){
+          console.log(error.message);
+          navigate("/login", { replace: true });
+          return;
+        }
+        setAddPlayerError(error.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
 
-  // useEffect(() => {
-  //   getTracks()
-  //     .then((track) => {
-  //       setTracks(track);
-  //     })
-  //     .catch((error) => {
-  //       setAddPlayerError(error.message);
-  //     })
-  //     .finally(() => {
-  //       setLoading(false);
-  //     });
-  //   console.log(tracks);
-    
+
+
+  // useEffect(() => {    
   //   getFavoritesTracks()
   //     .then((favoritesTrack) => {
   //       setFavoritesTracks(favoritesTrack);
-  //       console.log(favoritesTrack);
+  //       console.log('favoritesTrack');
   //     })
   //     .catch((error) => {
   //       // console.log("ошибка доступа");
@@ -77,6 +97,9 @@ export const AppRoutes = ({ user }) => {
   //       }
   //       setAddPlayerError(error.message);
   //     })
+  //     .finally(() => {
+  //       setLoading(false);
+  //     });
 
   // }, []);
 
@@ -103,6 +126,7 @@ export const AppRoutes = ({ user }) => {
             loading={loading}
             addPlayerError={addPlayerError}
             playingTrackFromStore={playingTrackFromStore}
+            playlist={playlist}
             />
           </ProtectedRoute>
         }
@@ -113,7 +137,7 @@ export const AppRoutes = ({ user }) => {
         path="/favorites"
         element={
           <ProtectedRoute isAllowed={Boolean(user)}>
-            <Favorites 
+            <Favorites
             isPlaying={isPlaying}
             setIsPlaying={setIsPlaying}
           tracks={tracks}
@@ -127,6 +151,7 @@ export const AppRoutes = ({ user }) => {
             isLiked={isLiked}
             setIsLiked={setIsLiked}
             playingTrackFromStore={playingTrackFromStore}
+            playlist={playlist}
             />
           </ProtectedRoute>
         }
@@ -154,6 +179,7 @@ export const AppRoutes = ({ user }) => {
                   setFavoritesTracks={setFavoritesTracks}
                   isLiked={isLiked}
                   setIsLiked={setIsLiked}
+                  playlist={playlist}
               />
             ) : null}
     </>

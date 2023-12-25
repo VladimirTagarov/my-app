@@ -62,7 +62,7 @@ a:visited {
 `;
 
 
-export const Main = ({ tracks, setTracks, playingTrack, setPlayingTrack, trackIndex, setTrackIndex, isPlaying, setIsPlaying, favoritesTracks, setFavoritesTracks, setIsLiked, isLiked, loading, addPlayerError, playingTrackFromStore}) => {
+export const Main = ({ tracks, setTracks, playingTrack, setPlayingTrack, trackIndex, setTrackIndex, isPlaying, setIsPlaying, favoritesTracks, setFavoritesTracks, setIsLiked, isLiked, loading, addPlayerError, playingTrackFromStore, playlist}) => {
   // const navigate = useNavigate();
   // const dispatch = useDispatch();
   // const [loading, setLoading] = useState(true);
@@ -163,6 +163,7 @@ export const Main = ({ tracks, setTracks, playingTrack, setPlayingTrack, trackIn
                   isLiked={isLiked}
                   setIsLiked={setIsLiked}
                   playingTrackFromStore={playingTrackFromStore}
+                  playlist={playlist}
                 />
               )}
               <p>{addPlayerError}</p>
@@ -180,6 +181,7 @@ export const Main = ({ tracks, setTracks, playingTrack, setPlayingTrack, trackIn
                   isLiked={isLiked}
                   setIsLiked={setIsLiked}
                   playingTrackFromStore={playingTrackFromStore}
+                  playlist={playlist}
                 />
             </S.MainCenterblock>
             {loading ? <SidebarSkeleton /> : <Sidebar />}
@@ -196,6 +198,7 @@ export const Main = ({ tracks, setTracks, playingTrack, setPlayingTrack, trackIn
                   setFavoritesTracks={setFavoritesTracks}
                   isLiked={isLiked}
                   setIsLiked={setIsLiked}
+                  playlist={playlist}
           >
             {playingTrack ? (
               <Bar
@@ -210,6 +213,7 @@ export const Main = ({ tracks, setTracks, playingTrack, setPlayingTrack, trackIn
                   setFavoritesTracks={setFavoritesTracks}
                   isLiked={isLiked}
                   setIsLiked={setIsLiked}
+                  playlist={playlist}
               />
             ) : null}
           </S.Bar>
