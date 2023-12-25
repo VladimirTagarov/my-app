@@ -88,12 +88,6 @@ export const Content = ({
           return (
             <S.PlaylistItem
               key={track.id}
-              // onClick={() => {
-              //   setPlayingTrack(track);
-              //   isPlaying = true;
-              //   setIsPlaying(!isPlaying);
-              //   setTrackIndex(index);
-              // }}
             >
               <S.PlaylistTrack>
                 <S.TrackTitle>
