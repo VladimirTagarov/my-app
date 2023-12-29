@@ -15,6 +15,7 @@ import { getTracks, getFavoritesTracks } from "../../api";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentPlaylist } from "../../store/reducers/tracksReducer";
 import { ContentFavorites } from "../../components/contentComponent/contentFavorite";
+import { useNavigate } from "react-router-dom";
 
 const GlobalStyle = createGlobalStyle`
 button,
@@ -59,8 +60,9 @@ a:visited {
 }
 `;
 
-export const Favorites = ({ tracks, setTracks, playingTrack, loading, setPlayingTrack, trackIndex, setTrackIndex, isPlaying, setIsPlaying, favoritesTracks, setFavoritesTracks, setIsLiked, isLiked, playlist}) => {
+export const Favorites = ({ tracks, setTracks, playingTrack, loading, setLoading, setPlayingTrack, trackIndex, setTrackIndex, isPlaying, setIsPlaying, favoritesTracks, setFavoritesTracks, setIsLiked, isLiked, playlist}) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   // const [loading, setLoading] = useState(true);
   // const [tracks, setTracks] = useState();
   // const [favoritesTracks, setFavoritesTracks] = useState();
@@ -78,6 +80,25 @@ export const Favorites = ({ tracks, setTracks, playingTrack, loading, setPlaying
 
 
 
+  useEffect(() => {
+    getFavoritesTracks(localStorage.access)
+      .then((favoritesTracks) => {
+        setFavoritesTracks(favoritesTracks);
+        console.log(favoritesTracks);
+      })
+      .catch((error) => {
+        // console.log("ошибка доступа");
+        if (error.message === 'Данный токен недействителен для любого типа токена') {
+          console.log(error.message);
+          navigate("/login", { replace: true });
+          return;
+        }
+        setAddPlayerError(error.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
 
   // useEffect(() => {
   //   getTracks()
@@ -129,6 +150,9 @@ export const Favorites = ({ tracks, setTracks, playingTrack, loading, setPlaying
                   trackIndex={trackIndex}
                   setTrackIndex={setTrackIndex}
                 /> */}
+                {!favoritesTracks ? (
+                <ContentSkeleton />
+              ) : (
                 <ContentFavorites
                   isPlaying={isPlaying}
                   setIsPlaying={setIsPlaying}
@@ -140,7 +164,10 @@ export const Favorites = ({ tracks, setTracks, playingTrack, loading, setPlaying
                   trackIndex={trackIndex}
                   setTrackIndex={setTrackIndex}
                   playlist={playlist}
+                  isLiked={isLiked}
+                  setIsLiked={setIsLiked}
                 />
+                )}
               {/* <p>{addPlayerError}</p> */}
             </S.MainCenterblock>
             {loading ? <SidebarSkeleton /> : <Sidebar />}

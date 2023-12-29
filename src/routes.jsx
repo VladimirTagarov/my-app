@@ -60,7 +60,11 @@ export const AppRoutes = ({ user }) => {
       .finally(() => {
         setLoading(false);
       });
-    // console.log(tracks);
+    }, []);
+    console.log(tracks);
+    
+    
+    useEffect(() => {
     getFavoritesTracks(localStorage.access)
       .then((favoritesTracks) => {
         setFavoritesTracks(favoritesTracks);
@@ -68,7 +72,7 @@ export const AppRoutes = ({ user }) => {
       })
       .catch((error) => {
         // console.log("ошибка доступа");
-        if (error.message === 'Данный токен недействителен для любого типа токена'){
+        if (error.message === 'Данный токен недействителен для любого типа токена') {
           console.log(error.message);
           navigate("/login", { replace: true });
           return;
@@ -152,6 +156,8 @@ export const AppRoutes = ({ user }) => {
             setIsLiked={setIsLiked}
             playingTrackFromStore={playingTrackFromStore}
             playlist={playlist}
+            loading={loading}
+            setLoading={setLoading}
             />
           </ProtectedRoute>
         }

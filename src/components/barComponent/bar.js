@@ -75,7 +75,7 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrac
   // }
 
   const handleTimeUpdate = () => {
-    setProgressTime(audioRef.current.currentTime);
+    // setProgressTime(audioRef.current.currentTime);
     setDuration(audioRef.current.duration);
   };
 

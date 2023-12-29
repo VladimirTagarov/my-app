@@ -145,7 +145,6 @@ export const Content = ({
 )
 
                     }
-                    {/* </S.LikeElement> */}
                   </S.TrackTimeSvg>
                   <S.TrackTimeText>
                     {Math.floor(track.duration_in_seconds / 60) +
