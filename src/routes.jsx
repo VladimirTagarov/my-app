@@ -27,7 +27,9 @@ export const AppRoutes = ({ user }) => {
   const [addPlayerError, setAddPlayerError] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [trackIndex, setTrackIndex] = useState(null);
-  const [isLiked, setIsLiked] = useState(false)
+  const [isLiked, setIsLiked] = useState(false);
+  const [duration, setDuration] = useState(0);
+  const [progressTime, setProgressTime] = useState(0);
 
   const addPlayingTrack = () => dispatch(setPlayingTrack(playingTrack));
   // addPlayingTrack();
@@ -131,6 +133,10 @@ export const AppRoutes = ({ user }) => {
             addPlayerError={addPlayerError}
             playingTrackFromStore={playingTrackFromStore}
             playlist={playlist}
+            duration={duration}
+            setDuration={setDuration}
+            progressTime={progressTime}
+            setProgressTime={setProgressTime}
             />
           </ProtectedRoute>
         }
@@ -158,6 +164,10 @@ export const AppRoutes = ({ user }) => {
             playlist={playlist}
             loading={loading}
             setLoading={setLoading}
+            duration={duration}
+            setDuration={setDuration}
+            progressTime={progressTime}
+            setProgressTime={setProgressTime}
             />
           </ProtectedRoute>
         }
@@ -186,6 +196,10 @@ export const AppRoutes = ({ user }) => {
                   isLiked={isLiked}
                   setIsLiked={setIsLiked}
                   playlist={playlist}
+                  duration={duration}
+            setDuration={setDuration}
+            progressTime={progressTime}
+            setProgressTime={setProgressTime}
               />
             ) : null}
     </>

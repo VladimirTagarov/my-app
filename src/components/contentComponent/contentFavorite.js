@@ -61,7 +61,9 @@ export const ContentFavorites = ({
   trackIndex,
   setTrackIndex,
   isLiked,
-  setIsLiked
+  setIsLiked,
+  duration,
+  setDuration
 }) => {
   console.log(favoritesTracks);
   console.log(Array.isArray(favoritesTracks));

@@ -60,7 +60,7 @@ a:visited {
 }
 `;
 
-export const Favorites = ({ tracks, setTracks, playingTrack, loading, setLoading, setPlayingTrack, trackIndex, setTrackIndex, isPlaying, setIsPlaying, favoritesTracks, setFavoritesTracks, setIsLiked, isLiked, playlist}) => {
+export const Favorites = ({ tracks, setTracks, playingTrack, loading, setLoading, setPlayingTrack, trackIndex, setTrackIndex, isPlaying, setIsPlaying, favoritesTracks, setFavoritesTracks, setIsLiked, isLiked, playlist, duration, setDuration, progressTime, setProgressTime}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // const [loading, setLoading] = useState(true);
@@ -166,13 +166,17 @@ export const Favorites = ({ tracks, setTracks, playingTrack, loading, setLoading
                   playlist={playlist}
                   isLiked={isLiked}
                   setIsLiked={setIsLiked}
+                  duration={duration}
+            setDuration={setDuration}
+            progressTime={progressTime}
+            setProgressTime={setProgressTime}
                 />
                 )}
               {/* <p>{addPlayerError}</p> */}
             </S.MainCenterblock>
             {loading ? <SidebarSkeleton /> : <Sidebar />}
           </S.Main>
-          <S.Bar
+          {/* <S.Bar
             isPlaying={isPlaying}
             setIsPlaying={setIsPlaying}
             tracks={tracks}
@@ -181,6 +185,10 @@ export const Favorites = ({ tracks, setTracks, playingTrack, loading, setLoading
             trackIndex={trackIndex}
             setTrackIndex={setTrackIndex}
             playlist={playlist}
+            duration={duration}
+            setDuration={setDuration}
+            progressTime={progressTime}
+            setProgressTime={setProgressTime}
           >
             {playingTrack ? (
               <Bar
@@ -192,9 +200,13 @@ export const Favorites = ({ tracks, setTracks, playingTrack, loading, setLoading
                 trackIndex={trackIndex}
                 setTrackIndex={setTrackIndex}
                 playlist={playlist}
+                duration={duration}
+            setDuration={setDuration}
+            progressTime={progressTime}
+            setProgressTime={setProgressTime}
               />
             ) : null}
-          </S.Bar>
+          </S.Bar> */}
           <S.Footer></S.Footer>
         </S.Container>
       </S.Wrapper>

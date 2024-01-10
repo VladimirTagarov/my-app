@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setCurrentPlaylist } from "../../store/reducers/tracksReducer";
 
-export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrackIndex, isPlaying, setIsPlaying, favoritesTracks, setFavoritesTracks, setIsLiked, isLiked, playlist}) => {
+export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrackIndex, isPlaying, setIsPlaying, favoritesTracks, setFavoritesTracks, setIsLiked, isLiked, playlist, duration, setDuration, progressTime, setProgressTime}) => {
   const dispatch = useDispatch()
   // const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef();
@@ -42,7 +42,7 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrac
     audioRef.current.play();
     setIsPlaying(true);
     setPlayingTrack(playingTrack);
-    addPlayingTrack(playingTrack);
+    // addPlayingTrack(playingTrack);
     addCurrentPlaylist(playlist);
   };
 
@@ -59,13 +59,13 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrac
       audioRef.current.pause();
       setIsPlaying(false);
     }
-  }, [isPlaying, audioRef, playingTrack, setPlayingTrack]);
+  }, [isPlaying, audioRef, playingTrack, setPlayingTrack, setIsPlaying, duration]);
 
   const togglePlay = isPlaying ? handleStop : handleStart;
 
-  const [progressTime, setProgressTime] = useState(0);
+  // const [progressTime, setProgressTime] = useState(0);
 
-  const [duration, setDuration] = useState(110);
+  // const [duration, setDuration] = useState(0);
   // if (isPlaying) {
   //   const timing = audioRef.current.duration;
   //   audioRef.current.duration = duration;
@@ -75,7 +75,7 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrac
   // }
 
   const handleTimeUpdate = () => {
-    // setProgressTime(audioRef.current.currentTime);
+    setProgressTime(audioRef.current.currentTime);
     setDuration(audioRef.current.duration);
   };
 

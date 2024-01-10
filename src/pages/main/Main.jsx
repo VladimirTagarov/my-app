@@ -62,7 +62,7 @@ a:visited {
 `;
 
 
-export const Main = ({ tracks, setTracks, playingTrack, setPlayingTrack, trackIndex, setTrackIndex, isPlaying, setIsPlaying, favoritesTracks, setFavoritesTracks, setIsLiked, isLiked, loading, addPlayerError, playingTrackFromStore, playlist}) => {
+export const Main = ({ tracks, setTracks, playingTrack, setPlayingTrack, trackIndex, setTrackIndex, isPlaying, setIsPlaying, favoritesTracks, setFavoritesTracks, setIsLiked, isLiked, loading, addPlayerError, playingTrackFromStore, playlist, duration, setDuration, progressTime, setProgressTime}) => {
   // const navigate = useNavigate();
   // const dispatch = useDispatch();
   // const [loading, setLoading] = useState(true);
@@ -167,7 +167,7 @@ export const Main = ({ tracks, setTracks, playingTrack, setPlayingTrack, trackIn
                 />
               )}
               <p>{addPlayerError}</p>
-              <S.ContentFavorites
+              {/* <S.ContentFavorites
                   isPlaying={isPlaying}
                   setIsPlaying={setIsPlaying}
                   tracks={tracks}
@@ -182,11 +182,15 @@ export const Main = ({ tracks, setTracks, playingTrack, setPlayingTrack, trackIn
                   setIsLiked={setIsLiked}
                   playingTrackFromStore={playingTrackFromStore}
                   playlist={playlist}
-                />
+                  duration={duration}
+            setDuration={setDuration}
+            progressTime={progressTime}
+            setProgressTime={setProgressTime}
+                /> */}
             </S.MainCenterblock>
             {loading ? <SidebarSkeleton /> : <Sidebar />}
           </S.Main>
-          <S.Bar
+          {/* <S.Bar
             isPlaying={isPlaying}
             setIsPlaying={setIsPlaying}
             tracks={tracks}
@@ -199,6 +203,10 @@ export const Main = ({ tracks, setTracks, playingTrack, setPlayingTrack, trackIn
                   isLiked={isLiked}
                   setIsLiked={setIsLiked}
                   playlist={playlist}
+                  duration={duration}
+            setDuration={setDuration}
+            progressTime={progressTime}
+            setProgressTime={setProgressTime}
           >
             {playingTrack ? (
               <Bar
@@ -214,9 +222,13 @@ export const Main = ({ tracks, setTracks, playingTrack, setPlayingTrack, trackIn
                   isLiked={isLiked}
                   setIsLiked={setIsLiked}
                   playlist={playlist}
+                  duration={duration}
+            setDuration={setDuration}
+            progressTime={progressTime}
+            setProgressTime={setProgressTime}
               />
             ) : null}
-          </S.Bar>
+          </S.Bar> */}
           <S.Footer></S.Footer>
         </S.Container>
       </S.Wrapper>
