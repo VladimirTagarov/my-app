@@ -1,7 +1,6 @@
 import React from "react";
 import * as S from "./Main.style";
-import { useState } from "react";
-import { useEffect } from "react";
+
 import MainNav from "../../components/mainNavComponent/MainNav";
 import Search from "../../components/searchComponent/search";
 import Filter from "../../components/filterComponent/filter";
@@ -9,14 +8,7 @@ import Content from "../../components/contentComponent/content";
 import ContentSkeleton from "../../components/contentSkeletonComponent/ContentSkeleton";
 import Sidebar from "../../components/sidebarComponent/sidebar";
 import SidebarSkeleton from "../../components/sidebarSkeletonComponent/sidebarSkeleton";
-import Bar from "../../components/barComponent/bar";
 import { createGlobalStyle } from "styled-components";
-import { getTracks, getFavoritesTracks } from "../../api";
-import { useDispatch, useSelector } from "react-redux";
-import { setCurrentPlaylist } from "../../store/reducers/tracksReducer";
-import { useNavigate } from "react-router-dom";
-
-
 
 const GlobalStyle = createGlobalStyle`
 button,
@@ -61,81 +53,34 @@ a:visited {
 }
 `;
 
-
-export const Main = ({ tracks, setTracks, playingTrack, setPlayingTrack, trackIndex, setTrackIndex, isPlaying, setIsPlaying, favoritesTracks, setFavoritesTracks, setIsLiked, isLiked, loading, addPlayerError, playingTrackFromStore, playlist, duration, setDuration, progressTime, setProgressTime}) => {
-  // const navigate = useNavigate();
-  // const dispatch = useDispatch();
-  // const [loading, setLoading] = useState(true);
-  // const [tracks, setTracks] = useState();
-  // const [favoritesTracks, setFavoritesTracks] = useState([]);
-  // const playingTrackFromStore = useSelector((state) => state.track)
-  // const [playingTrack, setPlayingTrack] = useState(playingTrackFromStore);
-  // const [addPlayerError, setAddPlayerError] = useState(null);
-  // const [isPlaying, setIsPlaying] = useState(false);
-  // const [trackIndex, setTrackIndex] = useState(null);
-  // const [isLiked, setIsLiked] = useState(false); 
-
-
-  
-
-  // const addPlayingTrack = () => dispatch(setPlayingTrack(playingTrack));
-  // // addPlayingTrack();
-  // const addCurrentPlaylist = () => dispatch(setCurrentPlaylist(tracks));
-  // useEffect(() => {
-  //   addCurrentPlaylist()
-  // }, [addCurrentPlaylist, playingTrack]);
-
-
-  // useEffect(() => {
-  //   getTracks()
-  //     .then((track) => {
-  //       setTracks(track);
-  //     })
-  //     .catch((error) => {
-  //       setAddPlayerError(error.message);
-  //     })
-  //     .finally(() => {
-  //       setLoading(false);
-  //     });
-  //   console.log(tracks);
-  // }, []);
-
-    // getFavoritesTracks()
-    //   .then((favoritesTrack) => {
-    //     setFavoritesTracks(favoritesTrack);
-    //     console.log(favoritesTrack);
-    //   })
-    //   .catch((error) => {
-    //     if (error.status === 401){
-    //       console.log("Авторизуйтесь");
-    //       navigate("/login", { replace: false });
-    //     }
-    //     setAddPlayerError(error.message);
-    //   })
-
-    //   .catch((error) => {
-    //     setAddPlayerError(error.message);
-    //   })
-    //   .finally(() => {
-    //     setLoading(false);
-    //   });
-    
-
-
-
-    // useEffect(() => {
-    //   getFavoritesTracks()
-    //   .then((favoritesTrack) => {
-    //     setFavoritesTracks(favoritesTrack);
-    //   })
-    //   .catch((error) => {
-    //     setAddPlayerError(error.message);
-    //   })
-    //   .finally(() => {
-    //     setLoading(false);
-    //   });
-
-    // }, [])
+export const Main = ({
+  tracks,
+  setTracks,
+  playingTrack,
+  setPlayingTrack,
+  trackIndex,
+  setTrackIndex,
+  isPlaying,
+  setIsPlaying,
+  favoritesTracks,
+  setFavoritesTracks,
+  setIsLiked,
+  isLiked,
+  loading,
+  addPlayerError,
+  playingTrackFromStore,
+  playlist,
+  duration,
+  setDuration,
+  progressTime,
+  setProgressTime,
+  findedTracks,
+  setFindedTracks,
+  isTrackfinded,
+  setIsTrackfinded,
+}) => {
+  console.log(tracks);
+  console.log(Array.isArray(tracks));
 
   return (
     <div>
@@ -145,11 +90,33 @@ export const Main = ({ tracks, setTracks, playingTrack, setPlayingTrack, trackIn
           <S.Main>
             <MainNav />
             <S.MainCenterblock>
-              <Search />
+              <Search
+                tracks={tracks}
+                setTracks={setTracks}
+                findedTracks={findedTracks}
+                setFindedTracks={setFindedTracks}
+                isTrackfinded={isTrackfinded}
+                setIsTrackfinded={setIsTrackfinded}
+              />
               <S.Centerblock>Треки</S.Centerblock>
               <Filter />
               {loading ? (
                 <ContentSkeleton />
+              ) : isTrackfinded ? (
+                <Content
+                  isPlaying={isPlaying}
+                  setIsPlaying={setIsPlaying}
+                  tracks={findedTracks}
+                  setTracks={setTracks}
+                  playingTrack={playingTrack}
+                  setPlayingTrack={setPlayingTrack}
+                  trackIndex={trackIndex}
+                  setTrackIndex={setTrackIndex}
+                  isLiked={isLiked}
+                  setIsLiked={setIsLiked}
+                  playingTrackFromStore={playingTrackFromStore}
+                  playlist={playlist}
+                />
               ) : (
                 <Content
                   isPlaying={isPlaying}
@@ -166,76 +133,14 @@ export const Main = ({ tracks, setTracks, playingTrack, setPlayingTrack, trackIn
                   playlist={playlist}
                 />
               )}
-              <p>{addPlayerError}</p>
-              {/* <S.ContentFavorites
-                  isPlaying={isPlaying}
-                  setIsPlaying={setIsPlaying}
-                  tracks={tracks}
-                  setTracks={setTracks}
-                  favoritesTracks={favoritesTracks}
-                  setFavoritesTracks={setFavoritesTracks}
-                  playingTrack={playingTrack}
-                  setPlayingTrack={setPlayingTrack}
-                  trackIndex={trackIndex}
-                  setTrackIndex={setTrackIndex}
-                  isLiked={isLiked}
-                  setIsLiked={setIsLiked}
-                  playingTrackFromStore={playingTrackFromStore}
-                  playlist={playlist}
-                  duration={duration}
-            setDuration={setDuration}
-            progressTime={progressTime}
-            setProgressTime={setProgressTime}
-                /> */}
+              {/* <p>{addPlayerError}</p> */}
             </S.MainCenterblock>
             {loading ? <SidebarSkeleton /> : <Sidebar />}
           </S.Main>
-          {/* <S.Bar
-            isPlaying={isPlaying}
-            setIsPlaying={setIsPlaying}
-            tracks={tracks}
-            playingTrack={playingTrack}
-            setPlayingTrack={setPlayingTrack}
-            trackIndex={trackIndex}
-            setTrackIndex={setTrackIndex}
-            favoritesTracks={favoritesTracks}
-                  setFavoritesTracks={setFavoritesTracks}
-                  isLiked={isLiked}
-                  setIsLiked={setIsLiked}
-                  playlist={playlist}
-                  duration={duration}
-            setDuration={setDuration}
-            progressTime={progressTime}
-            setProgressTime={setProgressTime}
-          >
-            {playingTrack ? (
-              <Bar
-              isPlaying={isPlaying}
-                  setIsPlaying={setIsPlaying}
-                tracks={tracks}
-                playingTrack={playingTrack}
-                setPlayingTrack={setPlayingTrack}
-                trackIndex={trackIndex}
-                setTrackIndex={setTrackIndex}
-                favoritesTracks={favoritesTracks}
-                  setFavoritesTracks={setFavoritesTracks}
-                  isLiked={isLiked}
-                  setIsLiked={setIsLiked}
-                  playlist={playlist}
-                  duration={duration}
-            setDuration={setDuration}
-            progressTime={progressTime}
-            setProgressTime={setProgressTime}
-              />
-            ) : null}
-          </S.Bar> */}
+
           <S.Footer></S.Footer>
         </S.Container>
       </S.Wrapper>
     </div>
   );
 };
-
-
-
-

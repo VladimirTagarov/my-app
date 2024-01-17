@@ -4,28 +4,34 @@ import { useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setCurrentPlaylist } from "../../store/reducers/tracksReducer";
 
-export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrackIndex, isPlaying, setIsPlaying, favoritesTracks, setFavoritesTracks, setIsLiked, isLiked, playlist, duration, setDuration, progressTime, setProgressTime}) => {
-  const dispatch = useDispatch()
-  // const [isPlaying, setIsPlaying] = useState(false);
+export const Bar = ({
+  tracks,
+  playingTrack,
+  setPlayingTrack,
+  trackIndex,
+  setTrackIndex,
+  isPlaying,
+  setIsPlaying,
+  favoritesTracks,
+  setFavoritesTracks,
+  setIsLiked,
+  isLiked,
+  playlist,
+  duration,
+  setDuration,
+  progressTime,
+  setProgressTime,
+}) => {
+  const dispatch = useDispatch();
   const audioRef = useRef();
   const [isShuffled, setIsShuffled] = useState(false);
-  // const [isLiked, setIsLiked] = useState(false)
 
   const addPlayingTrack = () => dispatch(setPlayingTrack(playingTrack));
   const addCurrentPlaylist = () => dispatch(setCurrentPlaylist(tracks));
-  // const addCurrentPlaylist = () => {
-  //   (window.location.pathname === '/') ?
-  //   dispatch(setCurrentPlaylist(tracks))
-  //   :dispatch(setCurrentPlaylist(favoritesTracks));
-  // }
-    useEffect(() => {
-    addCurrentPlaylist()
+
+  useEffect(() => {
+    addCurrentPlaylist();
   }, [playingTrack]);
-
-// console.log("текущий плэйлист:" + playlist);
-  // let playlist = tracks;
-  // playlist = useSelector((state) => state.tracks.currentPlaylist);
-
 
   const shuffleTracks = (array) => {
     const newArray = array.slice();
@@ -59,7 +65,14 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrac
       audioRef.current.pause();
       setIsPlaying(false);
     }
-  }, [isPlaying, audioRef, playingTrack, setPlayingTrack, setIsPlaying, duration]);
+  }, [
+    isPlaying,
+    audioRef,
+    playingTrack,
+    setPlayingTrack,
+    setIsPlaying,
+    duration,
+  ]);
 
   const togglePlay = isPlaying ? handleStop : handleStart;
 
@@ -109,8 +122,6 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrac
     setIsRepeating(!isRepeating);
   };
 
-  
-
   const [volume, setVolume] = useState(0.5);
   useEffect(() => {
     if (isPlaying) {
@@ -119,65 +130,53 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrac
   });
 
   const handlePreviousTrack = () => {
-    if (playlist.indexOf(playingTrack)===0) {
-      return
+    if (playlist.indexOf(playingTrack) === 0) {
+      return;
+    } else if (isShuffled) {
+      playlist = shuffleTracks(playlist);
+      const indexPrevTrack = playlist.indexOf(playingTrack) - 1;
+      setPlayingTrack(playlist[indexPrevTrack]);
+    } else {
+      const indexPrevTrack = playlist.indexOf(playingTrack) - 1;
+      setPlayingTrack(playlist[indexPrevTrack]);
     }
-    else if (isShuffled) {
-      playlist = shuffleTracks(playlist)
-      const indexPrevTrack = playlist.indexOf(playingTrack)-1;
-      setPlayingTrack(playlist[indexPrevTrack])
-
-    }
-    else {
-      const indexPrevTrack = playlist.indexOf(playingTrack)-1;
-      setPlayingTrack(playlist[indexPrevTrack])
-    }
-
-
-  }
+  };
 
   const handleNextTrack = () => {
-    const indexNextTrack = playlist.indexOf(playingTrack)+1;
-    if (playlist.indexOf(playingTrack)===(playlist.length-1)) {
-      return
+    const indexNextTrack = playlist.indexOf(playingTrack) + 1;
+    if (playlist.indexOf(playingTrack) === playlist.length - 1) {
+      return;
+    } else if (isShuffled) {
+      playlist = shuffleTracks(playlist);
+      const indexNextTrack = playlist.indexOf(playingTrack) + 1;
+      setPlayingTrack(playlist[indexNextTrack]);
+    } else {
+      const indexNextTrack = playlist.indexOf(playingTrack) + 1;
+      setPlayingTrack(playlist[indexNextTrack]);
     }
-    
-    else if (isShuffled) {
-      playlist = shuffleTracks(playlist)
-      const indexNextTrack = playlist.indexOf(playingTrack)+1;
-      setPlayingTrack(playlist[indexNextTrack])
-
-    }
-    else {
-      const indexNextTrack = playlist.indexOf(playingTrack)+1;
-      setPlayingTrack(playlist[indexNextTrack])
-    }
-
-
-  }
+  };
 
   const functionForNextTrack = () => {
     if (!isRepeating) {
-      handleNextTrack()
+      handleNextTrack();
     }
-  }
+  };
 
   const handleShuffle = () => {
-    playlist = shuffleTracks (playlist);
+    playlist = shuffleTracks(playlist);
     setIsShuffled(!isShuffled);
-  }
+  };
 
   const handleLike = (trackIndex) => {
     setIsLiked(true);
     // if (favoritesTracks.indexOf(track) === -1) {
-      setFavoritesTracks((favoritesTracks) => ([...favoritesTracks, trackIndex]));
-      console.log(favoritesTracks);
+    setFavoritesTracks((favoritesTracks) => [...favoritesTracks, trackIndex]);
+    console.log(favoritesTracks);
     // }
     // else {
     //   console.log('Трек уже добавлен в избранное');
     // }
-
-  }
+  };
 
   return (
     <S.Bars>
@@ -211,9 +210,7 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrac
         <S.BarPlayerBlock>
           <S.BarPlayer>
             <S.PlayerControls>
-              <S.BarPlayerBtnPrev
-                onClick={handlePreviousTrack}
-              >
+              <S.BarPlayerBtnPrev onClick={handlePreviousTrack}>
                 <S.BarPlayerBtnPrevSvg alt="prev">
                   <use xlinkHref="img/icon/sprite.svg#icon-prev"></use>
                 </S.BarPlayerBtnPrevSvg>
@@ -229,9 +226,7 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrac
                   </S.BarPlayerBtnPlaySvg>
                 )}
               </S.BarPlayerBtnPlay>
-              <S.BarPlayerBtnNext
-                onClick={handleNextTrack}
-              >
+              <S.BarPlayerBtnNext onClick={handleNextTrack}>
                 <S.BarPlayerBtnNextSvg alt="next">
                   <use xlinkHref="img/icon/sprite.svg#icon-next"></use>
                 </S.BarPlayerBtnNextSvg>
@@ -262,13 +257,13 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrac
                 onClick={handleShuffle}
               >
                 {!isShuffled ? (
-                <S.BarPlayerBtnShuffleSvg alt="shuffle">
-                  <use xlinkHref="img/icon/sprite.svg#icon-shuffle"></use>
-                </S.BarPlayerBtnShuffleSvg>
+                  <S.BarPlayerBtnShuffleSvg alt="shuffle">
+                    <use xlinkHref="img/icon/sprite.svg#icon-shuffle"></use>
+                  </S.BarPlayerBtnShuffleSvg>
                 ) : (
                   <S.BarPlayerBtnShuffleSvg alt="shuffle">
-                  <use xlinkHref="img/icon/sprite.svg#icon-shuffling"></use>
-                </S.BarPlayerBtnShuffleSvg>
+                    <use xlinkHref="img/icon/sprite.svg#icon-shuffling"></use>
+                  </S.BarPlayerBtnShuffleSvg>
                 )}
               </S.BarPlayerBtnShuffle>
             </S.PlayerControls>
@@ -333,7 +328,7 @@ export const Bar = ({ tracks, playingTrack, setPlayingTrack, trackIndex, setTrac
           </S.BarVolumeBlock>
         </S.BarPlayerBlock>
       </S.BarContent>
-      </S.Bars>
+    </S.Bars>
   );
 };
 
