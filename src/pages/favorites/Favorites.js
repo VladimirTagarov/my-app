@@ -60,7 +60,27 @@ a:visited {
 }
 `;
 
-export const Favorites = ({ tracks, setTracks, playingTrack, loading, setLoading, setPlayingTrack, trackIndex, setTrackIndex, isPlaying, setIsPlaying, favoritesTracks, setFavoritesTracks, setIsLiked, isLiked, playlist, duration, setDuration, progressTime, setProgressTime}) => {
+export const Favorites = ({
+  tracks,
+  setTracks,
+  playingTrack,
+  loading,
+  setLoading,
+  setPlayingTrack,
+  trackIndex,
+  setTrackIndex,
+  isPlaying,
+  setIsPlaying,
+  favoritesTracks,
+  setFavoritesTracks,
+  setIsLiked,
+  isLiked,
+  playlist,
+  duration,
+  setDuration,
+  progressTime,
+  setProgressTime,
+}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // const [loading, setLoading] = useState(true);
@@ -78,8 +98,6 @@ export const Favorites = ({ tracks, setTracks, playingTrack, loading, setLoading
   //   addCurrentPlaylist()
   // }, [addCurrentPlaylist, playingTrack]);
 
-
-
   useEffect(() => {
     getFavoritesTracks(localStorage.access)
       .then((favoritesTracks) => {
@@ -88,7 +106,9 @@ export const Favorites = ({ tracks, setTracks, playingTrack, loading, setLoading
       })
       .catch((error) => {
         // console.log("ошибка доступа");
-        if (error.message === 'Данный токен недействителен для любого типа токена') {
+        if (
+          error.message === "Данный токен недействителен для любого типа токена"
+        ) {
           console.log(error.message);
           navigate("/login", { replace: true });
           return;
@@ -99,35 +119,6 @@ export const Favorites = ({ tracks, setTracks, playingTrack, loading, setLoading
         setLoading(false);
       });
   }, []);
-
-  // useEffect(() => {
-  //   getTracks()
-  //     .then((track) => {
-  //       setTracks(track);
-  //     })
-  //     .catch((error) => {
-  //       setAddPlayerError(error.message);
-  //     })
-  //     .finally(() => {
-  //       setLoading(false);
-  //     });
-  //   // console.log(tracks);
-  //   getFavoritesTracks()
-  //   .then((favoritesTracks) => {
-  //     setFavoritesTracks(favoritesTracks);
-  //     console.log(favoritesTracks);
-  //   })
-
-  // }, []);
-
-   
-      // .catch((error) => {
-      //   setAddPlayerError(error.message);
-      // })
-      // .finally(() => {
-      //   setLoading(false);
-      // });
-
 
   return (
     <div>
@@ -140,17 +131,8 @@ export const Favorites = ({ tracks, setTracks, playingTrack, loading, setLoading
               <Search />
               <S.Centerblock>Мои треки</S.Centerblock>
               <Filter />
-             
-              {/* <Content
-                  isPlaying={isPlaying}
-                  setIsPlaying={setIsPlaying}
-                  tracks={tracks}
-                  playingTrack={playingTrack}
-                  setPlayingTrack={setPlayingTrack}
-                  trackIndex={trackIndex}
-                  setTrackIndex={setTrackIndex}
-                /> */}
-                {!favoritesTracks ? (
+
+              {!favoritesTracks ? (
                 <ContentSkeleton />
               ) : (
                 <ContentFavorites
@@ -167,11 +149,11 @@ export const Favorites = ({ tracks, setTracks, playingTrack, loading, setLoading
                   isLiked={isLiked}
                   setIsLiked={setIsLiked}
                   duration={duration}
-            setDuration={setDuration}
-            progressTime={progressTime}
-            setProgressTime={setProgressTime}
+                  setDuration={setDuration}
+                  progressTime={progressTime}
+                  setProgressTime={setProgressTime}
                 />
-                )}
+              )}
               {/* <p>{addPlayerError}</p> */}
             </S.MainCenterblock>
             {loading ? <SidebarSkeleton /> : <Sidebar />}

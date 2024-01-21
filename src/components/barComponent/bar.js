@@ -212,23 +212,23 @@ export const Bar = ({
             <S.PlayerControls>
               <S.BarPlayerBtnPrev onClick={handlePreviousTrack}>
                 <S.BarPlayerBtnPrevSvg alt="prev">
-                  <use xlinkHref="img/icon/sprite.svg#icon-prev"></use>
+                  <use xlinkHref="/img/icon/sprite.svg#icon-prev"></use>
                 </S.BarPlayerBtnPrevSvg>
               </S.BarPlayerBtnPrev>
               <S.BarPlayerBtnPlay className="_btn" onClick={togglePlay}>
                 {!isPlaying ? (
                   <S.BarPlayerBtnPlaySvg alt="play">
-                    <use xlinkHref="img/icon/sprite.svg#icon-play"></use>
+                    <use xlinkHref="/img/icon/sprite.svg#icon-play"></use>
                   </S.BarPlayerBtnPlaySvg>
                 ) : (
                   <S.BarPlayerBtnPlaySvg alt="play">
-                    <use xlinkHref="img/icon/sprite.svg#icon-pause"></use>
+                    <use xlinkHref="/img/icon/sprite.svg#icon-pause"></use>
                   </S.BarPlayerBtnPlaySvg>
                 )}
               </S.BarPlayerBtnPlay>
               <S.BarPlayerBtnNext onClick={handleNextTrack}>
                 <S.BarPlayerBtnNextSvg alt="next">
-                  <use xlinkHref="img/icon/sprite.svg#icon-next"></use>
+                  <use xlinkHref="/img/icon/sprite.svg#icon-next"></use>
                 </S.BarPlayerBtnNextSvg>
               </S.BarPlayerBtnNext>
               <S.BarPlayerBtnRepeat
@@ -241,14 +241,14 @@ export const Bar = ({
                     className="player__btn-repeat-svg"
                     alt="repeat"
                   >
-                    <use xlinkHref="img/icon/sprite.svg#icon-repeat"></use>
+                    <use xlinkHref="/img/icon/sprite.svg#icon-repeat"></use>
                   </S.BarPlayerBtnRepeatSvg>
                 ) : (
                   <S.BarPlayerBtnRepeatSvg
                     className="player__btn-repeat-svg"
                     alt="repeat"
                   >
-                    <use xlinkHref="img/icon/sprite.svg#icon-repeating"></use>
+                    <use xlinkHref="/img/icon/sprite.svg#icon-repeating"></use>
                   </S.BarPlayerBtnRepeatSvg>
                 )}
               </S.BarPlayerBtnRepeat>
@@ -258,11 +258,11 @@ export const Bar = ({
               >
                 {!isShuffled ? (
                   <S.BarPlayerBtnShuffleSvg alt="shuffle">
-                    <use xlinkHref="img/icon/sprite.svg#icon-shuffle"></use>
+                    <use xlinkHref="/img/icon/sprite.svg#icon-shuffle"></use>
                   </S.BarPlayerBtnShuffleSvg>
                 ) : (
                   <S.BarPlayerBtnShuffleSvg alt="shuffle">
-                    <use xlinkHref="img/icon/sprite.svg#icon-shuffling"></use>
+                    <use xlinkHref="/img/icon/sprite.svg#icon-shuffling"></use>
                   </S.BarPlayerBtnShuffleSvg>
                 )}
               </S.BarPlayerBtnShuffle>
@@ -271,7 +271,7 @@ export const Bar = ({
               <S.TrackPlayContain>
                 <S.TrackPlayImage>
                   <S.TrackPlaySvg alt="music">
-                    <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
+                    <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
                   </S.TrackPlaySvg>
                 </S.TrackPlayImage>
                 <S.TrackPlayAuthor>
@@ -294,12 +294,12 @@ export const Bar = ({
               <S.trackPlayLikeDis>
                 <S.TrackPlayLike className="_btn-icon" onClick={handleLike}>
                   <S.TrackPlayLikeSvg alt="like">
-                    <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
+                    <use xlinkHref="/img/icon/sprite.svg#icon-like"></use>
                   </S.TrackPlayLikeSvg>
                 </S.TrackPlayLike>
                 <S.TrackPlayDislike className="_btn-icon">
                   <S.TrackPlayDislikeSvg alt="dislike">
-                    <use xlinkHref="img/icon/sprite.svg#icon-dislike"></use>
+                    <use xlinkHref="/img/icon/sprite.svg#icon-dislike"></use>
                   </S.TrackPlayDislikeSvg>
                 </S.TrackPlayDislike>
               </S.trackPlayLikeDis>
@@ -309,7 +309,7 @@ export const Bar = ({
             <S.VolumeContent>
               <S.VolumeImage>
                 <S.VolumeSvg alt="volume">
-                  <use xlinkHref="img/icon/sprite.svg#icon-volume"></use>
+                  <use xlinkHref="/img/icon/sprite.svg#icon-volume"></use>
                 </S.VolumeSvg>
               </S.VolumeImage>
               <S.VolumeProgress className="_btn">

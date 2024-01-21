@@ -56,7 +56,7 @@ a:visited {
 }
 `;
 
-export const Category = (
+export const Category = ({
   tracks,
   setTracks,
   playingTrack,
@@ -77,12 +77,34 @@ export const Category = (
   duration,
   setDuration,
   progressTime,
-  setProgressTime
-) => {
+  setProgressTime,
+  findedTracks,
+  setFindedTracks,
+  isTrackfinded,
+  setIsTrackfinded,
+  filtredTracks,
+  setFiltredTracks,
+}) => {
   console.log(tracks);
   console.log(Array.isArray(tracks));
   const params = useParams();
   const categoryFromUrl = category.find((id) => id === Number(params.id));
+  console.log(params.id);
+
+  if (params.id === "1") {
+    filtredTracks = tracks.filter(
+      (item) => item.genre === "Классическая музыка"
+    );
+    console.log(1);
+  } else if (params.id === "2") {
+    filtredTracks = tracks.filter(
+      (item) => item.genre === "Электронная музыка"
+    );
+    console.log(2);
+  } else {
+    filtredTracks = tracks.filter((item) => item.genre === "Рок музыка");
+    console.log(3);
+  }
 
   return (
     <div>
@@ -102,7 +124,7 @@ export const Category = (
                   <ContentCategory
                     isPlaying={isPlaying}
                     setIsPlaying={setIsPlaying}
-                    tracks={tracks}
+                    tracks={filtredTracks}
                     setTracks={setTracks}
                     playingTrack={playingTrack}
                     setPlayingTrack={setPlayingTrack}
@@ -116,8 +138,9 @@ export const Category = (
                     loading={loading}
                   />
                 )}
-                <p>{addPlayerError}</p>
+                {/* <p>{addPlayerError}</p> */}
               </S.MainCenterblock>
+              {loading ? <SidebarSkeleton /> : <Sidebar />}
             </S.Main>
 
             <S.Footer></S.Footer>

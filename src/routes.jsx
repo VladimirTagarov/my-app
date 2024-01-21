@@ -31,6 +31,7 @@ export const AppRoutes = ({ user }) => {
   const [progressTime, setProgressTime] = useState(0);
   const [findedTracks, setFindedTracks] = useState([]);
   const [isTrackfinded, setIsTrackfinded] = useState(false);
+  const [filtredTracks, setFiltredTracks] = useState([]);
 
   const addPlayingTrack = () => dispatch(setPlayingTrack(playingTrack));
   // addPlayingTrack();
@@ -199,6 +200,12 @@ export const AppRoutes = ({ user }) => {
                 setDuration={setDuration}
                 progressTime={progressTime}
                 setProgressTime={setProgressTime}
+                findedTracks={findedTracks}
+                setFindedTracks={setFindedTracks}
+                isTrackfinded={isTrackfinded}
+                setIsTrackfinded={setIsTrackfinded}
+                filtredTracks={filtredTracks}
+                setFiltredTracks={setFiltredTracks}
               />
             </ProtectedRoute>
           }

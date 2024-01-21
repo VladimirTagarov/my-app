@@ -16,7 +16,7 @@ function Sidebar() {
     setRegUser(null);
     navigate("/login", { replace: true });
   };
-  const nameOfUser = localStorage.getItem('user');
+  const nameOfUser = localStorage.getItem("user");
 
   return (
     <S.MainSidebar>
@@ -49,7 +49,7 @@ function Sidebar() {
               <Link to={`/category/${id}`}>
                 <S.SidebarLink>
                   <S.SidebarImg
-                    src={`img/playlist0${id}.png`}
+                    src={`/img/playlist0${id}.png`}
                     alt="day's playlist"
                   />
                 </S.SidebarLink>
