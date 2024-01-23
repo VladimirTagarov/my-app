@@ -99,7 +99,7 @@ export const Main = ({
                 setIsTrackfinded={setIsTrackfinded}
               />
               <S.Centerblock>Треки</S.Centerblock>
-              <Filter />
+              <Filter tracks={tracks} setTracks={setTracks} />
               {loading ? (
                 <ContentSkeleton />
               ) : isTrackfinded ? (

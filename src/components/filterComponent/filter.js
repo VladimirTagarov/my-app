@@ -5,7 +5,7 @@ import YearFilter from "../FilterYearComponent/yearFilter";
 import { useState } from "react";
 import * as S from "./filter.styles";
 
-function Filter() {
+function Filter({ tracks, setTracks }) {
   const [open, setOpen] = useState(false);
 
   const popup = () => {
@@ -26,6 +26,11 @@ function Filter() {
     setOpenPopup(false);
   };
 
+  const toggleAuthors = (authorsId) => {
+    console.log(authorsId);
+    // setCountOfToggles(countOfToggles + 1);
+  };
+
   return (
     <S.CenterblockFilter>
       <S.FilterTitle>Искать по:</S.FilterTitle>
@@ -33,7 +38,21 @@ function Filter() {
         <S.FilterButton onClick={popup} className="_btn-text">
           исполнителю
         </S.FilterButton>
-        {open ? <AuthorFilter /> : null}
+        {open ? (
+          // <AuthorFilter tracks={tracks} setTracks={setTracks} /> :
+          <S.PopupAuthor>
+            {tracks.map((track, i) => {
+              return (
+                <S.PopupAuthorText
+                  key={track.id}
+                  onClick={toggleAuthors(track)}
+                >
+                  <div>{track.author}</div>
+                </S.PopupAuthorText>
+              );
+            })}
+          </S.PopupAuthor>
+        ) : null}
       </S.Popup>
       <S.Popup>
         <S.FilterButton onClick={popupYear} className="_btn-text">
