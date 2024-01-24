@@ -102,7 +102,7 @@ export const ContentFavorites = ({
       getTracks()
         .then((track) => {
           setTracks(track);
-          window.location.reload(true);
+          // window.location.reload(true);
         })
         .catch((error) => {
           if (error.status === 401) {
@@ -110,18 +110,18 @@ export const ContentFavorites = ({
             navigate("/login", { replace: true });
           }
         });
-      window.location.reload(true);
-      getFavoritesTracks()
-        .then((favoritesTracks) => {
-          setFavoritesTracks(favoritesTracks);
-          window.location.reload(true);
-        })
-        .catch((error) => {
-          if (error.status === 401) {
-            localStorage.clear();
-            navigate("/login", { replace: true });
-          }
-        });
+      // window.location.reload(true);
+      // getFavoritesTracks()
+      //   .then((favoritesTrack) => {
+      //     setFavoritesTracks(favoritesTrack);
+      //     // window.location.reload(true);
+      //   })
+      //   .catch((error) => {
+      //     if (error.status === 401) {
+      //       localStorage.clear();
+      //       navigate("/login", { replace: true });
+      //     }
+      //   });
     });
   };
 

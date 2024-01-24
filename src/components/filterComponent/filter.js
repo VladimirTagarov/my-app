@@ -45,7 +45,9 @@ function Filter({ tracks, setTracks }) {
               return (
                 <S.PopupAuthorText
                   key={track.id}
-                  onClick={toggleAuthors(track)}
+                  onClick={() => {
+                    toggleAuthors(track);
+                  }}
                 >
                   <div>{track.author}</div>
                 </S.PopupAuthorText>

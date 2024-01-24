@@ -83,20 +83,8 @@ export const Favorites = ({
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const [loading, setLoading] = useState(true);
-  // const [tracks, setTracks] = useState();
-  // const [favoritesTracks, setFavoritesTracks] = useState();
-  // const playingTrackFromStore = useSelector((state) => state.track)
-  // const [playingTrack, setPlayingTrack] = useState(playingTrackFromStore);
   const [addPlayerError, setAddPlayerError] = useState(null);
-  // const [isPlaying, setIsPlaying] = useState(false);
-  // const [trackIndex, setTrackIndex] = useState(null);
   const addPlayingTrack = () => dispatch(setPlayingTrack(playingTrack));
-  // addPlayingTrack();
-  // const addCurrentPlaylist = () => dispatch(setCurrentPlaylist(tracks));
-  // useEffect(() => {
-  //   addCurrentPlaylist()
-  // }, [addCurrentPlaylist, playingTrack]);
 
   useEffect(() => {
     getFavoritesTracks(localStorage.access)
@@ -158,37 +146,6 @@ export const Favorites = ({
             </S.MainCenterblock>
             {loading ? <SidebarSkeleton /> : <Sidebar />}
           </S.Main>
-          {/* <S.Bar
-            isPlaying={isPlaying}
-            setIsPlaying={setIsPlaying}
-            tracks={tracks}
-            playingTrack={playingTrack}
-            setPlayingTrack={setPlayingTrack}
-            trackIndex={trackIndex}
-            setTrackIndex={setTrackIndex}
-            playlist={playlist}
-            duration={duration}
-            setDuration={setDuration}
-            progressTime={progressTime}
-            setProgressTime={setProgressTime}
-          >
-            {playingTrack ? (
-              <Bar
-              isPlaying={isPlaying}
-                  setIsPlaying={setIsPlaying}
-                tracks={tracks}
-                playingTrack={playingTrack}
-                setPlayingTrack={setPlayingTrack}
-                trackIndex={trackIndex}
-                setTrackIndex={setTrackIndex}
-                playlist={playlist}
-                duration={duration}
-            setDuration={setDuration}
-            progressTime={progressTime}
-            setProgressTime={setProgressTime}
-              />
-            ) : null}
-          </S.Bar> */}
           <S.Footer></S.Footer>
         </S.Container>
       </S.Wrapper>

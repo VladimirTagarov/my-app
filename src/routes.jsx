@@ -217,6 +217,7 @@ export const AppRoutes = ({ user }) => {
           isPlaying={isPlaying}
           setIsPlaying={setIsPlaying}
           tracks={tracks}
+          setTracks={setTracks}
           playingTrack={playingTrack}
           setPlayingTrack={setPlayingTrack}
           trackIndex={trackIndex}

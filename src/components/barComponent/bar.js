@@ -3,9 +3,17 @@ import * as S from "./Bar.style";
 import { useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setCurrentPlaylist } from "../../store/reducers/tracksReducer";
+import {
+  getLikes,
+  getDisLikes,
+  getFavoritesTracks,
+  getTracks,
+} from "../../api";
+import { useNavigate } from "react-router-dom";
 
 export const Bar = ({
   tracks,
+  setTracks,
   playingTrack,
   setPlayingTrack,
   trackIndex,
@@ -22,6 +30,13 @@ export const Bar = ({
   progressTime,
   setProgressTime,
 }) => {
+  // const numberOfPlayingTrack = playingTrack.id;
+  const [numberOfPlayingTrack, setnumberOfPlayingTrack] = useState();
+  useEffect(() => {
+    setnumberOfPlayingTrack(playingTrack.id);
+  }, [playingTrack]);
+  console.log(numberOfPlayingTrack);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const audioRef = useRef();
   const [isShuffled, setIsShuffled] = useState(false);
@@ -167,15 +182,41 @@ export const Bar = ({
     setIsShuffled(!isShuffled);
   };
 
-  const handleLike = (trackIndex) => {
-    setIsLiked(true);
-    // if (favoritesTracks.indexOf(track) === -1) {
-    setFavoritesTracks((favoritesTracks) => [...favoritesTracks, trackIndex]);
-    console.log(favoritesTracks);
-    // }
-    // else {
-    //   console.log('Трек уже добавлен в избранное');
-    // }
+  const handleLike = async (numberOfPlayingTrack) => {
+    setIsLiked(!isLiked);
+
+    // // }
+    // // else {
+    // //   console.log('Трек уже добавлен в избранное');
+    // // }
+    getLikes(localStorage.access, numberOfPlayingTrack).then(() => {
+      getTracks()
+        .then((track) => {
+          setTracks(track);
+        })
+        .catch((error) => {
+          if (error.status === 401) {
+            localStorage.clear();
+            navigate("/login", { replace: true });
+          }
+        });
+    });
+  };
+
+  const handleDisLike = async (numberOfPlayingTrack) => {
+    setIsLiked(!isLiked);
+    getDisLikes(localStorage.access, numberOfPlayingTrack).then(() => {
+      getTracks()
+        .then((track) => {
+          setTracks(track);
+        })
+        .catch((error) => {
+          if (error.status === 401) {
+            localStorage.clear();
+            navigate("/login", { replace: true });
+          }
+        });
+    });
   };
 
   return (
@@ -292,12 +333,22 @@ export const Bar = ({
                 </S.TrackPlayAlbum>
               </S.TrackPlayContain>
               <S.trackPlayLikeDis>
-                <S.TrackPlayLike className="_btn-icon" onClick={handleLike}>
+                <S.TrackPlayLike
+                  className="_btn-icon"
+                  onClick={() => {
+                    handleLike(numberOfPlayingTrack);
+                  }}
+                >
                   <S.TrackPlayLikeSvg alt="like">
                     <use xlinkHref="/img/icon/sprite.svg#icon-like"></use>
                   </S.TrackPlayLikeSvg>
                 </S.TrackPlayLike>
-                <S.TrackPlayDislike className="_btn-icon">
+                <S.TrackPlayDislike
+                  className="_btn-icon"
+                  onClick={() => {
+                    handleDisLike(numberOfPlayingTrack);
+                  }}
+                >
                   <S.TrackPlayDislikeSvg alt="dislike">
                     <use xlinkHref="/img/icon/sprite.svg#icon-dislike"></use>
                   </S.TrackPlayDislikeSvg>
