@@ -207,6 +207,7 @@ export const TrackTimeSvg = styled.svg`
   margin-right: 17px;
   fill: transparent;
   stroke: #696969;
+  cursor: pointer;
 `;
 
 export const TrackTimeText = styled.span`
@@ -218,59 +219,53 @@ export const TrackTimeText = styled.span`
   color: #696969;
 `;
 
-export const PlayingDot = styled.div
-`
-display: none;
-width: 16px;
+export const PlayingDot = styled.div`
+  display: none;
+  width: 16px;
   height: 16px;
   background-color: #b672ff;
   border-radius: 8px;
   animation: bubble_out 0.6s ease-in-out infinite both;
 
-@keyframes bubble_out {
-  0%,
-  to {
-    transform: scale(0.5);
+  @keyframes bubble_out {
+    0%,
+    to {
+      transform: scale(0.5);
+    }
+    50% {
+      transform: scale(1);
+    }
   }
-  50% {
-    transform: scale(1);
-  }
-}
 `;
 
-export const PlayingDotActivePause = styled.div
-`
-display: block;
-width: 16px;
+export const PlayingDotActivePause = styled.div`
+  display: block;
+  width: 16px;
   height: 16px;
   background-color: #b672ff;
   border-radius: 8px;
- 
 `;
 
-export const PlayingDotActive = styled.div
-`
-display: block;
-width: 16px;
+export const PlayingDotActive = styled.div`
+  display: block;
+  width: 16px;
   height: 16px;
   background-color: #b672ff;
   border-radius: 8px;
   animation: bubble_out 0.6s ease-in-out infinite both;
 
-@keyframes bubble_out {
-  0%,
-  to {
-    transform: scale(0.5);
+  @keyframes bubble_out {
+    0%,
+    to {
+      transform: scale(0.5);
+    }
+    50% {
+      transform: scale(1);
+    }
   }
-  50% {
-    transform: scale(1);
-  }
-}
 `;
-export const LikeElement = styled.div
-`
-display: block;
-width: 14px;
-height: 12px;
+export const LikeElement = styled.div`
+  display: block;
+  width: 14px;
+  height: 12px;
 `;
-

@@ -19,4 +19,5 @@ export const PopupAuthor = styled.ul`
 export const PopupAuthorText = styled.li`
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 `;

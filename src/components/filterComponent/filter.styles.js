@@ -58,4 +58,19 @@ export const PopupAuthor = styled.ul`
 export const PopupAuthorText = styled.li`
   display: flex;
   flex-direction: column;
+  cursor: pointer;
+`;
+
+export const PopupAuthorTextActive = styled.li`
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  color: #b672ff;
+`;
+
+export const PopupAuthorTextPassive = styled.li`
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  color: white;
 `;

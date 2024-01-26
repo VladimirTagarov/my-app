@@ -21,6 +21,12 @@ export const ContentCategory = ({
   playlist,
   loading,
   setLoading,
+  countOfToggles,
+  setCountOfToggles,
+  isClicked,
+  setIsClicked,
+  checkedAuthors,
+  setCheckedAuthors,
 }) => {
   // useEffect(() => {
   //   setTimeout(() => {

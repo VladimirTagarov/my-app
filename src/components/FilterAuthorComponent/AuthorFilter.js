@@ -6,50 +6,29 @@ function AuthorFilter({ tracks, setTracks }) {
   const [countOfToggles, setCountOfToggles] = useState(0);
 
   let arrayOfAuthors = [];
+  let sortArrayOfAuthors = [];
   arrayOfAuthors = tracks.map((track) => track.author);
-  // console.log(arrayOfAuthors);
+  console.log(arrayOfAuthors);
+  sortArrayOfAuthors = arrayOfAuthors.filter(
+    (item, index) => arrayOfAuthors.indexOf(item) === index && item !== "-"
+  );
+  console.log(sortArrayOfAuthors);
   const toggleAuthors = (authorsId) => {
     console.log(authorsId);
     // setCountOfToggles(countOfToggles + 1);
   };
 
-  const author = [
-    "Alexander Nakarada",
-    "Frank Schroter",
-    "Kevin Macleod",
-    "Mixkit",
-    "Waltz Piano",
-    // "AFM",
-    // "Bobby Marleni",
-    // "Brian Holtz",
-    // "Fanz",
-    // "Luke",
-    // "Ryan Craig Martin",
-    // "Sascha Ende",
-    // "Starforsh",
-    // "Voisin",
-    // "Audionautix",
-    // "Kevin Macleodburn",
-    // "MED",
-    // "Tim Kulig",
-    "Winniethemoog",
-  ];
-
   return (
-    // <S.PopupAuthor>
-    //   {author.map((element, i) => (
-    //     <S.PopupAuthorText key={i} onClick={console.log("1")}>
-    //       <></>
-    //       {element}
-    //     </S.PopupAuthorText>
-    //   ))}
-    // </S.PopupAuthor>
-
     <S.PopupAuthor>
-      {tracks.map((track, i) => {
+      {sortArrayOfAuthors.map((author, i) => {
         return (
-          <S.PopupAuthorText key={track.id} onClick={toggleAuthors(track)}>
-            <div>{track.author}</div>
+          <S.PopupAuthorText
+            key={author.i}
+            onClick={() => {
+              toggleAuthors(author);
+            }}
+          >
+            <div>{author}</div>
           </S.PopupAuthorText>
         );
       })}

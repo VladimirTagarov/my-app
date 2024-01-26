@@ -80,6 +80,12 @@ export const Favorites = ({
   setDuration,
   progressTime,
   setProgressTime,
+  countOfToggles,
+  setCountOfToggles,
+  isClicked,
+  setIsClicked,
+  checkedAuthors,
+  setCheckedAuthors,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -118,7 +124,16 @@ export const Favorites = ({
             <S.MainCenterblock>
               <Search />
               <S.Centerblock>Мои треки</S.Centerblock>
-              <Filter />
+              <Filter
+                tracks={tracks}
+                setTracks={setTracks}
+                countOfToggles={countOfToggles}
+                setCountOfToggles={setCountOfToggles}
+                isClicked={isClicked}
+                setIsClicked={setIsClicked}
+                checkedAuthors={checkedAuthors}
+                setCheckedAuthors={setCheckedAuthors}
+              />
 
               {!favoritesTracks ? (
                 <ContentSkeleton />
@@ -140,6 +155,12 @@ export const Favorites = ({
                   setDuration={setDuration}
                   progressTime={progressTime}
                   setProgressTime={setProgressTime}
+                  countOfToggles={countOfToggles}
+                  setCountOfToggles={setCountOfToggles}
+                  isClicked={isClicked}
+                  setIsClicked={setIsClicked}
+                  checkedAuthors={checkedAuthors}
+                  setCheckedAuthors={setCheckedAuthors}
                 />
               )}
               {/* <p>{addPlayerError}</p> */}

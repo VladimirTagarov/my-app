@@ -84,6 +84,12 @@ export const Category = ({
   setIsTrackfinded,
   filtredTracks,
   setFiltredTracks,
+  countOfToggles,
+  setCountOfToggles,
+  isClicked,
+  setIsClicked,
+  checkedAuthors,
+  setCheckedAuthors,
 }) => {
   console.log(tracks);
   console.log(Array.isArray(tracks));
@@ -117,7 +123,16 @@ export const Category = ({
               <S.MainCenterblock>
                 <Search />
                 <S.Centerblock>Треки</S.Centerblock>
-                <Filter />
+                <Filter
+                  tracks={tracks}
+                  setTracks={setTracks}
+                  countOfToggles={countOfToggles}
+                  setCountOfToggles={setCountOfToggles}
+                  isClicked={isClicked}
+                  setIsClicked={setIsClicked}
+                  checkedAuthors={checkedAuthors}
+                  setCheckedAuthors={setCheckedAuthors}
+                />
                 {loading ? (
                   <ContentSkeleton />
                 ) : (
@@ -136,6 +151,12 @@ export const Category = ({
                     playlist={playlist}
                     setLoading={setLoading}
                     loading={loading}
+                    countOfToggles={countOfToggles}
+                    setCountOfToggles={setCountOfToggles}
+                    isClicked={isClicked}
+                    setIsClicked={setIsClicked}
+                    checkedAuthors={checkedAuthors}
+                    setCheckedAuthors={setCheckedAuthors}
                   />
                 )}
                 {/* <p>{addPlayerError}</p> */}

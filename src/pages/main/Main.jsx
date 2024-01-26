@@ -78,6 +78,14 @@ export const Main = ({
   setFindedTracks,
   isTrackfinded,
   setIsTrackfinded,
+  countOfToggles,
+  setCountOfToggles,
+  isClicked,
+  setIsClicked,
+  checkedAuthors,
+  setCheckedAuthors,
+  sortTracks,
+  setSortTracks,
 }) => {
   console.log(tracks);
   console.log(Array.isArray(tracks));
@@ -99,7 +107,18 @@ export const Main = ({
                 setIsTrackfinded={setIsTrackfinded}
               />
               <S.Centerblock>Треки</S.Centerblock>
-              <Filter tracks={tracks} setTracks={setTracks} />
+              <Filter
+                tracks={tracks}
+                setTracks={setTracks}
+                countOfToggles={countOfToggles}
+                setCountOfToggles={setCountOfToggles}
+                isClicked={isClicked}
+                setIsClicked={setIsClicked}
+                checkedAuthors={checkedAuthors}
+                setCheckedAuthors={setCheckedAuthors}
+                sortTracks={sortTracks}
+                setSortTracks={setSortTracks}
+              />
               {loading ? (
                 <ContentSkeleton />
               ) : isTrackfinded ? (
@@ -107,6 +126,27 @@ export const Main = ({
                   isPlaying={isPlaying}
                   setIsPlaying={setIsPlaying}
                   tracks={findedTracks}
+                  setTracks={setTracks}
+                  playingTrack={playingTrack}
+                  setPlayingTrack={setPlayingTrack}
+                  trackIndex={trackIndex}
+                  setTrackIndex={setTrackIndex}
+                  isLiked={isLiked}
+                  setIsLiked={setIsLiked}
+                  playingTrackFromStore={playingTrackFromStore}
+                  playlist={playlist}
+                  countOfToggles={countOfToggles}
+                  setCountOfToggles={setCountOfToggles}
+                  isClicked={isClicked}
+                  setIsClicked={setIsClicked}
+                  checkedAuthors={checkedAuthors}
+                  setCheckedAuthors={setCheckedAuthors}
+                />
+              ) : isClicked ? (
+                <Content
+                  isPlaying={isPlaying}
+                  setIsPlaying={setIsPlaying}
+                  tracks={sortTracks}
                   setTracks={setTracks}
                   playingTrack={playingTrack}
                   setPlayingTrack={setPlayingTrack}

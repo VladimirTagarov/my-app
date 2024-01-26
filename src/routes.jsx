@@ -32,6 +32,10 @@ export const AppRoutes = ({ user }) => {
   const [findedTracks, setFindedTracks] = useState([]);
   const [isTrackfinded, setIsTrackfinded] = useState(false);
   const [filtredTracks, setFiltredTracks] = useState([]);
+  const [countOfToggles, setCountOfToggles] = useState(0);
+  const [isClicked, setIsClicked] = useState(false);
+  const [checkedAuthors, setCheckedAuthors] = useState([]);
+  const [sortTracks, setSortTracks] = useState([]);
 
   const addPlayingTrack = () => dispatch(setPlayingTrack(playingTrack));
   // addPlayingTrack();
@@ -139,6 +143,14 @@ export const AppRoutes = ({ user }) => {
                 setFindedTracks={setFindedTracks}
                 isTrackfinded={isTrackfinded}
                 setIsTrackfinded={setIsTrackfinded}
+                countOfToggles={countOfToggles}
+                setCountOfToggles={setCountOfToggles}
+                isClicked={isClicked}
+                setIsClicked={setIsClicked}
+                checkedAuthors={checkedAuthors}
+                setCheckedAuthors={setCheckedAuthors}
+                sortTracks={sortTracks}
+                setSortTracks={setSortTracks}
               />
             </ProtectedRoute>
           }
@@ -170,6 +182,12 @@ export const AppRoutes = ({ user }) => {
                 setDuration={setDuration}
                 progressTime={progressTime}
                 setProgressTime={setProgressTime}
+                countOfToggles={countOfToggles}
+                setCountOfToggles={setCountOfToggles}
+                isClicked={isClicked}
+                setIsClicked={setIsClicked}
+                checkedAuthors={checkedAuthors}
+                setCheckedAuthors={setCheckedAuthors}
               />
             </ProtectedRoute>
           }
@@ -206,6 +224,12 @@ export const AppRoutes = ({ user }) => {
                 setIsTrackfinded={setIsTrackfinded}
                 filtredTracks={filtredTracks}
                 setFiltredTracks={setFiltredTracks}
+                countOfToggles={countOfToggles}
+                setCountOfToggles={setCountOfToggles}
+                isClicked={isClicked}
+                setIsClicked={setIsClicked}
+                checkedAuthors={checkedAuthors}
+                setCheckedAuthors={setCheckedAuthors}
               />
             </ProtectedRoute>
           }

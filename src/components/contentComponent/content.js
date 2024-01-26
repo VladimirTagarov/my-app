@@ -18,6 +18,12 @@ export const Content = ({
   setIsLiked,
   playingTrackFromStore,
   playlist,
+  countOfToggles,
+  setCountOfToggles,
+  isClicked,
+  setIsClicked,
+  checkedAuthors,
+  setCheckedAuthors,
 }) => {
   // const handlePlayTrack = (track) => {
   //   setPlayingTrack(track);
