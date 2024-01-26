@@ -86,6 +86,14 @@ export const Main = ({
   setCheckedAuthors,
   sortTracks,
   setSortTracks,
+  countOfTogglesGenre,
+  setCountOfTogglesGenre,
+  isClickedGenre,
+  setIsClickedGenre,
+  checkedGenre,
+  setCheckedGenre,
+  sortTracksGenre,
+  setSortTracksGenre,
 }) => {
   console.log(tracks);
   console.log(Array.isArray(tracks));
@@ -118,6 +126,14 @@ export const Main = ({
                 setCheckedAuthors={setCheckedAuthors}
                 sortTracks={sortTracks}
                 setSortTracks={setSortTracks}
+                countOfTogglesGenre={countOfTogglesGenre}
+                setCountOfTogglesGenre={setCountOfTogglesGenre}
+                isClickedGenre={isClickedGenre}
+                setIsClickedGenre={setIsClickedGenre}
+                checkedGenre={checkedGenre}
+                setCheckedGenre={setCheckedGenre}
+                sortTracksGenre={sortTracksGenre}
+                setSortTracksGenre={setSortTracksGenre}
               />
               {loading ? (
                 <ContentSkeleton />
@@ -141,12 +157,31 @@ export const Main = ({
                   setIsClicked={setIsClicked}
                   checkedAuthors={checkedAuthors}
                   setCheckedAuthors={setCheckedAuthors}
+                  isClickedGenre={isClickedGenre}
+                  setIsClickedGenre={setIsClickedGenre}
+                  sortTracksGenre={sortTracksGenre}
+                  setSortTracksGenre={setSortTracksGenre}
                 />
               ) : isClicked ? (
                 <Content
                   isPlaying={isPlaying}
                   setIsPlaying={setIsPlaying}
                   tracks={sortTracks}
+                  setTracks={setTracks}
+                  playingTrack={playingTrack}
+                  setPlayingTrack={setPlayingTrack}
+                  trackIndex={trackIndex}
+                  setTrackIndex={setTrackIndex}
+                  isLiked={isLiked}
+                  setIsLiked={setIsLiked}
+                  playingTrackFromStore={playingTrackFromStore}
+                  playlist={playlist}
+                />
+              ) : isClickedGenre ? (
+                <Content
+                  isPlaying={isPlaying}
+                  setIsPlaying={setIsPlaying}
+                  tracks={sortTracksGenre}
                   setTracks={setTracks}
                   playingTrack={playingTrack}
                   setPlayingTrack={setPlayingTrack}

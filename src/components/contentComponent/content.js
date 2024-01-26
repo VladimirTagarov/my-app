@@ -24,6 +24,10 @@ export const Content = ({
   setIsClicked,
   checkedAuthors,
   setCheckedAuthors,
+  isClickedGenre,
+  setIsClickedGenre,
+  sortTracksGenre,
+  setSortTracksGenre,
 }) => {
   // const handlePlayTrack = (track) => {
   //   setPlayingTrack(track);

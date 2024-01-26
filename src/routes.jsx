@@ -36,6 +36,10 @@ export const AppRoutes = ({ user }) => {
   const [isClicked, setIsClicked] = useState(false);
   const [checkedAuthors, setCheckedAuthors] = useState([]);
   const [sortTracks, setSortTracks] = useState([]);
+  const [countOfTogglesGenre, setCountOfTogglesGenre] = useState(0);
+  const [isClickedGenre, setIsClickedGenre] = useState(false);
+  const [checkedGenre, setCheckedGenre] = useState([]);
+  const [sortTracksGenre, setSortTracksGenre] = useState([]);
 
   const addPlayingTrack = () => dispatch(setPlayingTrack(playingTrack));
   // addPlayingTrack();
@@ -151,6 +155,14 @@ export const AppRoutes = ({ user }) => {
                 setCheckedAuthors={setCheckedAuthors}
                 sortTracks={sortTracks}
                 setSortTracks={setSortTracks}
+                countOfTogglesGenre={countOfTogglesGenre}
+                setCountOfTogglesGenre={setCountOfTogglesGenre}
+                isClickedGenre={isClickedGenre}
+                setIsClickedGenre={setIsClickedGenre}
+                checkedGenre={checkedGenre}
+                setCheckedGenre={setCheckedGenre}
+                sortTracksGenre={sortTracksGenre}
+                setSortTracksGenre={setSortTracksGenre}
               />
             </ProtectedRoute>
           }

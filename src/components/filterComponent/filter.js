@@ -16,11 +16,20 @@ function Filter({
   setCheckedAuthors,
   sortTracks,
   setSortTracks,
+  countOfTogglesGenre,
+  setCountOfTogglesGenre,
+  isClickedGenre,
+  setIsClickedGenre,
+  checkedGenre,
+  setCheckedGenre,
+  sortTracksGenre,
+  setSortTracksGenre,
 }) {
   const [open, setOpen] = useState(false);
   // const [countOfToggles, setCountOfToggles] = useState(0);
   // const [isClicked, setIsClicked] = useState(false);
   const [activeAuthors, setActiveAuthors] = useState(null);
+  const [activeGenres, setActiveGenres] = useState(null);
   // const [checkedAuthors, setCheckedAuthors] = useState([]);
 
   const popup = () => {
@@ -43,17 +52,19 @@ function Filter({
 
   let arrayOfAuthors = [];
   let sortArrayOfAuthors = [];
+  let genreArray = [];
+  let sortGenre = [];
   // let sortTracks = [];
+  genreArray = tracks.map((track) => track.genre);
+  sortGenre = genreArray.filter(
+    (item, index) => genreArray.indexOf(item) === index
+  );
   arrayOfAuthors = tracks.map((track) => track.author);
-  console.log("клик был: " + isClicked);
-  // console.log(arrayOfAuthors);
   sortArrayOfAuthors = arrayOfAuthors.filter(
     (item, index) => arrayOfAuthors.indexOf(item) === index && item !== "-"
   );
-  console.log("а вот и наш массив: " + sortTracks);
-  // console.log(sortArrayOfAuthors);
   const toggleAuthors = (authorsId) => {
-    setActiveAuthors(authorsId);
+    setActiveGenres(authorsId);
     console.log(authorsId);
 
     if (checkedAuthors.includes(authorsId)) {
@@ -76,6 +87,32 @@ function Filter({
     );
     console.log(sortTracks);
     setSortTracks(sortTracks);
+  };
+
+  const toggleGenres = (genresId) => {
+    setActiveGenres(genresId);
+    console.log(genresId);
+
+    if (checkedGenre.includes(genresId)) {
+      setCheckedGenre(checkedGenre.filter((e) => e !== genresId));
+      setCountOfTogglesGenre(checkedGenre.length - 1);
+      // console.log(countOfToggles);
+    } else {
+      setCheckedGenre((genres) => [...genres, genresId]);
+      setCountOfTogglesGenre(checkedGenre.length + 1);
+      // console.log(countOfToggles);
+    }
+    if (checkedGenre.length > 0) {
+      setIsClickedGenre(true);
+    } else {
+      setIsClickedGenre(false);
+    }
+
+    sortTracksGenre = tracks.filter((track) =>
+      checkedGenre.includes(track.genre)
+    );
+    console.log(sortTracksGenre);
+    setSortTracksGenre(sortTracksGenre);
   };
 
   return (
@@ -147,18 +184,79 @@ function Filter({
           </div>
         </>
       ) : null}
-      <S.Popup>
+      {/* <S.Popup>
         <S.FilterButton onClick={popupYear} className="_btn-text">
           году выпуска
         </S.FilterButton>
         {openYear ? <YearFilter /> : null}
-      </S.Popup>
+      </S.Popup> */}
       <S.Popup>
         <S.FilterButton onClick={popupGenre} className="_btn-text">
           жанру
         </S.FilterButton>
-        {openPopup ? <GenreFilter /> : null}
+        {openPopup ? (
+          <S.PopupGenre>
+            {sortGenre.map(
+              //   (element, i) => (
+              //   <S.PopupGenreText className="popup__genre-text" key={i}>
+              //     {element}
+              //   </S.PopupGenreText>
+              // )
+              (genre, i) => {
+                return (
+                  <S.PopupGenreText
+                    key={i}
+                    onClick={() => {
+                      toggleGenres(genre);
+                      // setIsClicked(!isClicked);
+                      console.log(genre + "fff");
+                      console.log(countOfTogglesGenre);
+                    }}
+                  >
+                    {checkedGenre.includes(genre) ? (
+                      <S.PopupAuthorTextActive>{genre}</S.PopupAuthorTextActive>
+                    ) : (
+                      <S.PopupAuthorTextPassive>
+                        {genre}
+                      </S.PopupAuthorTextPassive>
+                    )}
+                  </S.PopupGenreText>
+                );
+              }
+            )}
+          </S.PopupGenre>
+        ) : null}
       </S.Popup>
+      {countOfTogglesGenre ? (
+        <>
+          <svg
+            width="26"
+            height="26"
+            viewBox="0 0 26 26"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style={{
+              position: "relative",
+              zIndex: "3",
+              top: "-15px",
+              left: "-25px",
+              gap: "0px",
+            }}
+          >
+            <ellipse cx="13" cy="12.75" rx="13" ry="12.75" fill="#AD61FF" />
+          </svg>
+          <div
+            style={{
+              position: "relative",
+              zIndex: "4",
+              top: "-16px",
+              left: "-52px",
+            }}
+          >
+            {countOfTogglesGenre}
+          </div>
+        </>
+      ) : null}
     </S.CenterblockFilter>
   );
 }
