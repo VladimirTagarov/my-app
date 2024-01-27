@@ -50,6 +50,11 @@ function Filter({
     setOpenPopup(false);
   };
 
+  console.log("count: " + countOfTogglesGenre);
+  setSortTracksGenre(sortTracksGenre);
+  setSortTracks(sortTracks);
+  console.log("есть ли клик?: " + isClickedGenre);
+
   let arrayOfAuthors = [];
   let sortArrayOfAuthors = [];
   let genreArray = [];
@@ -65,6 +70,7 @@ function Filter({
   );
   const toggleAuthors = (authorsId) => {
     setActiveGenres(authorsId);
+    setSortTracksGenre(sortTracksGenre);
     console.log(authorsId);
 
     if (checkedAuthors.includes(authorsId)) {
@@ -209,8 +215,9 @@ function Filter({
                     onClick={() => {
                       toggleGenres(genre);
                       // setIsClicked(!isClicked);
+                      setSortTracksGenre(sortTracksGenre);
                       console.log(genre + "fff");
-                      console.log(countOfTogglesGenre);
+                      console.log("счет: " + countOfTogglesGenre);
                     }}
                   >
                     {checkedGenre.includes(genre) ? (

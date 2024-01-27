@@ -121,9 +121,16 @@ export const Category = ({
             <S.Main>
               <MainNav />
               <S.MainCenterblock>
-                <Search />
+                <Search
+                  tracks={tracks}
+                  setTracks={setTracks}
+                  findedTracks={findedTracks}
+                  setFindedTracks={setFindedTracks}
+                  isTrackfinded={isTrackfinded}
+                  setIsTrackfinded={setIsTrackfinded}
+                />
                 <S.Centerblock>Треки</S.Centerblock>
-                <Filter
+                {/* <Filter
                   tracks={tracks}
                   setTracks={setTracks}
                   countOfToggles={countOfToggles}
@@ -132,9 +139,32 @@ export const Category = ({
                   setIsClicked={setIsClicked}
                   checkedAuthors={checkedAuthors}
                   setCheckedAuthors={setCheckedAuthors}
-                />
+                /> */}
                 {loading ? (
                   <ContentSkeleton />
+                ) : isTrackfinded ? (
+                  <ContentCategory
+                    isPlaying={isPlaying}
+                    setIsPlaying={setIsPlaying}
+                    tracks={findedTracks}
+                    setTracks={setTracks}
+                    playingTrack={playingTrack}
+                    setPlayingTrack={setPlayingTrack}
+                    trackIndex={trackIndex}
+                    setTrackIndex={setTrackIndex}
+                    isLiked={isLiked}
+                    setIsLiked={setIsLiked}
+                    playingTrackFromStore={playingTrackFromStore}
+                    playlist={playlist}
+                    setLoading={setLoading}
+                    loading={loading}
+                    countOfToggles={countOfToggles}
+                    setCountOfToggles={setCountOfToggles}
+                    isClicked={isClicked}
+                    setIsClicked={setIsClicked}
+                    checkedAuthors={checkedAuthors}
+                    setCheckedAuthors={setCheckedAuthors}
+                  />
                 ) : (
                   <ContentCategory
                     isPlaying={isPlaying}

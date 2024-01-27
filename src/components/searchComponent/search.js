@@ -18,9 +18,14 @@ function Search({
         item.author.toLowerCase().includes(e.target.value.toLowerCase())
     );
     setFindedTracks(findedTracks);
-    setIsTrackfinded(true);
+    // setIsTrackfinded(true);
     console.log(e.target.value);
     console.log(findedTracks);
+    if (e.target.value) {
+      setIsTrackfinded(true);
+    } else {
+      setIsTrackfinded(false);
+    }
     // getTracks()
     //   .then((tracks) => {
     //     setTracks(tracks);

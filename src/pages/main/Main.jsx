@@ -98,6 +98,8 @@ export const Main = ({
   console.log(tracks);
   console.log(Array.isArray(tracks));
 
+  console.log("кликнул?: " + isClickedGenre);
+
   return (
     <div>
       <GlobalStyle />
@@ -162,7 +164,7 @@ export const Main = ({
                   sortTracksGenre={sortTracksGenre}
                   setSortTracksGenre={setSortTracksGenre}
                 />
-              ) : isClicked ? (
+              ) : isClicked && !isClickedGenre ? (
                 <Content
                   isPlaying={isPlaying}
                   setIsPlaying={setIsPlaying}
@@ -177,11 +179,26 @@ export const Main = ({
                   playingTrackFromStore={playingTrackFromStore}
                   playlist={playlist}
                 />
-              ) : isClickedGenre ? (
+              ) : isClickedGenre && !isClicked ? (
                 <Content
                   isPlaying={isPlaying}
                   setIsPlaying={setIsPlaying}
                   tracks={sortTracksGenre}
+                  setTracks={setTracks}
+                  playingTrack={playingTrack}
+                  setPlayingTrack={setPlayingTrack}
+                  trackIndex={trackIndex}
+                  setTrackIndex={setTrackIndex}
+                  isLiked={isLiked}
+                  setIsLiked={setIsLiked}
+                  playingTrackFromStore={playingTrackFromStore}
+                  playlist={playlist}
+                />
+              ) : isClickedGenre && isClicked ? (
+                <Content
+                  isPlaying={isPlaying}
+                  setIsPlaying={setIsPlaying}
+                  tracks={[...sortTracks, ...sortTracksGenre]}
                   setTracks={setTracks}
                   playingTrack={playingTrack}
                   setPlayingTrack={setPlayingTrack}

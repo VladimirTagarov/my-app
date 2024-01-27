@@ -40,6 +40,7 @@ export const AppRoutes = ({ user }) => {
   const [isClickedGenre, setIsClickedGenre] = useState(false);
   const [checkedGenre, setCheckedGenre] = useState([]);
   const [sortTracksGenre, setSortTracksGenre] = useState([]);
+  console.log("кликнуто ли" + isClickedGenre);
 
   const addPlayingTrack = () => dispatch(setPlayingTrack(playingTrack));
   // addPlayingTrack();
@@ -70,7 +71,7 @@ export const AppRoutes = ({ user }) => {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [isClicked, isClickedGenre]);
   console.log(tracks);
 
   useEffect(() => {
@@ -194,12 +195,10 @@ export const AppRoutes = ({ user }) => {
                 setDuration={setDuration}
                 progressTime={progressTime}
                 setProgressTime={setProgressTime}
-                countOfToggles={countOfToggles}
-                setCountOfToggles={setCountOfToggles}
-                isClicked={isClicked}
-                setIsClicked={setIsClicked}
-                checkedAuthors={checkedAuthors}
-                setCheckedAuthors={setCheckedAuthors}
+                findedTracks={findedTracks}
+                setFindedTracks={setFindedTracks}
+                isTrackfinded={isTrackfinded}
+                setIsTrackfinded={setIsTrackfinded}
               />
             </ProtectedRoute>
           }

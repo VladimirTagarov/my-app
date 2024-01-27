@@ -80,12 +80,12 @@ export const Favorites = ({
   setDuration,
   progressTime,
   setProgressTime,
-  countOfToggles,
-  setCountOfToggles,
-  isClicked,
-  setIsClicked,
-  checkedAuthors,
-  setCheckedAuthors,
+  isTrackfinded,
+  setIsTrackfinded,
+  filtredTracks,
+  setFiltredTracks,
+  findedTracks,
+  setFindedTracks,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -122,9 +122,16 @@ export const Favorites = ({
           <S.Main>
             <MainNav />
             <S.MainCenterblock>
-              <Search />
+              <Search
+                tracks={tracks}
+                setTracks={setTracks}
+                findedTracks={findedTracks}
+                setFindedTracks={setFindedTracks}
+                isTrackfinded={isTrackfinded}
+                setIsTrackfinded={setIsTrackfinded}
+              />
               <S.Centerblock>Мои треки</S.Centerblock>
-              <Filter
+              {/* <Filter
                 tracks={tracks}
                 setTracks={setTracks}
                 countOfToggles={countOfToggles}
@@ -133,10 +140,29 @@ export const Favorites = ({
                 setIsClicked={setIsClicked}
                 checkedAuthors={checkedAuthors}
                 setCheckedAuthors={setCheckedAuthors}
-              />
+              /> */}
 
               {!favoritesTracks ? (
                 <ContentSkeleton />
+              ) : isTrackfinded ? (
+                <ContentFavorites
+                  isPlaying={isPlaying}
+                  setIsPlaying={setIsPlaying}
+                  tracks={findedTracks}
+                  favoritesTracks={findedTracks}
+                  setFavoritesTracks={setFavoritesTracks}
+                  playingTrack={playingTrack}
+                  setPlayingTrack={setPlayingTrack}
+                  trackIndex={trackIndex}
+                  setTrackIndex={setTrackIndex}
+                  playlist={playlist}
+                  isLiked={isLiked}
+                  setIsLiked={setIsLiked}
+                  duration={duration}
+                  setDuration={setDuration}
+                  progressTime={progressTime}
+                  setProgressTime={setProgressTime}
+                />
               ) : (
                 <ContentFavorites
                   isPlaying={isPlaying}
@@ -155,12 +181,6 @@ export const Favorites = ({
                   setDuration={setDuration}
                   progressTime={progressTime}
                   setProgressTime={setProgressTime}
-                  countOfToggles={countOfToggles}
-                  setCountOfToggles={setCountOfToggles}
-                  isClicked={isClicked}
-                  setIsClicked={setIsClicked}
-                  checkedAuthors={checkedAuthors}
-                  setCheckedAuthors={setCheckedAuthors}
                 />
               )}
               {/* <p>{addPlayerError}</p> */}
