@@ -68,7 +68,7 @@ function Filter({
     (item, index) => arrayOfAuthors.indexOf(item) === index && item !== "-"
   );
   const toggleAuthors = (authorsId) => {
-    setCheckedAuthors((authors) => [...authors, authorsId]);
+    // setCheckedAuthors((authors) => [...authors, authorsId]);
     setActiveGenres(authorsId);
     setSortTracksGenre(sortTracksGenre);
     setTracks(tracks);
