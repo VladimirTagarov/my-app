@@ -26,11 +26,9 @@ function Filter({
   setSortTracksGenre,
 }) {
   const [open, setOpen] = useState(false);
-  // const [countOfToggles, setCountOfToggles] = useState(0);
-  // const [isClicked, setIsClicked] = useState(false);
   const [activeAuthors, setActiveAuthors] = useState(null);
   const [activeGenres, setActiveGenres] = useState(null);
-  // const [checkedAuthors, setCheckedAuthors] = useState([]);
+  console.log(checkedAuthors);
 
   const popup = () => {
     setOpen(!open);
@@ -55,6 +53,7 @@ function Filter({
   setSortTracks(sortTracks);
   console.log("есть ли клик?: " + isClickedGenre);
 
+  const year = ["по умолчанию", "сначала старые", "сначала новые"];
   let arrayOfAuthors = [];
   let sortArrayOfAuthors = [];
   let genreArray = [];
@@ -69,9 +68,12 @@ function Filter({
     (item, index) => arrayOfAuthors.indexOf(item) === index && item !== "-"
   );
   const toggleAuthors = (authorsId) => {
+    setCheckedAuthors((authors) => [...authors, authorsId]);
     setActiveGenres(authorsId);
     setSortTracksGenre(sortTracksGenre);
+    setTracks(tracks);
     console.log(authorsId);
+    console.log("массив: " + checkedAuthors);
 
     if (checkedAuthors.includes(authorsId)) {
       setCheckedAuthors(checkedAuthors.filter((e) => e !== authorsId));
@@ -99,6 +101,12 @@ function Filter({
     setActiveGenres(genresId);
     console.log(genresId);
 
+    if (checkedGenre.length > 0) {
+      setIsClickedGenre(true);
+    } else {
+      setIsClickedGenre(false);
+    }
+
     if (checkedGenre.includes(genresId)) {
       setCheckedGenre(checkedGenre.filter((e) => e !== genresId));
       setCountOfTogglesGenre(checkedGenre.length - 1);
@@ -107,11 +115,6 @@ function Filter({
       setCheckedGenre((genres) => [...genres, genresId]);
       setCountOfTogglesGenre(checkedGenre.length + 1);
       // console.log(countOfToggles);
-    }
-    if (checkedGenre.length > 0) {
-      setIsClickedGenre(true);
-    } else {
-      setIsClickedGenre(false);
     }
 
     sortTracksGenre = tracks.filter((track) =>
@@ -136,12 +139,11 @@ function Filter({
               return (
                 <S.PopupAuthorText
                   key={i}
-                  style={{
-                    color:
-                      isClicked && activeAuthors === author ? "red" : "white",
-                  }}
-                  onClick={() => {
+                  onClick={(authorsId) => {
+                    setCheckedAuthors((authors) => [...authors, authorsId]);
+                    console.log("этот же массив при клике: " + checkedAuthors);
                     toggleAuthors(author);
+
                     // setIsClicked(!isClicked);
                     console.log(author + "fff");
                     console.log(countOfToggles);
@@ -190,12 +192,6 @@ function Filter({
           </div>
         </>
       ) : null}
-      {/* <S.Popup>
-        <S.FilterButton onClick={popupYear} className="_btn-text">
-          году выпуска
-        </S.FilterButton>
-        {openYear ? <YearFilter /> : null}
-      </S.Popup> */}
       <S.Popup>
         <S.FilterButton onClick={popupGenre} className="_btn-text">
           жанру
@@ -264,6 +260,18 @@ function Filter({
           </div>
         </>
       ) : null}
+      <S.Popup>
+        <S.FilterButton onClick={popupYear} className="_btn-text">
+          {year[0]}
+        </S.FilterButton>
+        {openYear ? (
+          <S.PopupYear>
+            {year.map((element, i) => (
+              <S.PopupYearText key={i}>{element}</S.PopupYearText>
+            ))}
+          </S.PopupYear>
+        ) : null}
+      </S.Popup>
     </S.CenterblockFilter>
   );
 }
