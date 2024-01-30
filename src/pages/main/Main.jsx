@@ -94,11 +94,16 @@ export const Main = ({
   setCheckedGenre,
   sortTracksGenre,
   setSortTracksGenre,
+  isSortOn,
+  setIsSortOn,
+  sortirizedTracks,
+  setSortirizedTracks,
 }) => {
   console.log(tracks);
   console.log(Array.isArray(tracks));
+  console.log("этот же массив после клика main: " + checkedAuthors);
 
-  console.log("кликнул?: " + isClickedGenre);
+  console.log("кликнул?: " + isClicked);
 
   return (
     <div>
@@ -136,6 +141,10 @@ export const Main = ({
                 setCheckedGenre={setCheckedGenre}
                 sortTracksGenre={sortTracksGenre}
                 setSortTracksGenre={setSortTracksGenre}
+                isSortOn={isSortOn}
+                setIsSortOn={setIsSortOn}
+                sortirizedTracks={sortirizedTracks}
+                setSortirizedTracks={setSortirizedTracks}
               />
               {loading ? (
                 <ContentSkeleton />
@@ -164,7 +173,7 @@ export const Main = ({
                   sortTracksGenre={sortTracksGenre}
                   setSortTracksGenre={setSortTracksGenre}
                 />
-              ) : isClicked && !isClickedGenre ? (
+              ) : countOfToggles && !isClickedGenre && !isSortOn ? (
                 <Content
                   isPlaying={isPlaying}
                   setIsPlaying={setIsPlaying}
@@ -179,7 +188,7 @@ export const Main = ({
                   playingTrackFromStore={playingTrackFromStore}
                   playlist={playlist}
                 />
-              ) : isClickedGenre && !isClicked ? (
+              ) : isClickedGenre && !isClicked && !isSortOn ? (
                 <Content
                   isPlaying={isPlaying}
                   setIsPlaying={setIsPlaying}
@@ -194,11 +203,26 @@ export const Main = ({
                   playingTrackFromStore={playingTrackFromStore}
                   playlist={playlist}
                 />
-              ) : isClickedGenre && isClicked ? (
+              ) : isClickedGenre && isClicked && !isSortOn ? (
                 <Content
                   isPlaying={isPlaying}
                   setIsPlaying={setIsPlaying}
                   tracks={[...sortTracks, ...sortTracksGenre]}
+                  setTracks={setTracks}
+                  playingTrack={playingTrack}
+                  setPlayingTrack={setPlayingTrack}
+                  trackIndex={trackIndex}
+                  setTrackIndex={setTrackIndex}
+                  isLiked={isLiked}
+                  setIsLiked={setIsLiked}
+                  playingTrackFromStore={playingTrackFromStore}
+                  playlist={playlist}
+                />
+              ) : isSortOn ? (
+                <Content
+                  isPlaying={isPlaying}
+                  setIsPlaying={setIsPlaying}
+                  tracks={sortirizedTracks}
                   setTracks={setTracks}
                   playingTrack={playingTrack}
                   setPlayingTrack={setPlayingTrack}

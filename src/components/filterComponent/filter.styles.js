@@ -114,4 +114,12 @@ export const PopupYear = styled.ul`
 export const PopupYearText = styled.li`
   display: flex;
   flex-direction: column;
+  cursor: pointer;
+`;
+
+export const PopupYearTextActive = styled.li`
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  color: #b672ff;
 `;

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AuthorFilter from "../FilterAuthorComponent/AuthorFilter";
 import GenreFilter from "../FilterGenreComponent/GenreFilter";
 import YearFilter from "../FilterYearComponent/yearFilter";
 import { useState } from "react";
 import * as S from "./filter.styles";
+import { getTracks } from "../../api";
 
 function Filter({
   tracks,
@@ -24,11 +25,17 @@ function Filter({
   setCheckedGenre,
   sortTracksGenre,
   setSortTracksGenre,
+  isSortOn,
+  setIsSortOn,
+  sortirizedTracks,
+  setSortirizedTracks,
 }) {
   const [open, setOpen] = useState(false);
   const [activeAuthors, setActiveAuthors] = useState(null);
   const [activeGenres, setActiveGenres] = useState(null);
+  const [activeSort, setActiveSort] = useState("по умолчанию");
   console.log(checkedAuthors);
+  console.log("sortTracks: " + sortTracks);
 
   const popup = () => {
     setOpen(!open);
@@ -48,10 +55,8 @@ function Filter({
     setOpenPopup(false);
   };
 
-  console.log("count: " + countOfTogglesGenre);
-  setSortTracksGenre(sortTracksGenre);
-  setSortTracks(sortTracks);
-  console.log("есть ли клик?: " + isClickedGenre);
+  console.log("count: " + countOfToggles);
+  console.log("есть ли клик?: " + isClicked);
 
   const year = ["по умолчанию", "сначала старые", "сначала новые"];
   let arrayOfAuthors = [];
@@ -67,10 +72,17 @@ function Filter({
   sortArrayOfAuthors = arrayOfAuthors.filter(
     (item, index) => arrayOfAuthors.indexOf(item) === index && item !== "-"
   );
+
+  useEffect(() => {
+    getTracks().then((tracks) => {
+      setTracks(tracks);
+    });
+  }, [isClicked, isClickedGenre, isSortOn]);
+
   const toggleAuthors = (authorsId) => {
-    // setCheckedAuthors((authors) => [...authors, authorsId]);
-    setActiveGenres(authorsId);
-    setSortTracksGenre(sortTracksGenre);
+    setIsClicked(true);
+    setActiveAuthors(authorsId);
+    console.log("sortTracks " + sortTracks);
     setTracks(tracks);
     console.log(authorsId);
     console.log("массив: " + checkedAuthors);
@@ -78,23 +90,39 @@ function Filter({
     if (checkedAuthors.includes(authorsId)) {
       setCheckedAuthors(checkedAuthors.filter((e) => e !== authorsId));
       setCountOfToggles(checkedAuthors.length - 1);
+      setSortTracks(
+        (sortTracks = tracks.filter((track) =>
+          checkedAuthors.includes(track.author)
+        ))
+      );
+
+      // setSortTracks(sortTracks);
+      console.log(sortTracks);
+
       // console.log(countOfToggles);
     } else {
       setCheckedAuthors((authors) => [...authors, authorsId]);
       setCountOfToggles(checkedAuthors.length + 1);
       // console.log(countOfToggles);
+      setSortTracks(
+        (sortTracks = tracks.filter((track) =>
+          checkedAuthors.includes(track.author)
+        ))
+      );
+      console.log(sortTracks);
     }
+
     if (checkedAuthors.length > 0) {
       setIsClicked(true);
     } else {
       setIsClicked(false);
     }
 
-    sortTracks = tracks.filter((track) =>
-      checkedAuthors.includes(track.author)
-    );
-    console.log(sortTracks);
-    setSortTracks(sortTracks);
+    // sortTracks = tracks.filter((track) =>
+    //   checkedAuthors.includes(track.author)
+    // );
+    // console.log(sortTracks);
+    // setSortTracks(sortTracks);
   };
 
   const toggleGenres = (genresId) => {
@@ -124,6 +152,56 @@ function Filter({
     setSortTracksGenre(sortTracksGenre);
   };
 
+  const toggleSortirize = (sortirize) => {
+    setActiveSort(sortirize);
+    console.log("isSortOn: " + isSortOn);
+    console.log("activeSort: " + activeSort);
+    if (activeSort === "по умолчанию") {
+      setIsSortOn(false);
+      setTracks(tracks);
+    } else if (activeSort === "сначала старые") {
+      setIsSortOn(true);
+      setIsClickedGenre(false);
+      setIsClicked(false);
+      setCountOfToggles(0);
+      setCountOfTogglesGenre(0);
+      setTracks(sortirizedTracks);
+      setCheckedAuthors([]);
+      setCheckedGenre([]);
+      sortirizedTracks = tracks.sort(function (a, b) {
+        if (a.release_date > b.release_date) {
+          return 1;
+        }
+        if (a.release_date < b.release_date) {
+          return -1;
+        }
+        return 0;
+      });
+      setSortirizedTracks(sortirizedTracks);
+      console.log(sortirizedTracks);
+    } else {
+      setIsSortOn(true);
+      setIsClickedGenre(false);
+      setCountOfToggles(0);
+      setCountOfTogglesGenre(0);
+      setIsClicked(false);
+      setTracks(sortirizedTracks);
+      setCheckedAuthors([]);
+      setCheckedGenre([]);
+      sortirizedTracks = tracks.sort(function (a, b) {
+        if (a.release_date < b.release_date) {
+          return 1;
+        }
+        if (a.release_date > b.release_date) {
+          return -1;
+        }
+        return 0;
+      });
+      setSortirizedTracks(sortirizedTracks);
+      console.log(sortirizedTracks);
+    }
+  };
+
   return (
     <S.CenterblockFilter>
       <S.FilterTitle>Искать по:</S.FilterTitle>
@@ -140,11 +218,17 @@ function Filter({
                 <S.PopupAuthorText
                   key={i}
                   onClick={(authorsId) => {
-                    setCheckedAuthors((authors) => [...authors, authorsId]);
+                    // setCheckedAuthors((authors) => [...authors, authorsId]);
                     console.log("этот же массив при клике: " + checkedAuthors);
                     toggleAuthors(author);
+                    // if (checkedAuthors.length > 0) {
+                    //   setIsClicked(true);
+                    // } else {
+                    //   setIsClicked(false);
+                    // }
+                    // setSortTracks(sortTracks);
+                    // setIsClicked(true);
 
-                    // setIsClicked(!isClicked);
                     console.log(author + "fff");
                     console.log(countOfToggles);
                   }}
@@ -260,15 +344,40 @@ function Filter({
           </div>
         </>
       ) : null}
+      <div
+        style={{
+          marginLeft: "400px",
+        }}
+      >
+        Сортировка по:{" "}
+      </div>
       <S.Popup>
         <S.FilterButton onClick={popupYear} className="_btn-text">
-          {year[0]}
+          {activeSort}
         </S.FilterButton>
         {openYear ? (
           <S.PopupYear>
-            {year.map((element, i) => (
-              <S.PopupYearText key={i}>{element}</S.PopupYearText>
-            ))}
+            {year.map((element, i) =>
+              element === activeSort ? (
+                <S.PopupYearTextActive
+                  key={i}
+                  onClick={() => {
+                    toggleSortirize(element);
+                  }}
+                >
+                  {element}
+                </S.PopupYearTextActive>
+              ) : (
+                <S.PopupYearText
+                  key={i}
+                  onClick={() => {
+                    toggleSortirize(element);
+                  }}
+                >
+                  {element}
+                </S.PopupYearText>
+              )
+            )}
           </S.PopupYear>
         ) : null}
       </S.Popup>
