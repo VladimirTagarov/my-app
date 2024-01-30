@@ -43,8 +43,6 @@ export const AppRoutes = ({ user }) => {
   const [isSortOn, setIsSortOn] = useState(false);
   const [sortirizedTracks, setSortirizedTracks] = useState([]);
 
-  console.log("кликнуто ли" + isClicked);
-
   const addPlayingTrack = () => dispatch(setPlayingTrack(playingTrack));
   // addPlayingTrack();
   // const addCurrentPlaylist = () => dispatch(setCurrentPlaylist(tracks));

@@ -34,8 +34,7 @@ function Filter({
   const [activeAuthors, setActiveAuthors] = useState(null);
   const [activeGenres, setActiveGenres] = useState(null);
   const [activeSort, setActiveSort] = useState("по умолчанию");
-  console.log(checkedAuthors);
-  console.log("sortTracks: " + sortTracks);
+  // console.log("sortTracks: " + sortTracks);
 
   const popup = () => {
     setOpen(!open);
@@ -55,15 +54,14 @@ function Filter({
     setOpenPopup(false);
   };
 
-  console.log("count: " + countOfToggles);
-  console.log("есть ли клик?: " + isClicked);
+  // console.log("count: " + countOfToggles);
+  // console.log("есть ли клик?: " + isClicked);
 
   const year = ["по умолчанию", "сначала старые", "сначала новые"];
   let arrayOfAuthors = [];
   let sortArrayOfAuthors = [];
   let genreArray = [];
   let sortGenre = [];
-  // let sortTracks = [];
   genreArray = tracks.map((track) => track.genre);
   sortGenre = genreArray.filter(
     (item, index) => genreArray.indexOf(item) === index
@@ -82,14 +80,9 @@ function Filter({
   const toggleAuthors = (authorsId) => {
     setIsClicked(true);
     setActiveAuthors(authorsId);
-    console.log("sortTracks " + sortTracks);
     setTracks(tracks);
-    console.log(authorsId);
-    console.log("массив: " + checkedAuthors);
 
     if (checkedAuthors.includes(authorsId)) {
-      // setCheckedAuthors(checkedAuthors.filter((e) => e !== authorsId));
-
       setCountOfToggles(checkedAuthors.length - 1);
       checkedAuthors = checkedAuthors.filter((e) => e !== authorsId);
       setCheckedAuthors(checkedAuthors);
@@ -98,26 +91,16 @@ function Filter({
           checkedAuthors.includes(track.author)
         ))
       );
-
-      // setSortTracks(sortTracks);
-      console.log(sortTracks);
-
-      // console.log(countOfToggles);
     } else {
-      // setCheckedAuthors((authors) => [...authors, authorsId]);
       setCountOfToggles(checkedAuthors.length + 1);
       checkedAuthors = [...checkedAuthors, authorsId];
       setCheckedAuthors(checkedAuthors);
 
-      console.log("= = = = tracks, checkedAuthors = ", tracks, checkedAuthors);
-
-      // console.log(countOfToggles);
       setSortTracks(
         (sortTracks = tracks.filter((track) =>
           checkedAuthors.includes(track.author)
         ))
       );
-      console.log(sortTracks);
     }
 
     if (checkedAuthors.length > 0) {
@@ -125,22 +108,15 @@ function Filter({
     } else {
       setIsClicked(false);
     }
-
-    // sortTracks = tracks.filter((track) =>
-    //   checkedAuthors.includes(track.author)
-    // );
-    // console.log(sortTracks);
-    // setSortTracks(sortTracks);
   };
 
   const toggleGenres = (genresId) => {
     setIsClickedGenre(true);
     setActiveGenres(genresId);
-    console.log(genresId);
+
     setTracks(tracks);
 
     if (checkedGenre.includes(genresId)) {
-      // setCheckedGenre(checkedGenre.filter((e) => e !== genresId));
       setCountOfTogglesGenre(checkedGenre.length - 1);
       checkedGenre = checkedGenre.filter((e) => e !== genresId);
       setCheckedGenre(checkedGenre);
@@ -149,9 +125,7 @@ function Filter({
           checkedGenre.includes(track.genre)
         ))
       );
-      // console.log(countOfToggles);
     } else {
-      // setCheckedGenre((genres) => [...genres, genresId]);
       setCountOfTogglesGenre(checkedGenre.length + 1);
       checkedGenre = [...checkedGenre, genresId];
       setCheckedGenre(checkedGenre);
@@ -160,15 +134,7 @@ function Filter({
           checkedGenre.includes(track.genre)
         ))
       );
-
-      // console.log(countOfToggles);
     }
-
-    // sortTracksGenre = tracks.filter((track) =>
-    //   checkedGenre.includes(track.genre)
-    // );
-    // console.log(sortTracksGenre);
-    // setSortTracksGenre(sortTracksGenre);
 
     if (checkedGenre.length > 0) {
       setIsClickedGenre(true);
@@ -178,18 +144,20 @@ function Filter({
   };
 
   const toggleSortirize = (sortirize) => {
+    setIsSortOn(true);
+    console.log("sortirize", sortirize);
     setActiveSort(sortirize);
-    console.log("isSortOn: " + isSortOn);
-    console.log("activeSort: " + activeSort);
-    if (activeSort === "по умолчанию") {
+
+    if (sortirize === "по умолчанию") {
       setIsSortOn(false);
       setTracks(tracks);
-    } else if (activeSort === "сначала старые") {
+    } else if (sortirize === "сначала старые") {
       setIsSortOn(true);
       setIsClickedGenre(false);
       setIsClicked(false);
       setCountOfToggles(0);
       setCountOfTogglesGenre(0);
+      // setActiveSort("сначала старые");
       setTracks(sortirizedTracks);
       setCheckedAuthors([]);
       setCheckedGenre([]);
@@ -203,13 +171,14 @@ function Filter({
         return 0;
       });
       setSortirizedTracks(sortirizedTracks);
-      console.log(sortirizedTracks);
+      console.log("sortirizedTracks", sortirizedTracks);
     } else {
       setIsSortOn(true);
       setIsClickedGenre(false);
       setCountOfToggles(0);
       setCountOfTogglesGenre(0);
       setIsClicked(false);
+      // setActiveSort("сначала новые");
       setTracks(sortirizedTracks);
       setCheckedAuthors([]);
       setCheckedGenre([]);
@@ -225,6 +194,8 @@ function Filter({
       setSortirizedTracks(sortirizedTracks);
       console.log(sortirizedTracks);
     }
+    console.log("isSortOn: " + isSortOn);
+    console.log("activeSort: " + activeSort);
   };
 
   return (
@@ -389,7 +360,6 @@ function Filter({
                   key={i}
                   onClick={() => {
                     toggleSortirize(element);
-                    toggleSortirize(element);
                   }}
                 >
                   {element}
@@ -398,7 +368,6 @@ function Filter({
                 <S.PopupYearText
                   key={i}
                   onClick={() => {
-                    toggleSortirize(element);
                     toggleSortirize(element);
                   }}
                 >

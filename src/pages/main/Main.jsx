@@ -99,12 +99,6 @@ export const Main = ({
   sortirizedTracks,
   setSortirizedTracks,
 }) => {
-  console.log(tracks);
-  console.log(Array.isArray(tracks));
-  console.log("этот же массив после клика main: " + checkedAuthors);
-
-  console.log("кликнул?: " + isClicked);
-
   return (
     <div>
       <GlobalStyle />
