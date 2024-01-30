@@ -88,8 +88,11 @@ function Filter({
     console.log("массив: " + checkedAuthors);
 
     if (checkedAuthors.includes(authorsId)) {
-      setCheckedAuthors(checkedAuthors.filter((e) => e !== authorsId));
+      // setCheckedAuthors(checkedAuthors.filter((e) => e !== authorsId));
+
       setCountOfToggles(checkedAuthors.length - 1);
+      checkedAuthors = checkedAuthors.filter((e) => e !== authorsId);
+      setCheckedAuthors(checkedAuthors);
       setSortTracks(
         (sortTracks = tracks.filter((track) =>
           checkedAuthors.includes(track.author)
@@ -101,8 +104,13 @@ function Filter({
 
       // console.log(countOfToggles);
     } else {
-      setCheckedAuthors((authors) => [...authors, authorsId]);
+      // setCheckedAuthors((authors) => [...authors, authorsId]);
       setCountOfToggles(checkedAuthors.length + 1);
+      checkedAuthors = [...checkedAuthors, authorsId];
+      setCheckedAuthors(checkedAuthors);
+
+      console.log("= = = = tracks, checkedAuthors = ", tracks, checkedAuthors);
+
       // console.log(countOfToggles);
       setSortTracks(
         (sortTracks = tracks.filter((track) =>
@@ -126,30 +134,47 @@ function Filter({
   };
 
   const toggleGenres = (genresId) => {
+    setIsClickedGenre(true);
     setActiveGenres(genresId);
     console.log(genresId);
+    setTracks(tracks);
+
+    if (checkedGenre.includes(genresId)) {
+      // setCheckedGenre(checkedGenre.filter((e) => e !== genresId));
+      setCountOfTogglesGenre(checkedGenre.length - 1);
+      checkedGenre = checkedGenre.filter((e) => e !== genresId);
+      setCheckedGenre(checkedGenre);
+      setSortTracksGenre(
+        (sortTracksGenre = tracks.filter((track) =>
+          checkedGenre.includes(track.genre)
+        ))
+      );
+      // console.log(countOfToggles);
+    } else {
+      // setCheckedGenre((genres) => [...genres, genresId]);
+      setCountOfTogglesGenre(checkedGenre.length + 1);
+      checkedGenre = [...checkedGenre, genresId];
+      setCheckedGenre(checkedGenre);
+      setSortTracksGenre(
+        (sortTracksGenre = tracks.filter((track) =>
+          checkedGenre.includes(track.genre)
+        ))
+      );
+
+      // console.log(countOfToggles);
+    }
+
+    // sortTracksGenre = tracks.filter((track) =>
+    //   checkedGenre.includes(track.genre)
+    // );
+    // console.log(sortTracksGenre);
+    // setSortTracksGenre(sortTracksGenre);
 
     if (checkedGenre.length > 0) {
       setIsClickedGenre(true);
     } else {
       setIsClickedGenre(false);
     }
-
-    if (checkedGenre.includes(genresId)) {
-      setCheckedGenre(checkedGenre.filter((e) => e !== genresId));
-      setCountOfTogglesGenre(checkedGenre.length - 1);
-      // console.log(countOfToggles);
-    } else {
-      setCheckedGenre((genres) => [...genres, genresId]);
-      setCountOfTogglesGenre(checkedGenre.length + 1);
-      // console.log(countOfToggles);
-    }
-
-    sortTracksGenre = tracks.filter((track) =>
-      checkedGenre.includes(track.genre)
-    );
-    console.log(sortTracksGenre);
-    setSortTracksGenre(sortTracksGenre);
   };
 
   const toggleSortirize = (sortirize) => {
@@ -338,6 +363,7 @@ function Filter({
               zIndex: "4",
               top: "-16px",
               left: "-52px",
+              gap: "0px",
             }}
           >
             {countOfTogglesGenre}
@@ -346,7 +372,7 @@ function Filter({
       ) : null}
       <div
         style={{
-          marginLeft: "400px",
+          marginLeft: "300px",
         }}
       >
         Сортировка по:{" "}
@@ -363,6 +389,7 @@ function Filter({
                   key={i}
                   onClick={() => {
                     toggleSortirize(element);
+                    toggleSortirize(element);
                   }}
                 >
                   {element}
@@ -371,6 +398,7 @@ function Filter({
                 <S.PopupYearText
                   key={i}
                   onClick={() => {
+                    toggleSortirize(element);
                     toggleSortirize(element);
                   }}
                 >
