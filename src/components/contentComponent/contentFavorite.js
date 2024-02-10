@@ -174,11 +174,9 @@ export const ContentFavorites = ({
                         </S.TrackTitleSvg>
                       </S.PlayingDotActivePause>
                     ) : (
-                      <S.PlayingDot>
-                        <S.TrackTitleSvg alt="music">
-                          <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
-                        </S.TrackTitleSvg>
-                      </S.PlayingDot>
+                      <S.TrackTitleSvg alt="music">
+                        <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
+                      </S.TrackTitleSvg>
                     )}
                   </S.TrackTitleImage>
                   <S.TrackTitleText>

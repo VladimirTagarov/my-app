@@ -129,7 +129,7 @@ export const Category = ({
                   isTrackfinded={isTrackfinded}
                   setIsTrackfinded={setIsTrackfinded}
                 />
-                <S.Centerblock>Треки</S.Centerblock>
+                <S.Centerblock>{filtredTracks[1]?.genre}</S.Centerblock>
                 {/* <Filter
                   tracks={tracks}
                   setTracks={setTracks}

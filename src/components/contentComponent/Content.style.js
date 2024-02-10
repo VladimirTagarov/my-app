@@ -131,6 +131,7 @@ export const TrackTitleImage = styled.div`
   height: 51px;
   padding: 16px;
   background: #313131;
+  /* background-image:  */
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
