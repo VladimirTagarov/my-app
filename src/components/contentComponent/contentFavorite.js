@@ -75,7 +75,27 @@ export const ContentFavorites = ({
   setIsClicked,
   checkedAuthors,
   setCheckedAuthors,
+  setAddPlayerError,
 }) => {
+  useEffect(() => {
+    getFavoritesTracks(localStorage.access)
+      .then((favoritesTracks) => {
+        setFavoritesTracks(favoritesTracks);
+        console.log(favoritesTracks);
+      })
+      .catch((error) => {
+        // console.log("ошибка доступа");
+        if (
+          error.message === "Данный токен недействителен для любого типа токена"
+        ) {
+          console.log(error.message);
+          navigate("/login", { replace: true });
+          return;
+        }
+        setAddPlayerError(error.message);
+      });
+  }, []);
+
   console.log(favoritesTracks);
   console.log(Array.isArray(favoritesTracks));
 
@@ -89,6 +109,10 @@ export const ContentFavorites = ({
   const arrOfFavoritesTracks = tracks?.filter((track) => {
     return track.stared_user.some((user) => user.username === nameOfUser);
   });
+
+  console.log("arrOfFavoritesTracks" + arrOfFavoritesTracks);
+  console.log("favoritesTrack: " + favoritesTracks);
+  setFavoritesTracks(favoritesTracks);
 
   // const addCurrentPlaylist = () => dispatch(setCurrentPlaylist(tracks))
   // console.log(arrOfFavoritesTracks);
@@ -117,17 +141,18 @@ export const ContentFavorites = ({
           }
         });
       // window.location.reload(true);
-      // getFavoritesTracks()
-      //   .then((favoritesTrack) => {
-      //     setFavoritesTracks(favoritesTrack);
-      //     // window.location.reload(true);
-      //   })
-      //   .catch((error) => {
-      //     if (error.status === 401) {
-      //       localStorage.clear();
-      //       navigate("/login", { replace: true });
-      //     }
-      //   });
+      getFavoritesTracks()
+        .then((favoritesTrack) => {
+          setFavoritesTracks(favoritesTrack);
+          console.log("любимые треки: ", favoritesTrack);
+          // window.location.reload(true);
+        })
+        .catch((error) => {
+          if (error.status === 401) {
+            localStorage.clear();
+            navigate("/login", { replace: true });
+          }
+        });
     });
   };
 
@@ -206,22 +231,24 @@ export const ContentFavorites = ({
                       toggleDisLike(track.id);
                     }}
                   >
-                    <svg
-                      width="16"
-                      height="14"
-                      viewBox="0 0 16 14"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M8.02203 12.7031C13.9025 9.20312 16.9678 3.91234 13.6132 1.47046C11.413 -0.13111 8.95392 1.14488 8.02203 1.95884H8.00052H8.00046H7.97895C7.04706 1.14488 4.58794 -0.13111 2.38775 1.47046C-0.966814 3.91234 2.09846 9.20312 7.97895 12.7031H8.00046H8.00052H8.02203Z"
-                        fill="#B672FF"
-                      />
-                      <path
-                        d="M8.00046 1.95884H8.02203C8.95392 1.14488 11.413 -0.13111 13.6132 1.47046C16.9678 3.91234 13.9025 9.20312 8.02203 12.7031H8.00046M8.00052 1.95884H7.97895C7.04706 1.14488 4.58794 -0.13111 2.38775 1.47046C-0.966814 3.91234 2.09846 9.20312 7.97895 12.7031H8.00052"
-                        stroke="#B672FF"
-                      />
-                    </svg>
+                    {!arrOfFavoritesTracks.includes(track) ? (
+                      <svg
+                        width="16"
+                        height="14"
+                        viewBox="0 0 16 14"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M8.02203 12.7031C13.9025 9.20312 16.9678 3.91234 13.6132 1.47046C11.413 -0.13111 8.95392 1.14488 8.02203 1.95884H8.00052H8.00046H7.97895C7.04706 1.14488 4.58794 -0.13111 2.38775 1.47046C-0.966814 3.91234 2.09846 9.20312 7.97895 12.7031H8.00046H8.00052H8.02203Z"
+                          fill="#B672FF"
+                        />
+                        <path
+                          d="M8.00046 1.95884H8.02203C8.95392 1.14488 11.413 -0.13111 13.6132 1.47046C16.9678 3.91234 13.9025 9.20312 8.02203 12.7031H8.00046M8.00052 1.95884H7.97895C7.04706 1.14488 4.58794 -0.13111 2.38775 1.47046C-0.966814 3.91234 2.09846 9.20312 7.97895 12.7031H8.00052"
+                          stroke="#B672FF"
+                        />
+                      </svg>
+                    ) : null}
 
                     {/* 
 {((arrOfFavoritesTracks?.includes(track))) ? (<svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">

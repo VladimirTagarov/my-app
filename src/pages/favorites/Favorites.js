@@ -11,7 +11,7 @@ import Sidebar from "../../components/sidebarComponent/sidebar";
 import SidebarSkeleton from "../../components/sidebarSkeletonComponent/sidebarSkeleton";
 import Bar from "../../components/barComponent/bar";
 import { createGlobalStyle } from "styled-components";
-import { getTracks, getFavoritesTracks } from "../../api";
+import { getTracks, getFavoritesTracks, getDisLikes } from "../../api";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentPlaylist } from "../../store/reducers/tracksReducer";
 import { ContentFavorites } from "../../components/contentComponent/contentFavorite";
@@ -112,7 +112,7 @@ export const Favorites = ({
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [favoritesTracks]);
 
   return (
     <div>
@@ -162,6 +162,9 @@ export const Favorites = ({
                   setDuration={setDuration}
                   progressTime={progressTime}
                   setProgressTime={setProgressTime}
+                  loading={loading}
+                  setLoading={setLoading}
+                  setAddPlayerError={setAddPlayerError}
                 />
               ) : (
                 <ContentFavorites

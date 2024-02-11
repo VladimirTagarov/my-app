@@ -32,20 +32,24 @@ export const Login = ({ isLoginMode = true }) => {
         .then((response) => {
           console.log(response);
           setUser("user", response.access);
-          localStorage.setItem('access', response.access);
-          console.log('access');
-          console.log('user');
-          localStorage.setItem('refreshed', response.refresh);
+          localStorage.setItem("access", response.access);
+          console.log("access");
+          console.log("user");
+          localStorage.setItem("refreshed", response.refresh);
           setNameUser(response.username);
           console.log(nameUser);
           setIsLogin(true);
           setRegUser(email);
           console.log(regUser);
         })
+        .catch((error) => {
+          setError("Логин или пароль некорректен");
+        })
         .then(() => {
           setLoading(false);
         });
-        // refreshToken()
+
+      // refreshToken()
 
       // alert(`Выполняется регистрация: ${email} ${password}`);
       // setError("Неизвестная ошибка регистрации");
@@ -63,14 +67,17 @@ export const Login = ({ isLoginMode = true }) => {
           .then((response) => {
             console.log(response);
             setUser("user", response.access);
-            localStorage.setItem('access', response.access);
-            console.log('access');
-            console.log('user');
-            localStorage.setItem('refreshed', response.refresh);
+            localStorage.setItem("access", response.access);
+            console.log("access");
+            console.log("user");
+            localStorage.setItem("refreshed", response.refresh);
             setNameUser(response.username);
             console.log(nameUser);
             setIsLogin(true);
             setRegUser(email);
+          })
+          .catch((error) => {
+            setError(error.message);
           })
           .then(() => {
             setLoading(false);
