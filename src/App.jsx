@@ -1,34 +1,34 @@
-// import logo from "./logo.svg";
-import "./App.css";
-import MainNav from "./components/mainNavComponent/MainNav.js";
-import Search from "./components/searchComponent/Search.js";
-import Filter from "./components/filterComponent/Filter.js";
-import Content from "./components/contentComponent/Content.js";
-import Sidebar from "./components/sidebarComponent/Sidebar.js";
-import Bar from "./components/barComponent/Bar.js";
+import React from "react";
+import { AppRoutes } from "./routes.jsx";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthorizedProvider } from "./context.js";
+import { Provider } from "react-redux";
+import store from "./store/index.js";
+import Bar from "./components/barComponent/bar.js";
+
+
 
 function App() {
+  const [user, setUser] = useState(null);
+
+  const navigate = useNavigate();
+
+  const handleLogin = () => setUser({ login: "taradam" });
+
+  const handleLogout = () => setUser(null);
+
   return (
-    <div className="App">
-      <div className="wrapper">
-        <div className="container">
-          <main className="main">
-            <MainNav />
-            <div className="main__centerblock centerblock">
-              <Search />
-              <h2 className="centerblock__h2">Треки</h2>
-              <Filter />
-              <Content />
-            </div>
-            <Sidebar />
-          </main>
-          <div className="bar">
-            <Bar />
-          </div>
-          <footer className="footer"></footer>
+    <Provider store={store}>
+      <AuthorizedProvider>
+        <div>
+          <AppRoutes
+            user={user}
+            onAuthButtonClick={user ? handleLogout : handleLogin}
+          />
         </div>
-      </div>
-    </div>
+      </AuthorizedProvider>
+    </Provider>
   );
 }
 

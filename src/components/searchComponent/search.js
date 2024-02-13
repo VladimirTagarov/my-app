@@ -1,18 +1,56 @@
-import "./search.css";
+import React from "react";
+import * as S from "./search.styles";
+import { getTracks } from "../../api";
 
-function Search() {
+function Search({
+  tracks,
+  setTracks,
+  findedTracks,
+  setFindedTracks,
+  isTrackfinded,
+  setIsTrackfinded,
+}) {
+  const findTracks = (e) => {
+    findedTracks = tracks;
+    findedTracks = tracks.filter(
+      (item) =>
+        item.name.toLowerCase().includes(e.target.value.toLowerCase()) ||
+        item.author.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    setFindedTracks(findedTracks);
+    // setIsTrackfinded(true);
+    console.log(e.target.value);
+    console.log(findedTracks);
+    if (e.target.value) {
+      setIsTrackfinded(true);
+    } else {
+      setIsTrackfinded(false);
+    }
+    // getTracks()
+    //   .then((tracks) => {
+    //     setTracks(tracks);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error.message);
+    //     // })
+    //     // .finally(() => {
+    //     //   setLoading(false);
+    //   });
+    return tracks;
+  };
+
   return (
-    <div className="centerblock__search search">
-      <svg className="search__svg">
+    <S.CenterblockSearch>
+      <S.SearchSvg>
         <use xlinkHref="img/icon/sprite.svg#icon-search"></use>
-      </svg>
-      <input
-        className="search__text"
+      </S.SearchSvg>
+      <S.SearchText
         type="search"
+        onChange={findTracks}
         placeholder="Поиск"
         name="search"
       />
-    </div>
+    </S.CenterblockSearch>
   );
 }
 

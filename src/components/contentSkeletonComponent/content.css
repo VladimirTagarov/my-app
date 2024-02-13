@@ -1,0 +1,18 @@
+.track__album-skeleton {
+  width: 235px;
+  height: 19px;
+  background-color: #313131;
+}
+.track__author-skeleton {
+  width: 271px;
+  height: 19px;
+  background-color: #313131;
+}
+.track__title-link-skeleton {
+  width: 356px;
+  height: 19px;
+  background-color: #313131;
+}
+.track__album {
+  text-align: left;
+}
